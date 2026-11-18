@@ -502,3 +502,48 @@ header h1 {
 .btn-primary:disabled:hover {
   background: #adb5bd;
 }
+
+/* ---- Comfort test (Day 2 assumption test) ---- */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.officer-picker {
+  font-size: 13px;
+}
+
+.officer-picker select {
+  margin-left: 6px;
+  padding: 2px 6px;
+}
+
+.rating-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.rating-btn {
+  flex: 1;
+  font-size: 16px;
+}
+
+.comfort-line {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.comfort-verdict {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #f1f3f5;
+}
+
+.verdict-success { background: #d3f9d8; color: #2b8a3e; }
+.verdict-kill { background: #ffe3e3; color: #c92a2a; }
+.verdict-unclear { background: #fff3bf; color: #8a6d00; }
