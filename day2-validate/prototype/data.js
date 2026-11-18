@@ -1,11 +1,34 @@
 // Synthetic data for ServiceSG enquiry prototype
 // All data in this file is made up for testing purposes only
 
+// Policy pages the AI may use, with last-updated dates. Copied from the Sources table in
+// day2-validate/context-skill.md. All names and dates are made up.
+const policySources = {
+  "ICA Passport Services": "2024-10-01",
+  "ICA Fee Schedule": "2024-10-01",
+  "ICA Application Channels": "2024-09-15",
+  "ICA Lost Card Procedure": "2024-10-01",
+  "PTC Concession Policy": "2024-08-20",
+  "TransitLink Application Guide": "2024-08-20",
+  "Community Centre Opening Hours": "2024-11-01",
+  "Community Centre Online Booking": "2024-11-01",
+  "Season Parking Renewal Policy": "2024-09-30",
+  "Season Parking Channels": "2024-09-30",
+  "HDB BTO Late Application Policy": "2024-07-10",
+  "HDB Fee Waiver Guidelines": "2024-07-10",
+  "HDB First-Timer Priority": "2024-07-10",
+  "Overseas Applicant Guidelines": "2024-06-05",
+  "Appeals Procedure": "2024-06-05"
+};
+
+// Enquiries with draft: null show a no-draft screen. noDraft.type is one of:
+// low_confidence, needs_clarification, handoff, attachment (see context-skill.md rules 2, 7, 8, 9).
 const syntheticEnquiries = [
   {
     id: "ENQ-2024-001",
     timestamp: "2024-11-18 09:32",
     confidence: "high",
+    confidencePct: 96,
     enquiry: {
       from: "Resident (made up)",
       subject: "Documents needed for passport renewal",
@@ -52,6 +75,7 @@ const syntheticEnquiries = [
     id: "ENQ-2024-002",
     timestamp: "2024-11-18 10:15",
     confidence: "high",
+    confidencePct: 94,
     enquiry: {
       from: "Resident (made up)",
       subject: "How to apply for senior citizen concession card",
@@ -90,12 +114,17 @@ const syntheticEnquiries = [
     id: "ENQ-2024-003",
     timestamp: "2024-11-18 11:42",
     confidence: "low",
+    confidencePct: 62,
     enquiry: {
       from: "Resident (made up)",
       subject: "Appeal for late HDB application and fee waiver",
       body: "Hi, I missed the deadline for my HDB BTO application by 2 days because I was hospitalized. I have the medical certificate. Can I still apply? Also my income dropped last month due to retrenchment - can I get the application fee waived? I am a first-timer. Thank you."
     },
     draft: null,
+    noDraft: {
+      type: "low_confidence",
+      reason: "Two topics (a late application and a fee waiver). This needs officer judgment."
+    },
     suggestedPolicies: [
       {
         source: "HDB BTO Late Application Policy (made up)",
@@ -119,6 +148,7 @@ const syntheticEnquiries = [
     id: "ENQ-2024-004",
     timestamp: "2024-11-18 13:05",
     confidence: "high",
+    confidencePct: 95,
     enquiry: {
       from: "Resident (made up)",
       subject: "Replacing a lost identity card",
@@ -154,6 +184,7 @@ const syntheticEnquiries = [
     id: "ENQ-2024-005",
     timestamp: "2024-11-18 14:20",
     confidence: "high",
+    confidencePct: 97,
     enquiry: {
       from: "Resident (made up)",
       subject: "Opening hours of community centre booking counter",
@@ -188,6 +219,7 @@ const syntheticEnquiries = [
     id: "ENQ-2024-006",
     timestamp: "2024-11-18 15:10",
     confidence: "high",
+    confidencePct: 93,
     enquiry: {
       from: "Resident (made up)",
       subject: "Deadline to renew parking season pass",
@@ -223,12 +255,17 @@ const syntheticEnquiries = [
     id: "ENQ-2024-007",
     timestamp: "2024-11-18 16:02",
     confidence: "low",
+    confidencePct: 41,
     enquiry: {
       from: "Resident (made up)",
       subject: "Expired document, living overseas, appeal against earlier decision",
       body: "I am living overseas and my document expired last year. My earlier application was rejected and I want to appeal. Can I do this by post, and does the rejection affect my new application?"
     },
     draft: null,
+    noDraft: {
+      type: "low_confidence",
+      reason: "Several topics (living overseas, an expired document and an appeal). This needs officer judgment."
+    },
     suggestedPolicies: [
       {
         source: "Overseas Applicant Guidelines (made up)",
@@ -239,8 +276,65 @@ const syntheticEnquiries = [
         source: "Appeals Procedure (made up)",
         passage: "Appeals must be lodged within 30 days of the decision with supporting reasons.",
         url: "#policy-appeals-001"
+      },
+      {
+        source: "ICA Application Channels (made up)",
+        passage: "Applications may be submitted at ICA Services Centres or online.",
+        url: "#policy-ica-channels-002"
       }
     ]
+  },
+  {
+    id: "ENQ-2024-008",
+    timestamp: "2024-11-18 16:40",
+    confidence: "none",
+    confidencePct: null,
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Wrong information about my season parking pass",
+      body: "Your agency gave me the wrong information about my season parking pass and I had to pay a penalty. I will take legal action. I want to speak to someone senior."
+    },
+    draft: null,
+    noDraft: {
+      type: "handoff",
+      reason: "This is a complaint with legal risk. A human lead must handle it. No draft is written."
+    },
+    suggestedPolicies: []
+  },
+  {
+    id: "ENQ-2024-009",
+    timestamp: "2024-11-18 16:55",
+    confidence: "none",
+    confidencePct: null,
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Please read the attached letter",
+      body: "I attached a photo of my letter. Can you tell me what it says and what I should do?"
+    },
+    attachment: { name: "letter-photo.jpg (made up)", readable: false },
+    draft: null,
+    noDraft: {
+      type: "attachment",
+      reason: "The attached image could not be read, so any draft would be a guess. The officer needs to open the image."
+    },
+    suggestedPolicies: []
+  },
+  {
+    id: "ENQ-2024-010",
+    timestamp: "2024-11-18 17:10",
+    confidence: "none",
+    confidencePct: null,
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "How long does passport renewal take?",
+      body: "How many days does passport renewal take to process?"
+    },
+    draft: null,
+    noDraft: {
+      type: "needs_clarification",
+      reason: "No policy page in the source list covers processing time. Nothing was guessed."
+    },
+    suggestedPolicies: []
   }
 ];
 

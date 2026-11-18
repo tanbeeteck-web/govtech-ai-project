@@ -35,6 +35,7 @@
         </div>
         <div class="enquiry-subject" id="enquiry-subject"></div>
         <div class="enquiry-body" id="enquiry-body"></div>
+        <div class="enquiry-attachment" id="enquiry-attachment" style="display:none;"></div>
       </div>
     </section>
 
@@ -42,7 +43,7 @@
     <section class="panel" id="draft-panel">
       <div class="panel-header">
         <span id="draft-panel-title">AI Draft with Citations</span>
-        <span id="confidence-badge" style="font-size: 12px; color: #51cf66;">High confidence</span>
+        <span id="confidence-badge" style="font-size: 12px;"></span>
       </div>
       <div class="panel-body" id="draft-content">
         <!-- Draft content rendered by JS -->
@@ -141,10 +142,24 @@
     let pendingEditPercent;
     let enquiryShownAt = Date.now();
 
+    // Short labels for each no-draft case (from context-skill.md rules 2, 7, 8, 9)
+    const NO_DRAFT_INFO = {
+      low_confidence:      { tab: 'Low conf',      badge: 'Low confidence',      title: 'No draft generated',        text: 'Confidence is below 90%. Here are the closest policy pages to help you draft a reply:' },
+      needs_clarification: { tab: 'Needs clarif.', badge: 'NEEDS CLARIFICATION', title: 'NEEDS CLARIFICATION',        text: 'The answer is not in the policy pages the AI is allowed to use, so it did not guess.' },
+      handoff:             { tab: 'Hand-off',      badge: 'Hand off to human lead', title: 'Hand off to a human lead', text: 'Complaints, legal action, regulators and vulnerable residents are not drafted by the AI.' },
+      attachment:          { tab: 'Attachment',    badge: 'Attachment not readable', title: 'Attachment could not be read', text: 'The AI will not guess what the attachment says.' }
+    };
+    // Last-updated date for a cited policy page, from policySources in data.js
+    function sourceDate(source) {
+      const name = source.replace(' (made up)', '');
+      return policySources[name] ? ` · updated ${policySources[name]} (made up)` : '';
+    }
+    function noDraftLabel(type) { return NO_DRAFT_INFO[type].tab; }
+
     function buildTabs() {
       const nav = document.getElementById('enquiry-nav');
       nav.innerHTML = syntheticEnquiries.map((e, i) =>
-        `<button class="enquiry-tab" data-index="${i}">${e.id}${e.confidence === 'low' ? ' (Low conf)' : ''}</button>`
+        `<button class="enquiry-tab" data-index="${i}">${e.id}${e.draft === null ? ' (' + noDraftLabel(e.noDraft.type) + ')' : ''}</button>`
       ).join('');
       nav.querySelectorAll('.enquiry-tab').forEach(tab => {
         tab.addEventListener('click', () => {
@@ -220,73 +235,79 @@
       });
 
       // Check confidence level
-      if (enquiry.confidence === 'low') {
-        renderLowConfidence(enquiry);
+      // Show any attachment under the enquiry text
+      const att = enquiry.attachment;
+      const attEl = document.getElementById('enquiry-attachment');
+      attEl.textContent = att ? `Attachment: ${att.name}${att.readable ? '' : ' (could not be read)'}` : '';
+      attEl.style.display = att ? 'block' : 'none';
+
+      if (enquiry.draft === null) {
+        renderNoDraft(enquiry);
       } else {
         renderDraft(enquiry);
       }
     }
 
-    function renderLowConfidence(enquiry) {
-      // Update header
+    function renderNoDraft(enquiry) {
+      const info = NO_DRAFT_INFO[enquiry.noDraft.type];
+      const pct = enquiry.confidencePct === null || enquiry.confidencePct === undefined ? '' : ` (${enquiry.confidencePct}%)`;
       document.getElementById('draft-panel-title').textContent = 'No Draft Available';
-      document.getElementById('confidence-badge').textContent = 'Low confidence';
+      document.getElementById('confidence-badge').textContent = info.badge + pct;
       document.getElementById('confidence-badge').style.color = '#fa5252';
 
-      // Log low confidence event
-      logLowConfidence(enquiry.id, 'Multiple topics detected; case requires officer judgment');
+      logNoDraft(enquiry.id, enquiry.noDraft.type, enquiry.noDraft.reason);
 
-      // Render suggested policies instead of draft
       let html = `
         <div class="low-confidence-notice">
           <div class="notice-icon">⚠️</div>
           <div class="notice-text">
-            <strong>No draft generated</strong>
-            <p>This enquiry involves multiple topics or edge cases that require officer judgment. Here are the closest policy pages to help you draft a reply:</p>
+            <strong>${info.title}</strong>
+            <p>${enquiry.noDraft.reason}</p>
+            <p>${info.text}</p>
           </div>
         </div>
-        <div class="suggested-policies">
-          <h4>Suggested policy pages</h4>
       `;
 
-      enquiry.suggestedPolicies.forEach((policy, i) => {
-        html += `
-          <div class="policy-card">
-            <div class="policy-source">${policy.source}</div>
-            <p class="policy-passage">"${policy.passage}"</p>
-            <a href="${policy.url}" class="policy-link">View full policy →</a>
-          </div>
-        `;
-      });
-
-      html += `</div>`;
+      if (enquiry.suggestedPolicies.length > 0) {
+        html += `<div class="suggested-policies"><h4>Closest policy pages (up to 3)</h4>`;
+        enquiry.suggestedPolicies.slice(0, 3).forEach(policy => {
+          html += `
+            <div class="policy-card">
+              <div class="policy-source">${policy.source}</div>
+              <p class="policy-passage">"${policy.passage}"</p>
+              <a href="${policy.url}" class="policy-link">View full policy →</a>
+            </div>
+          `;
+        });
+        html += `</div>`;
+      }
 
       document.getElementById('draft-content').innerHTML = html;
 
-      // Update actions for low confidence
+      const handoff = enquiry.noDraft.type === 'handoff';
       document.getElementById('draft-actions').innerHTML = `
-        <button class="btn btn-primary" id="btn-start-scratch">Start from scratch</button>
-        <button class="btn btn-warning" id="btn-escalate">Escalate to senior officer</button>
+        <button class="btn btn-primary" id="btn-start-scratch">${handoff ? 'Open case file' : 'Start from scratch'}</button>
+        <button class="btn btn-warning" id="btn-escalate">${handoff ? 'Hand off to human lead' : 'Escalate to senior officer'}</button>
       `;
-
-      // Attach new event listeners
       document.getElementById('btn-start-scratch').addEventListener('click', () => {
         showToast('Opening blank reply editor. (not implemented in prototype)');
       });
       document.getElementById('btn-escalate').addEventListener('click', () => {
-        showToast('Escalated to senior officer queue. (made up)');
+        showToast(handoff ? 'Handed off to a human lead. (made up)' : 'Escalated to senior officer queue. (made up)');
       });
     }
 
     function renderDraft(enquiry) {
       // Update header
       document.getElementById('draft-panel-title').textContent = 'AI Draft with Citations';
-      document.getElementById('confidence-badge').textContent = 'High confidence';
-      document.getElementById('confidence-badge').style.color = '#51cf66';
-
       const draft = enquiry.draft;
       highRiskItems = [];
-      let html = `<p class="draft-greeting">${draft.greeting}</p>`;
+      let html = `<p class="draft-only-note">Draft only. An officer must review and send every reply.</p>`;
+      const flaggedCount = draft.paragraphs.filter(p => p.highRisk).length;
+      html += flaggedCount > 0
+        ? `<p class="flag-summary flag-summary-red">${flaggedCount} section${flaggedCount > 1 ? 's' : ''} in red. The AI is less sure about these. Check each against its cited passage.</p>`
+        : `<p class="flag-summary flag-summary-green">No sections flagged. Still check the citations before sending.</p>`;
+      html += `<p class="draft-greeting">${draft.greeting}</p>`;
 
       draft.paragraphs.forEach((para, i) => {
         const hasCitation = para.citation !== null;
@@ -314,6 +335,7 @@
               <span class="citation-icon">📄</span>
               <div>
                 <span class="citation-source">${para.citation.source}</span>
+                <span class="citation-updated">${sourceDate(para.citation.source)}</span>
                 <p class="citation-passage">"${para.citation.passage}"</p>
               </div>
               <button class="flag-btn" data-para="${i}" title="Flag this citation as incorrect">🚩 Flag</button>
@@ -322,6 +344,18 @@
         }
         html += `</div>`;
       });
+
+      // The badge must agree with the red sections. Never show "High confidence" while any
+      // section is flagged red. The percentage is only how well the enquiry matched a policy topic.
+      const badge = document.getElementById('confidence-badge');
+      if (highRiskItems.length > 0) {
+        const types = [...new Set(highRiskItems.map(item => item.type.toUpperCase()))].join(', ');
+        badge.textContent = `Check before sending: ${highRiskItems.length} flagged (${types}) · topic match ${enquiry.confidencePct}%`;
+        badge.style.color = '#e67700';
+      } else {
+        badge.textContent = `High confidence · no flagged sections · topic match ${enquiry.confidencePct}%`;
+        badge.style.color = '#2b8a3e';
+      }
 
       html += `<p class="draft-closing">${draft.closing}</p>`;
       html += `<p class="draft-signature">${draft.signature}</p>`;

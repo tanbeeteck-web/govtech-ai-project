@@ -547,3 +547,35 @@ header h1 {
 .verdict-success { background: #d3f9d8; color: #2b8a3e; }
 .verdict-kill { background: #ffe3e3; color: #c92a2a; }
 .verdict-unclear { background: #fff3bf; color: #8a6d00; }
+
+/* ---- Context skill updates ---- */
+.draft-only-note {
+  font-size: 12px;
+  color: #666;
+  background: #f1f3f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.citation-updated {
+  font-size: 11px;
+  color: #868e96;
+}
+
+.enquiry-attachment {
+  margin-top: 10px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: #fff3bf;
+  border-radius: 4px;
+}
+
+.flag-summary {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.flag-summary-red { background: #ffe3e3; color: #c92a2a; }
+.flag-summary-green { background: #d3f9d8; color: #2b8a3e; }
