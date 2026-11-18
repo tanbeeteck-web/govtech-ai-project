@@ -64,11 +64,12 @@ Each colour has one meaning. Do not reuse a colour for something else. A wrong c
 |---|---|---|
 | **Blue** | **The officer must verify this before accepting.** It is a required check. It does **not** mean the AI is unsure. | Fee, deadline and eligibility sections (rule 3), the "Verification required" badge, the verification summary line, the confirmation checklist |
 | **Green** | **Nothing here needs verification.** The officer still checks the citations. It does not mean the draft is safe to send without review. | "High confidence · nothing to verify" badge, the "Nothing here needs verification" line, the success verdict in the comfort test |
-| **Red** | **The AI is unsure or cannot help, so there is no draft.** Low confidence, hand-off, unreadable attachment, needs clarification. | No-draft screens and badge, matching feedback log entries, the kill-switch verdict, the fail verdict in the comfort test |
+| **Red** | **Stop. Something failed or the AI cannot help.** Two uses: (1) the AI is unsure or cannot help, so there is no draft (low confidence, hand-off, unreadable attachment, needs clarification); (2) the comfort test failed (kill switch hit or fail verdict). | No-draft screens and badge, matching feedback log entries, the kill-switch verdict, the fail verdict in the comfort test |
 | **Amber** | **Look at this, but it is not an error.** Something needs attention or a decision. | Flag and escalate buttons, wrong-citation log entries, the attachment note, the "in between" verdict in the comfort test |
 | **Grey** | **Neutral information.** | "Draft only" note, source last-updated date, the "All data is made up" badge in the page header |
 
 Rules for colours:
+- Red on the test result panel means the test failed. It says nothing about any one draft.
 - Never show red on a section of a draft. If a draft exists, the AI was sure enough to write it (rule 7). A section that needs checking is blue.
 - Never show green while any section is blue.
 - The topic-match percentage is not a colour signal. It shows how well the enquiry matched a policy topic. It says nothing about whether each claim is correct.
