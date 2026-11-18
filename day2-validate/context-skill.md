@@ -66,15 +66,13 @@ Each colour has one meaning. Do not reuse a colour for something else. A wrong c
 | **Green** | **Nothing here needs verification.** The officer still checks the citations. It does not mean the draft is safe to send without review. | "High confidence · nothing to verify" badge, the "Nothing here needs verification" line, the success verdict in the comfort test |
 | **Red** | **The AI is unsure or cannot help, so there is no draft.** Low confidence, hand-off, unreadable attachment, needs clarification. | No-draft screens and badge, matching feedback log entries, the kill-switch verdict |
 | **Amber** | **Look at this, but it is not an error.** Something needs attention or a decision. | Flag and escalate buttons, wrong-citation log entries, the attachment note, the "in between" verdict in the comfort test |
-| **Grey** | **Neutral information.** | "Draft only" note, source last-updated date |
+| **Grey** | **Neutral information.** | "Draft only" note, source last-updated date, the "All data is made up" badge in the page header |
 
 Rules for colours:
 - Never show red on a section of a draft. If a draft exists, the AI was sure enough to write it (rule 7). A section that needs checking is blue.
 - Never show green while any section is blue.
 - The topic-match percentage is not a colour signal. It shows how well the enquiry matched a policy topic. It says nothing about whether each claim is correct.
 - Never rely on colour alone. Every colour also has words: for example "Verification required" or "No draft generated".
-
-Known exception: the "All data is made up" badge in the page header is a red-orange. It marks synthetic data and is not part of the signals above. Consider changing it to grey so it cannot be read as a low-confidence signal.
 
 ## Examples
 
