@@ -23,7 +23,7 @@ All figures are made up.
 
 **Hypothesis:** Officers will send an AI-drafted first reply after a light edit when every draft cites the policy page it used.
 
-**Success:** 8 in 10 drafts sent after a light edit in a two-week pilot. Fail below 6 in 10.
+**Success:** 8 in 10 drafts sent after a light edit in a two-week pilot. Fail below 7 in 10.
 
 ## Experience and trust
 
@@ -162,7 +162,7 @@ All numbers are made up and come from the prototype's comfort test.
 ## Open issues
 
 - **Real test needed.** The prototype has no AI and no real officers. Its numbers are not evidence.
-- **Success target is now one number:** 8 in 10 drafts sent with no edit or a light edit. The earlier 6 in 10 and 60% were dropped. 6 in 10 stays as the fail line in `opportunity.md`.
+- **Success target is now one number:** 8 in 10 drafts sent with no edit or a light edit. The earlier 6 in 10 and 60% were dropped. The fail line is raised to below 7 in 10.
 - **SLA:** the made-up current rate is now 70% against the 90% target, so the problem exists. The 70% is a new made-up number. Replace it with a real figure before a pilot.
 - **Leader replies.** The three leader replies in `build-log.md` say "I can do these". The evidence is not collected yet.
 - **Attachments.** 1 in 5 enquiries have images, and no tool reads them yet.
