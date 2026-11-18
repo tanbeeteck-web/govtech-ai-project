@@ -130,6 +130,8 @@ All numbers are made up and come from the prototype's comfort test.
 
 **Sponsor's kill metric (for a real pilot):** more than 2 wrong citations reaching residents in a week disables the tool until reviewed.
 
+**Fail line:** after 5 officers each rate 3 or more drafts, fail if fewer than 70% (7 in 10) of drafts are sent or given a minor edit.
+
 **If the result is in between:** run more officers or enquiries before deciding.
 
 ## Evals and gates

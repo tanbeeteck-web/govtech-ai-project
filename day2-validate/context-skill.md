@@ -64,7 +64,7 @@ Each colour has one meaning. Do not reuse a colour for something else. A wrong c
 |---|---|---|
 | **Blue** | **The officer must verify this before accepting.** It is a required check. It does **not** mean the AI is unsure. | Fee, deadline and eligibility sections (rule 3), the "Verification required" badge, the verification summary line, the confirmation checklist |
 | **Green** | **Nothing here needs verification.** The officer still checks the citations. It does not mean the draft is safe to send without review. | "High confidence · nothing to verify" badge, the "Nothing here needs verification" line, the success verdict in the comfort test |
-| **Red** | **The AI is unsure or cannot help, so there is no draft.** Low confidence, hand-off, unreadable attachment, needs clarification. | No-draft screens and badge, matching feedback log entries, the kill-switch verdict |
+| **Red** | **The AI is unsure or cannot help, so there is no draft.** Low confidence, hand-off, unreadable attachment, needs clarification. | No-draft screens and badge, matching feedback log entries, the kill-switch verdict, the fail verdict in the comfort test |
 | **Amber** | **Look at this, but it is not an error.** Something needs attention or a decision. | Flag and escalate buttons, wrong-citation log entries, the attachment note, the "in between" verdict in the comfort test |
 | **Grey** | **Neutral information.** | "Draft only" note, source last-updated date, the "All data is made up" badge in the page header |
 
