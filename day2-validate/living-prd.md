@@ -41,7 +41,22 @@ These notes come from what was built, tested and read. "Solid" means tested on a
 
 Extracted from the code in `day2-validate/prototype/` on `main` (commit `25bfb1c`, 2026-11-18). Where this file and the code disagree, the code is right. Update this file when a constant, a screen or a rule in the code changes.
 
+| # | Building block | Status |
+|---|---|---|
+| 1 | Product overview | Present |
+| 2 | Problem and riskiest assumption | Present |
+| 3 | User flow and screen map | Partial |
+| 4 | Success metrics | Partial |
+| 5 | Technical reality | Present |
+| 6 | Assumptions and risks | Present |
+| 7 | In and out of scope | Present |
+| 8 | Engineering recommendation | Partial |
+
+Present means the block is written from the code and checked against it. Partial means it is written but has a stated gap. None is missing.
+
 ### 1. Product overview
+
+**Status: Present.** What it is, what it is not, who it is for and its size are all stated and match the code.
 
 **What it is:** The ServiceSG Enquiry Draft Assistant, a clickable mock-up for Scenario A. An officer opens a resident enquiry and sees a drafted first reply with a policy citation under each claim. They approve, edit or reject it. The page then asks for a comfort rating from 1 to 5 and shows whether the test is passing.
 
@@ -54,6 +69,8 @@ Extracted from the code in `day2-validate/prototype/` on `main` (commit `25bfb1c
 **Size:** About 2,000 lines of plain HTML, CSS and JavaScript. No dependencies. Double-click `index.html` to run it.
 
 ### 2. Problem and riskiest assumption
+
+**Status: Present.** The problem figures come from the Day 1 files, not the code, and are made up. The assumption and how the code tests it are stated.
 
 **Problem** (from `day1-discover-define/opportunity.md`, all figures made up):
 - Officers search policy pages before they can reply. A search takes 12 minutes.
@@ -71,6 +88,8 @@ Extracted from the code in `day2-validate/prototype/` on `main` (commit `25bfb1c
 **How the code tests it:** After each send, edit or reject, the officer rates comfort from 1 to 5. The Comfort test panel turns the ratings into a verdict (block 4). This tests comfort with a mock-up. It cannot test whether a real model's drafts deserve that comfort.
 
 ### 3. User flow and screen map
+
+**Status: Partial.** Every flow and screen is mapped from the code. Nobody has opened the page in a real browser, so there are no screenshots and the layout is unconfirmed.
 
 **Flow:**
 1. The officer picks a test officer (O1 to O5) and, if they want, a policy topic.
@@ -106,6 +125,8 @@ Extracted from the code in `day2-validate/prototype/` on `main` (commit `25bfb1c
 **Colours** (full table in `context-skill.md`): blue means the officer must verify, green means nothing to verify, red means stop or no draft, amber means look at this, grey is neutral.
 
 ### 4. Success metrics
+
+**Status: Partial.** The success, fail and kill thresholds are all in the code. Four measures that earlier documents require are not built (30-second signal, auto-disable, weekly audit, consistency check). The Day 1 baselines (12-minute search, 70% on time) are not measured by the page.
 
 All values are named constants at the top of the comfort test in `log.js`.
 
@@ -145,6 +166,8 @@ All values are named constants at the top of the comfort test in `log.js`.
 
 ### 5. Technical reality
 
+**Status: Present.** What is real and what is faked is listed, with the code shape and data shape. Browser behaviour is the one unknown, and it is stated.
+
 **What is real and what is faked:**
 
 | Part | State |
@@ -177,6 +200,8 @@ All values are named constants at the top of the comfort test in `log.js`.
 
 ### 6. Assumptions and risks
 
+**Status: Present.** 12 assumptions and risks, each with what the code shows and how to test or fix it.
+
 | # | Assumption or risk | Type | What the code shows | How to test or fix |
 |---|---|---|---|---|
 | 1 | Officers are comfortable with AI drafts with citations (riskiest) | Desirability | Tested only with hand-written drafts and typed ratings | Run the comfort test with 5 real officers |
@@ -193,6 +218,8 @@ All values are named constants at the top of the comfort test in `log.js`.
 | 12 | The dates are current | Data | Enquiries and policy dates are all in 2024 | Refresh the made-up dates |
 
 ### 7. In and out of scope
+
+**Status: Present.** Built, look-built-but-not, and not built are separated.
 
 **In scope (built and in the code):**
 - 10 made-up enquiries: 5 with a draft and 5 without (2 low confidence, 1 hand-off, 1 unreadable attachment, 1 needs clarification).
@@ -220,6 +247,8 @@ All values are named constants at the top of the comfort test in `log.js`.
 - Any test of layout or accessibility in a real browser.
 
 ### 8. Engineering recommendation
+
+**Status: Partial.** The recommendation and its order of work are clear. It has no effort sizes, no owners and no dates, because none have been decided.
 
 **Do not build on this code as it stands. Build from what it specifies.** The page script is one inline block with shared state, and nothing in the repo tests it. The valuable parts are the draft data shape, the no-draft types, the rule constants, the colour meanings and the edit-size measure. Keep those. Treat the page as the reference UI.
 
