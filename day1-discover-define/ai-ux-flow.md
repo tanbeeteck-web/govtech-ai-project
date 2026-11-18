@@ -38,7 +38,7 @@ Below the confidence threshold, no draft. The enquiry goes to an officer with th
 
 ## How we measure trust (Expert)
 
-Accept-as-is rate: the share of drafts officers send without edits, checked weekly. Target: 6 in 10 by the end of the pilot (made up).
+Accept rate: the share of drafts officers send with no edit or only a light edit (50% or less of the text changed), checked weekly. Target: 8 in 10 by the end of the pilot (made up).
 
 ## AI-UX readiness
 
