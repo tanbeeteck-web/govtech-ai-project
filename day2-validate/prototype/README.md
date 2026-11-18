@@ -34,9 +34,9 @@ Double-click `index.html`. It opens in your browser. `server.py` is optional and
 
 **On a draft:**
 - Fees, deadlines and eligibility show in **blue**. This means the officer must verify them. It does not mean low confidence.
-- **Approve** on a draft with blue items opens a checklist. Every item must be ticked before approving.
+- **Approve** on a draft with blue items opens a "Verify before accepting" checklist. Every item must be ticked before approving.
 - **Edit** opens a text box. The prototype measures how much changed. More than 50% of the words is a major edit. Text the officer typed is kept if they leave and come back.
-- **Reject draft**, **Restore original** and **Flag** are also there. Flag logs a wrong citation.
+- **Reject draft**, **Restore original** and **Flag a citation** are also there. Flag logs a wrong citation.
 - After sending, editing or rejecting, the officer rates comfort from 1 to 5.
 
 **Comfort test panel:** pick a made-up officer (O1 to O5) and rate drafts. The panel updates live with:
@@ -64,6 +64,7 @@ Results show once 5 officers have each rated 3 or more drafts. The kill switch c
 
 ## Limits
 
+- Widths and fit on a laptop were estimated from the code, not measured in a browser.
 - Fixed drafts, not a model. It tests comfort with a mock-up, not with a real AI.
 - Ratings and logs are kept in the page only. A reload clears them.
 - All ratings are made-up test inputs. They are not evidence.

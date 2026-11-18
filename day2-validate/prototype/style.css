@@ -61,6 +61,8 @@ header h1 {
   border-bottom: 1px solid #e9ecef;
   font-weight: 600;
   display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
   justify-content: space-between;
   align-items: center;
 }
@@ -85,6 +87,9 @@ header h1 {
 }
 
 .enquiry-body {
+  max-height: 45vh;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
   background: #f8f9fa;
   padding: 12px;
   border-radius: 6px;
@@ -169,7 +174,8 @@ header h1 {
 /* Action buttons */
 .actions {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   padding: 16px;
   border-top: 1px solid #e9ecef;
   background: #f8f9fa;
@@ -217,6 +223,7 @@ header h1 {
 /* Enquiry navigation */
 .enquiry-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 12px 20px;
   background: #e9ecef;
@@ -328,7 +335,8 @@ header h1 {
 
 .modal-actions {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   margin-top: 16px;
   justify-content: flex-end;
 }
@@ -634,4 +642,11 @@ header h1 {
 .log-type.lookup_failed {
   background: #ffe3e3;
   color: #c92a2a;
+}
+
+/* ---- Refine: keep the buttons on screen when a draft or enquiry is long ---- */
+#draft-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
 }
