@@ -427,15 +427,17 @@ header h1 {
   text-decoration: underline;
 }
 
-/* High-risk styling */
+/* Verification-required styling (fees, deadlines, eligibility).
+   Blue on purpose: it means "officer must verify before accepting", NOT low confidence.
+   Red is kept for low-confidence and no-draft screens only. */
 .draft-paragraph.high-risk {
-  border-left: 3px solid #fa5252;
-  background: #fff5f5;
+  border-left: 3px solid #1c7ed6;
+  background: #f1f8ff;
 }
 
 .high-risk-badge {
   display: inline-block;
-  background: #fa5252;
+  background: #1c7ed6;
   color: white;
   font-size: 11px;
   font-weight: 600;
@@ -447,8 +449,8 @@ header h1 {
 }
 
 .citation-high-risk {
-  background: #ffe3e3;
-  border: 1px solid #ffa8a8;
+  background: #e7f5ff;
+  border: 1px solid #a5d8ff;
 }
 
 /* Confirmation modal checkbox */
@@ -480,7 +482,7 @@ header h1 {
 .check-type {
   font-size: 11px;
   font-weight: 600;
-  color: #fa5252;
+  color: #1c7ed6;
   text-transform: uppercase;
 }
 
@@ -577,5 +579,5 @@ header h1 {
   border-radius: 4px;
   margin-bottom: 10px;
 }
-.flag-summary-red { background: #ffe3e3; color: #c92a2a; }
+.flag-summary-verify { background: #e7f5ff; color: #1864ab; }
 .flag-summary-green { background: #d3f9d8; color: #2b8a3e; }

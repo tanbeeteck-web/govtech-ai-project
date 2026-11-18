@@ -305,8 +305,8 @@
       let html = `<p class="draft-only-note">Draft only. An officer must review and send every reply.</p>`;
       const flaggedCount = draft.paragraphs.filter(p => p.highRisk).length;
       html += flaggedCount > 0
-        ? `<p class="flag-summary flag-summary-red">${flaggedCount} section${flaggedCount > 1 ? 's' : ''} in red. The AI is less sure about these. Check each against its cited passage.</p>`
-        : `<p class="flag-summary flag-summary-green">No sections flagged. Still check the citations before sending.</p>`;
+        ? `<p class="flag-summary flag-summary-verify">${flaggedCount} section${flaggedCount > 1 ? 's need' : ' needs'} your verification before you accept. Check ${flaggedCount > 1 ? 'each' : 'it'} against the cited passage. This is a required check, not a sign of low confidence.</p>`
+        : `<p class="flag-summary flag-summary-green">Nothing here needs verification. Still check the citations before sending.</p>`;
       html += `<p class="draft-greeting">${draft.greeting}</p>`;
 
       draft.paragraphs.forEach((para, i) => {
@@ -324,7 +324,7 @@
         html += `<div class="draft-paragraph ${hasCitation ? 'has-citation' : ''} ${isHighRisk ? 'high-risk' : ''}">`;
 
         if (isHighRisk) {
-          html += `<span class="high-risk-badge">${para.highRisk.toUpperCase()} - Verify before sending</span>`;
+          html += `<span class="high-risk-badge">${para.highRisk.toUpperCase()} - Verify before accepting</span>`;
         }
 
         html += `<p class="draft-text">${para.text}</p>`;
@@ -345,15 +345,16 @@
         html += `</div>`;
       });
 
-      // The badge must agree with the red sections. Never show "High confidence" while any
-      // section is flagged red. The percentage is only how well the enquiry matched a policy topic.
+      // The badge must agree with the blue "verify" sections. Never show a plain "High confidence"
+      // while any section still needs the officer's verification. Blue means "verify first",
+      // not low confidence. The percentage is only how well the enquiry matched a policy topic.
       const badge = document.getElementById('confidence-badge');
       if (highRiskItems.length > 0) {
         const types = [...new Set(highRiskItems.map(item => item.type.toUpperCase()))].join(', ');
-        badge.textContent = `Check before sending: ${highRiskItems.length} flagged (${types}) · topic match ${enquiry.confidencePct}%`;
-        badge.style.color = '#e67700';
+        badge.textContent = `Verification required: ${highRiskItems.length} item${highRiskItems.length > 1 ? 's' : ''} (${types}) · topic match ${enquiry.confidencePct}%`;
+        badge.style.color = '#1864ab';
       } else {
-        badge.textContent = `High confidence · no flagged sections · topic match ${enquiry.confidencePct}%`;
+        badge.textContent = `High confidence · nothing to verify · topic match ${enquiry.confidencePct}%`;
         badge.style.color = '#2b8a3e';
       }
 
