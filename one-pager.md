@@ -14,7 +14,7 @@ Use case: Scenario A · ServiceSG enquiry response. All enquiries, residents, po
 
 All figures are made up.
 
-- Enquiries answered within SLA: 90%.
+- Enquiries answered within SLA: 70%, against a target of 90% within one working day.
 - Average first reply: 2 days.
 - Minutes per policy search: 12.
 - Enquiries with an image: 1 in 5.
@@ -48,7 +48,7 @@ All figures are made up.
 **Riskiest assumption (desirability):** Officers are comfortable with AI-generated draft replies that carry policy citations. If they are not, they ignore the drafts or rubber-stamp them, and the first-draft bet fails.
 
 **Market:**
-- Head of Product: 90% of enquiries already meet SLA, so the real pain may be consistency, not speed. Need to show less variance than 10 officers answering the same 10 questions.
+- Head of Product: speed may not be the real pain. Consistency may matter more. Need to show less variance than 10 officers answering the same 10 questions.
 
 **Technical:**
 - The prototype has no AI. It shows fixed drafts, so it tests comfort with a mock-up, not with a model.
@@ -121,7 +121,7 @@ All numbers are made up and come from the prototype's comfort test.
 - Edit size, measured automatically. More than 50% of the draft text changed is a major edit.
 - Wrong citations flagged per week.
 
-**Success signal:** At least 4 of 5 officers are comfortable, and at least 60% of drafts are sent or given a minor edit.
+**Success signal:** At least 4 of 5 officers are comfortable, and at least 80% (8 in 10) of drafts are sent or given a minor edit.
 
 **Stop line (kill switch), stop if any is true:**
 - 3 of 5 officers reject or majorly edit more than half of their drafts. This can trip early.
@@ -162,8 +162,8 @@ All numbers are made up and come from the prototype's comfort test.
 ## Open issues
 
 - **Real test needed.** The prototype has no AI and no real officers. Its numbers are not evidence.
-- **Success numbers differ across files.** `opportunity.md` says 8 in 10 sent after a light edit. `ai-ux-flow.md` says 6 in 10 sent without edits. `build-log.md` says 60% sent or minor edit plus 4 of 5 officers comfortable. Pick one.
-- **SLA figure.** The strategy kernel says first replies miss the 90% within-one-day SLA, but the made-up metrics say 90% already meet it. Check which is right.
+- **Success target is now one number:** 8 in 10 drafts sent with no edit or a light edit. The earlier 6 in 10 and 60% were dropped. 6 in 10 stays as the fail line in `opportunity.md`.
+- **SLA:** the made-up current rate is now 70% against the 90% target, so the problem exists. The 70% is a new made-up number. Replace it with a real figure before a pilot.
 - **Leader replies.** The three leader replies in `build-log.md` say "I can do these". The evidence is not collected yet.
 - **Attachments.** 1 in 5 enquiries have images, and no tool reads them yet.
 - **Consistency** (Head of Product) is not measured by the prototype.

@@ -74,7 +74,7 @@ If the kill switch trips, drop the AI-written draft. Try a version that only sug
 
 **Success signal:** All of these are true:
 - At least 4 of 5 officers are comfortable (average rating of 4 or more), and
-- At least 60% of drafts are sent or given only a minor edit (not rejected or majorly edited).
+- At least 80% (8 in 10) of drafts are sent or given only a minor edit (not rejected or majorly edited).
 
 If the result is in between, run more officers or enquiries before deciding.
 

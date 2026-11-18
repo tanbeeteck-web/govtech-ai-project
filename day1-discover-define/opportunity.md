@@ -40,7 +40,7 @@ Will officers edit a cited draft, or rewrite it from scratch?
 
 ### Metrics
 
-- Enquiries answered within SLA: 90% (made up)
+- Enquiries answered within SLA: 70%, against a target of 90% within one working day (made up)
 - Average first reply: 2 days (made up)
 - Enquiries with an image: 1 in 5 (made up)
 - Minutes per policy search: 12 (made up)

@@ -79,7 +79,7 @@ const PLANNED_OFFICERS = 5;          // test officers (made up: O1..O5)
 const MIN_RATINGS_PER_OFFICER = 3;   // an officer counts once they rate this many drafts
 const COMFORT_CUTOFF = 4;            // rating 4 or 5 on a 1-5 scale = comfortable
 const SUCCESS_OFFICERS = 4;          // success: at least 4 of 5 officers comfortable ...
-const SUCCESS_ACCEPT_RATE = 0.6;     // ... and at least 60% of drafts used (sent or edited)
+const SUCCESS_ACCEPT_RATE = 0.8;     // ... and at least 80% (8 in 10) of drafts used (sent or minor edit)
 const KILL_OFFICERS = 3;             // kill: fewer than 3 of 5 officers comfortable ...
 const KILL_DISCARD_RATE = 0.5;       // ... or more than 50% of drafts discarded
 const KILL_REJECTING_OFFICERS = 3;   // kill: 3 of 5 officers mostly rejected or majorly edited their drafts
