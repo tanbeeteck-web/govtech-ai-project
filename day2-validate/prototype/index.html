@@ -9,14 +9,17 @@
 <body>
   <header>
     <h1>ServiceSG Enquiry Draft Assistant</h1>
-    <span class="synthetic-badge">All data is made up</span>
+    <span class="header-right">
+      <label class="officer-picker">Test officer (made up):
+        <select id="officer-select">
+          <option>O1</option><option>O2</option><option>O3</option><option>O4</option><option>O5</option>
+        </select>
+      </label>
+      <span class="synthetic-badge">All data is made up</span>
+    </span>
   </header>
 
-  <nav class="enquiry-nav">
-    <button class="enquiry-tab active" data-index="0">ENQ-2024-001</button>
-    <button class="enquiry-tab" data-index="1">ENQ-2024-002</button>
-    <button class="enquiry-tab" data-index="2">ENQ-2024-003 (Low conf)</button>
-  </nav>
+  <nav class="enquiry-nav" id="enquiry-nav"></nav>
 
   <main class="container">
     <!-- Enquiry Panel (Left) -->
@@ -50,6 +53,14 @@
         <button class="btn btn-secondary" id="btn-restore">Restore original</button>
         <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
       </div>
+    </section>
+
+    <!-- Comfort Test Panel -->
+    <section class="panel log-panel">
+      <div class="panel-header">
+        <span>Comfort test: are officers comfortable with AI drafts? (made up ratings)</span>
+      </div>
+      <div class="panel-body" id="comfort-summary"></div>
     </section>
 
     <!-- Feedback Log Panel -->
@@ -97,6 +108,26 @@
     </div>
   </div>
 
+  <!-- Comfort Rating Modal -->
+  <div class="modal-overlay" id="rating-modal">
+    <div class="modal">
+      <h3 id="rating-title">How comfortable were you with this draft?</h3>
+      <p style="margin-bottom: 12px; color: #666; font-size: 14px;">
+        1 = not comfortable, 5 = fully comfortable. Test ratings are made up.
+      </p>
+      <div class="rating-row" id="rating-row">
+        <button class="btn btn-secondary rating-btn" data-rating="1">1</button>
+        <button class="btn btn-secondary rating-btn" data-rating="2">2</button>
+        <button class="btn btn-secondary rating-btn" data-rating="3">3</button>
+        <button class="btn btn-secondary rating-btn" data-rating="4">4</button>
+        <button class="btn btn-secondary rating-btn" data-rating="5">5</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="rating-cancel">Go back</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast notification -->
   <div class="toast" id="toast"></div>
 
@@ -106,9 +137,50 @@
     let currentEnquiryIndex = 0;
     let currentFlagTarget = null;
     let highRiskItems = [];
+    let pendingAction = null;
+    let enquiryShownAt = Date.now();
+
+    function buildTabs() {
+      const nav = document.getElementById('enquiry-nav');
+      nav.innerHTML = syntheticEnquiries.map((e, i) =>
+        `<button class="enquiry-tab" data-index="${i}">${e.id}${e.confidence === 'low' ? ' (Low conf)' : ''}</button>`
+      ).join('');
+      nav.querySelectorAll('.enquiry-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          currentEnquiryIndex = parseInt(tab.dataset.index);
+          renderEnquiry(currentEnquiryIndex);
+        });
+      });
+    }
+
+    function openRatingModal(action) {
+      pendingAction = action;
+      document.getElementById('rating-modal').classList.add('show');
+    }
+
+    function closeRatingModal() {
+      document.getElementById('rating-modal').classList.remove('show');
+      pendingAction = null;
+    }
+
+    function recordRating(rating) {
+      if (!pendingAction) return;
+      const action = pendingAction;
+      logComfort({
+        officer: document.getElementById('officer-select').value,
+        enquiry_id: syntheticEnquiries[currentEnquiryIndex].id,
+        action: action,
+        rating: rating,
+        seconds_to_decide: Math.round((Date.now() - enquiryShownAt) / 1000)
+      });
+      closeRatingModal();
+      const label = { sent: 'sent', edited: 'used with edits', discarded: 'discarded' }[action];
+      showToast(`Draft ${label}. Rating ${rating} logged. (made up)`);
+    }
 
     function renderEnquiry(index) {
       const enquiry = syntheticEnquiries[index];
+      enquiryShownAt = Date.now();
       document.getElementById('enquiry-id').textContent = enquiry.id;
       document.getElementById('enquiry-from').textContent = enquiry.enquiry.from;
       document.getElementById('enquiry-time').textContent = enquiry.timestamp;
@@ -235,6 +307,7 @@
         <button class="btn btn-secondary" id="btn-edit">Edit</button>
         <button class="btn btn-secondary" id="btn-restore">Restore original</button>
         <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
+        <button class="btn btn-secondary" id="btn-discard">Discard draft</button>
       `;
 
       // Attach event listeners
@@ -248,7 +321,10 @@
 
       document.getElementById('btn-approve').addEventListener('click', handleApprove);
       document.getElementById('btn-edit').addEventListener('click', () => {
-        showToast('Edit mode enabled. (not implemented in prototype)');
+        openRatingModal('edited');
+      });
+      document.getElementById('btn-discard').addEventListener('click', () => {
+        openRatingModal('discarded');
       });
       document.getElementById('btn-restore').addEventListener('click', () => {
         renderEnquiry(currentEnquiryIndex);
@@ -266,7 +342,7 @@
       if (highRiskItems.length > 0) {
         openConfirmModal();
       } else {
-        showToast('Draft approved and sent. (made up)');
+        openRatingModal('sent');
       }
     }
 
@@ -333,12 +409,10 @@
     }
 
     // Event listeners
-    document.querySelectorAll('.enquiry-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        currentEnquiryIndex = parseInt(tab.dataset.index);
-        renderEnquiry(currentEnquiryIndex);
-      });
+    document.querySelectorAll('.rating-btn').forEach(btn => {
+      btn.addEventListener('click', () => recordRating(parseInt(btn.dataset.rating)));
     });
+    document.getElementById('rating-cancel').addEventListener('click', closeRatingModal);
 
     document.getElementById('flag-cancel').addEventListener('click', closeFlagModal);
 
@@ -360,7 +434,7 @@
 
     document.getElementById('confirm-approve').addEventListener('click', () => {
       closeConfirmModal();
-      showToast('High-risk claims verified. Draft approved and sent. (made up)');
+      openRatingModal('sent');
     });
 
     // Close modals on overlay click
@@ -372,7 +446,9 @@
     });
 
     // Initial render
+    buildTabs();
     renderEnquiry(0);
+    updateComfortDisplay();
   </script>
 </body>
 </html>
