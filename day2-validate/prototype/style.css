@@ -606,3 +606,32 @@ header h1 {
   padding: 1px 8px;
   border-radius: 10px;
 }
+
+/* ---- Policy lookup failure (Behavior prompt) ---- */
+.test-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 24px 0;
+  font-size: 13px;
+  color: #343a40;
+}
+.kept-text {
+  margin-top: 14px;
+}
+.kept-text label {
+  display: block;
+  font-size: 13px;
+  color: #495057;
+  margin-bottom: 6px;
+}
+.kept-text textarea {
+  width: 100%;
+  min-height: 160px;
+  font: inherit;
+  padding: 8px;
+}
+.log-type.lookup_failed {
+  background: #ffe3e3;
+  color: #c92a2a;
+}
