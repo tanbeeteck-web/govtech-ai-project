@@ -128,7 +128,7 @@ All values are named constants at the top of the comfort test in `log.js`.
 
 **Verdict order:**
 1. Kill switch, if 3 officers are rejecting. This can trip before all 5 officers finish.
-2. Once 5 officers are counted: success, else kill (fewer than 3 comfortable, or more than 50% rejected), else fail (below 70% used), else in between (70% to under 80%).
+2. Once 5 officers are counted: success, else kill (fewer than 3 comfortable, or more than 50% rejected), else fail (below 70% used), else in between (anything left: success was not met, no kill or fail was hit, and at least 70% of drafts were used).
 3. Before that: "Collecting".
 
 **Recorded for every action:** officer, enquiry, action (sent, minor edit, major edit, rejected), rating, seconds to decide, edit percent.
