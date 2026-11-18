@@ -1,6 +1,13 @@
 // Feedback log for prototype testing
 // Logs wrong citations and low confidence events for knowledge base improvement
 
+// Makes text safe to put inside the page. Use it on any text that came from data or from a person.
+function escapeHtml(text) {
+  return String(text === null || text === undefined ? '' : text)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 const feedbackLog = [];
 
 function logFeedback(entry) {
@@ -71,9 +78,9 @@ function updateLogDisplay() {
 
   const html = feedbackLog.map(entry => `
     <div class="log-entry">
-      <span class="log-type ${entry.flag_type}">${{ wrong_citation: 'Wrong citation', low_confidence: 'Low confidence', needs_clarification: 'Needs clarification', handoff: 'Hand-off', attachment: 'Attachment', lookup_failed: 'Lookup failed' }[entry.flag_type] || entry.flag_type}</span>
-      <span class="log-enquiry">${entry.enquiry_id}</span>
-      ${entry.officer_note ? `<p class="log-note">"${entry.officer_note}"</p>` : ''}
+      <span class="log-type ${entry.flag_type}">${{ wrong_citation: 'Wrong citation', low_confidence: 'Low confidence', needs_clarification: 'Needs clarification', handoff: 'Hand-off', attachment: 'Attachment', lookup_failed: 'Lookup failed' }[entry.flag_type] || escapeHtml(entry.flag_type)}</span>
+      <span class="log-enquiry">${escapeHtml(entry.enquiry_id)}</span>
+      ${entry.officer_note ? `<p class="log-note">"${escapeHtml(entry.officer_note)}"</p>` : ''}
     </div>
   `).join('');
 
@@ -213,5 +220,5 @@ function updateComfortDisplay() {
 
 // Export for use in main script
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { editPercent, classifyEdit, logFeedback, flagWrongCitation, logLowConfidence, logNoDraft, logLookupFailed, getLog, logComfort, getComfortSummary, comfortLog };
+  module.exports = { escapeHtml, editPercent, classifyEdit, logFeedback, flagWrongCitation, logLowConfidence, logNoDraft, logLookupFailed, getLog, logComfort, getComfortSummary, comfortLog };
 }
