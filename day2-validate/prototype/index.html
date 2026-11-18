@@ -39,7 +39,7 @@
     <!-- Enquiry Panel (Left) -->
     <section class="panel" id="enquiry-panel">
       <div class="panel-header">
-        <span>Resident Enquiry</span>
+        <span>Resident enquiry</span>
         <span id="enquiry-id"></span>
       </div>
       <div class="panel-body">
@@ -57,7 +57,7 @@
     <!-- Draft Panel (Right) -->
     <section class="panel" id="draft-panel">
       <div class="panel-header">
-        <span id="draft-panel-title">AI Draft with Citations</span>
+        <span id="draft-panel-title">AI draft with citations</span>
         <span id="confidence-badge" style="font-size: 12px;"></span>
       </div>
       <div class="panel-body" id="draft-content">
@@ -67,7 +67,7 @@
         <button class="btn btn-primary" id="btn-approve">Approve</button>
         <button class="btn btn-secondary" id="btn-edit">Edit</button>
         <button class="btn btn-secondary" id="btn-restore">Restore original</button>
-        <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
+        <button class="btn btn-warning" id="btn-flag-all">Flag a citation</button>
       </div>
     </section>
 
@@ -82,7 +82,7 @@
     <!-- Feedback Log Panel -->
     <section class="panel log-panel">
       <div class="panel-header">
-        <span>Feedback Log (for knowledge base review)</span>
+        <span>Feedback log (for knowledge base review)</span>
       </div>
       <div class="panel-body" id="feedback-log">
         <p class="empty-log">No flags yet. Flagged items will appear here for knowledge base review.</p>
@@ -101,7 +101,7 @@
       <label style="display: block; margin-bottom: 8px; font-weight: 500;">What's wrong? (optional)</label>
       <textarea id="flag-note" placeholder="e.g. The fee shown is outdated, the correct fee is $75."></textarea>
       <div class="modal-actions">
-        <button class="btn btn-secondary" id="flag-cancel">Cancel</button>
+        <button class="btn btn-secondary" id="flag-cancel">Go back</button>
         <button class="btn btn-warning" id="flag-submit">Submit flag</button>
       </div>
     </div>
@@ -110,9 +110,9 @@
   <!-- High-Risk Confirmation Modal -->
   <div class="modal-overlay" id="confirm-modal">
     <div class="modal">
-      <h3>Confirm high-risk claims</h3>
+      <h3>Verify before accepting</h3>
       <p style="margin-bottom: 12px; color: #666; font-size: 14px;">
-        This draft contains claims about <strong id="risk-types"></strong>. Please verify each one against the cited policy before approving.
+        This draft contains claims about <strong id="risk-types"></strong>. Please verify each one against the cited policy before accepting.
       </p>
       <div id="confirm-checklist" style="margin-bottom: 16px;">
         <!-- Checklist items rendered by JS -->
@@ -259,7 +259,7 @@
 
     function renderLookupFailed(enquiry, st) {
       const retrying = st.status === 'retrying';
-      document.getElementById('draft-panel-title').textContent = 'No Draft Available';
+      document.getElementById('draft-panel-title').textContent = 'No draft available';
       const badge = document.getElementById('confidence-badge');
       badge.textContent = retrying ? 'Retrying policy lookup...' : 'Policy lookup failed';
       badge.style.color = retrying ? '#666' : '#fa5252';
@@ -436,7 +436,7 @@
     function renderNoDraft(enquiry) {
       const info = NO_DRAFT_INFO[enquiry.noDraft.type];
       const pct = enquiry.confidencePct === null || enquiry.confidencePct === undefined ? '' : ` (${enquiry.confidencePct}%)`;
-      document.getElementById('draft-panel-title').textContent = 'No Draft Available';
+      document.getElementById('draft-panel-title').textContent = 'No draft available';
       document.getElementById('confidence-badge').textContent = info.badge + pct;
       document.getElementById('confidence-badge').style.color = '#fa5252';
 
@@ -484,7 +484,7 @@
 
     function renderDraft(enquiry) {
       // Update header
-      document.getElementById('draft-panel-title').textContent = 'AI Draft with Citations';
+      document.getElementById('draft-panel-title').textContent = 'AI draft with citations';
       const draft = enquiry.draft;
       highRiskItems = [];
       let html = `<p class="draft-only-note">Draft only. An officer must review and send every reply.</p>`;
@@ -553,7 +553,7 @@
         <button class="btn btn-primary" id="btn-approve">Approve</button>
         <button class="btn btn-secondary" id="btn-edit">Edit</button>
         <button class="btn btn-secondary" id="btn-restore">Restore original</button>
-        <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
+        <button class="btn btn-warning" id="btn-flag-all">Flag a citation</button>
         <button class="btn btn-secondary" id="btn-discard">Reject draft</button>
       `;
 

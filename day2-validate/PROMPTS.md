@@ -74,10 +74,20 @@ All data is synthetic and labelled as made up.
 **Edge cases:**
 - Long enquiries still fit on a laptop screen.
 
-**Result:** Not run yet. No results to report.
+**Result:** Ran on 2024-11-18 (made-up data). Not yet checked in a real browser.
 
-*What worked:* nothing to report until this prompt is run.
+*What worked:*
+- Labels use one style: sentence case for panel and screen titles ("Resident enquiry", "AI draft with citations", "No draft available", "Feedback log").
+- Pop-ups leave the same way: "Go back". The flag pop-up said "Cancel" before.
+- The top button on a draft is now "Flag a citation", which matches the pop-up it opens ("Flag wrong citation"). It was "Flag draft issue".
+- The verify step uses one word, "accepting", as the blue labels do. The pop-up title is "Verify before accepting". It was "Confirm high-risk claims".
+- Buttons, tabs, panel headers and pop-up buttons wrap onto a second row instead of being cut off. On a 1280 to 1440 px laptop the five draft buttons need two rows.
+- A long enquiry or draft scrolls inside its own box, and long words wrap, so the buttons stay on screen.
+- Rule "do not change how drafts are generated or approved": the page script is identical to the previous version apart from label text. All 53 element ids are unchanged. The 40 earlier checks (topic filter and failed lookup) still pass.
 
-*What broke:* nothing to report until this prompt is run.
-
-*Before running it:* the reply screen now also has the topic chip, the lookup-failure screen and its Retry button. Check those for label, spacing and button-name consistency too, for example "Reject draft" against "Discard my edit".
+*What broke or needs a decision:*
+- One check failed after the change. It looked for the old title "No Draft Available". The page was right and the test was out of date.
+- Widths and fit were estimated from character counts. They were not measured in a browser.
+- Not changed: "Reject draft", "Discard my edit" and "Start from scratch" are different actions with different effects, so they keep different names.
+- Not changed: "Flag" appears on each citation, and "Flag a citation" at the bottom does the same thing for the first one. A single flag button would be a behaviour change, so it was left alone.
+- The topic chip and the failed-lookup screen use the same styles as the rest of the reply screen, so they needed no change.
