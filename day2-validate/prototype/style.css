@@ -360,3 +360,145 @@ header h1 {
     opacity: 1;
   }
 }
+
+/* Low confidence screen */
+.low-confidence-notice {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #fff3bf;
+  border-radius: 8px;
+  border: 1px solid #ffd43b;
+  margin-bottom: 20px;
+}
+
+.notice-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.notice-text strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #e67700;
+}
+
+.notice-text p {
+  color: #666;
+  font-size: 14px;
+}
+
+.suggested-policies h4 {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.policy-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.policy-source {
+  font-weight: 600;
+  color: #1971c2;
+  margin-bottom: 6px;
+}
+
+.policy-passage {
+  font-style: italic;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.policy-link {
+  font-size: 13px;
+  color: #1971c2;
+  text-decoration: none;
+}
+
+.policy-link:hover {
+  text-decoration: underline;
+}
+
+/* High-risk styling */
+.draft-paragraph.high-risk {
+  border-left: 3px solid #fa5252;
+  background: #fff5f5;
+}
+
+.high-risk-badge {
+  display: inline-block;
+  background: #fa5252;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.citation-high-risk {
+  background: #ffe3e3;
+  border: 1px solid #ffa8a8;
+}
+
+/* Confirmation modal checkbox */
+.confirm-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.confirm-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.check-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.check-type {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fa5252;
+  text-transform: uppercase;
+}
+
+.check-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.check-source {
+  font-size: 12px;
+  color: #666;
+}
+
+.btn-primary:disabled {
+  background: #adb5bd;
+  cursor: not-allowed;
+}
+
+.btn-primary:disabled:hover {
+  background: #adb5bd;
+}
