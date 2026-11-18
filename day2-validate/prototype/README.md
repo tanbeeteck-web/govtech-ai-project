@@ -12,9 +12,17 @@ Double-click `index.html`. It opens in your browser. `server.py` is optional and
 
 ## What it does today
 
-**10 made-up enquiries**, one tab each:
+**10 made-up enquiries**, one tab each. Each tab shows the enquiry's topic underneath:
 - **5 have a draft.** Each claim has a citation with the policy page and its last-updated date. The page says "Draft only. An officer must review and send every reply."
 - **5 have no draft:** low confidence (two of them), hand-off for a legal complaint, an unreadable attachment, and a question no source covers. Each shows why, and up to three closest policy pages.
+
+**Topic filter:** a dropdown above the tabs filters the inbox by policy topic.
+- There is a fixed list of 6 made-up topics: Passports and ID cards, Concessions and transport, Community centres, Parking, Housing (HDB), and Appeals and overseas.
+- Each enquiry has one topic only, shown as a grey "Topic:" chip next to the time.
+- An enquiry with no topic goes under **Other**. Today that is ENQ-2024-009, the unreadable attachment.
+- Each option shows its count, for example "Parking (2)". A line says "Showing 2 of 10 enquiries".
+- A topic with 0 enquiries shows a plain message and no buttons. Picking All brings the inbox back.
+- Picking a topic opens its first enquiry, unless the one you are on is still in the list.
 
 **On a draft:**
 - Fees, deadlines and eligibility show in **blue**. This means the officer must verify them. It does not mean low confidence.
@@ -40,8 +48,8 @@ Results show once 5 officers have each rated 3 or more drafts. The kill switch c
 
 | File | What it is for |
 |---|---|
-| `index.html` | The page and its logic |
-| `data.js` | The made-up enquiries, drafts, citations and policy sources |
+| `index.html` | The page and its logic, including the topic filter |
+| `data.js` | The made-up enquiries, drafts, citations, policy sources and the list of 6 topics |
 | `log.js` | The feedback log and the comfort test rules |
 | `style.css` | Colours and layout. Colour meanings are in `../context-skill.md` |
 | `server.py` | Optional local server |
@@ -51,4 +59,6 @@ Results show once 5 officers have each rated 3 or more drafts. The kill switch c
 - Fixed drafts, not a model. It tests comfort with a mock-up, not with a real AI.
 - Ratings and logs are kept in the page only. A reload clears them.
 - All ratings are made-up test inputs. They are not evidence.
+- The topic is set by hand in `data.js`. Nothing works it out from the enquiry text.
+- Picking a topic that opens an enquiry with no draft adds another entry to the feedback log.
 - The prototype cannot run the six test questions in `../context-skill.md`. It only has screens for them.
