@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ServiceSG Enquiry Draft Assistant (Prototype)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>ServiceSG Enquiry Draft Assistant</h1>
+    <span class="synthetic-badge">All data is made up</span>
+  </header>
+
+  <nav class="enquiry-nav">
+    <button class="enquiry-tab active" data-index="0">ENQ-2024-001</button>
+    <button class="enquiry-tab" data-index="1">ENQ-2024-002</button>
+  </nav>
+
+  <main class="container">
+    <!-- Enquiry Panel (Left) -->
+    <section class="panel" id="enquiry-panel">
+      <div class="panel-header">
+        <span>Resident Enquiry</span>
+        <span id="enquiry-id"></span>
+      </div>
+      <div class="panel-body">
+        <div class="enquiry-meta">
+          <span id="enquiry-from"></span>
+          <span id="enquiry-time"></span>
+        </div>
+        <div class="enquiry-subject" id="enquiry-subject"></div>
+        <div class="enquiry-body" id="enquiry-body"></div>
+      </div>
+    </section>
+
+    <!-- Draft Panel (Right) -->
+    <section class="panel" id="draft-panel">
+      <div class="panel-header">
+        <span>AI Draft with Citations</span>
+        <span style="font-size: 12px; color: #51cf66;">High confidence</span>
+      </div>
+      <div class="panel-body" id="draft-content">
+        <!-- Draft content rendered by JS -->
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-approve">Approve</button>
+        <button class="btn btn-secondary" id="btn-edit">Edit</button>
+        <button class="btn btn-secondary" id="btn-restore">Restore original</button>
+        <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
+      </div>
+    </section>
+
+    <!-- Feedback Log Panel -->
+    <section class="panel log-panel">
+      <div class="panel-header">
+        <span>Feedback Log (for knowledge base review)</span>
+      </div>
+      <div class="panel-body" id="feedback-log">
+        <p class="empty-log">No flags yet. Flagged items will appear here for knowledge base review.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Flag Modal -->
+  <div class="modal-overlay" id="flag-modal">
+    <div class="modal">
+      <h3>Flag wrong citation</h3>
+      <p style="margin-bottom: 12px; color: #666; font-size: 14px;">
+        This will be logged for knowledge base review. (made up)
+      </p>
+      <p id="flag-citation-info" style="margin-bottom: 12px; font-size: 13px; background: #f8f9fa; padding: 8px; border-radius: 4px;"></p>
+      <label style="display: block; margin-bottom: 8px; font-weight: 500;">What's wrong? (optional)</label>
+      <textarea id="flag-note" placeholder="e.g. The fee shown is outdated, the correct fee is $75."></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="flag-cancel">Cancel</button>
+        <button class="btn btn-warning" id="flag-submit">Submit flag</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+
+  <script src="data.js"></script>
+  <script src="log.js"></script>
+  <script>
+    let currentEnquiryIndex = 0;
+    let currentFlagTarget = null;
+
+    function renderEnquiry(index) {
+      const enquiry = syntheticEnquiries[index];
+      document.getElementById('enquiry-id').textContent = enquiry.id;
+      document.getElementById('enquiry-from').textContent = enquiry.enquiry.from;
+      document.getElementById('enquiry-time').textContent = enquiry.timestamp;
+      document.getElementById('enquiry-subject').textContent = enquiry.enquiry.subject;
+      document.getElementById('enquiry-body').textContent = enquiry.enquiry.body;
+
+      // Update tabs
+      document.querySelectorAll('.enquiry-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+      });
+
+      renderDraft(enquiry);
+    }
+
+    function renderDraft(enquiry) {
+      const draft = enquiry.draft;
+      let html = `<p class="draft-greeting">${draft.greeting}</p>`;
+
+      draft.paragraphs.forEach((para, i) => {
+        const hasCitation = para.citation !== null;
+        html += `<div class="draft-paragraph ${hasCitation ? 'has-citation' : ''}">`;
+        html += `<p class="draft-text">${para.text}</p>`;
+
+        if (hasCitation) {
+          html += `
+            <div class="citation">
+              <span class="citation-icon">📄</span>
+              <div>
+                <span class="citation-source">${para.citation.source}</span>
+                <p class="citation-passage">"${para.citation.passage}"</p>
+              </div>
+              <button class="flag-btn" data-para="${i}" title="Flag this citation as incorrect">🚩 Flag</button>
+            </div>
+          `;
+        }
+        html += `</div>`;
+      });
+
+      html += `<p class="draft-closing">${draft.closing}</p>`;
+      html += `<p class="draft-signature">${draft.signature}</p>`;
+
+      document.getElementById('draft-content').innerHTML = html;
+
+      // Attach flag handlers
+      document.querySelectorAll('.flag-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const paraIndex = parseInt(e.target.dataset.para);
+          const para = draft.paragraphs[paraIndex];
+          openFlagModal(enquiry.id, para);
+        });
+      });
+    }
+
+    function openFlagModal(enquiryId, para) {
+      currentFlagTarget = {
+        enquiryId: enquiryId,
+        citation: para.citation.source,
+        draftText: para.text
+      };
+      document.getElementById('flag-citation-info').innerHTML =
+        `<strong>Citation:</strong> ${para.citation.source}<br><strong>Text:</strong> "${para.text}"`;
+      document.getElementById('flag-note').value = '';
+      document.getElementById('flag-modal').classList.add('show');
+    }
+
+    function closeFlagModal() {
+      document.getElementById('flag-modal').classList.remove('show');
+      currentFlagTarget = null;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Event listeners
+    document.querySelectorAll('.enquiry-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        currentEnquiryIndex = parseInt(tab.dataset.index);
+        renderEnquiry(currentEnquiryIndex);
+      });
+    });
+
+    document.getElementById('btn-approve').addEventListener('click', () => {
+      showToast('Draft approved and sent. (made up)');
+    });
+
+    document.getElementById('btn-edit').addEventListener('click', () => {
+      showToast('Edit mode enabled. (not implemented in prototype)');
+    });
+
+    document.getElementById('btn-restore').addEventListener('click', () => {
+      renderEnquiry(currentEnquiryIndex);
+      showToast('Original draft restored.');
+    });
+
+    document.getElementById('btn-flag-all').addEventListener('click', () => {
+      const enquiry = syntheticEnquiries[currentEnquiryIndex];
+      const firstCitedPara = enquiry.draft.paragraphs.find(p => p.citation);
+      if (firstCitedPara) {
+        openFlagModal(enquiry.id, firstCitedPara);
+      }
+    });
+
+    document.getElementById('flag-cancel').addEventListener('click', closeFlagModal);
+
+    document.getElementById('flag-submit').addEventListener('click', () => {
+      if (currentFlagTarget) {
+        const note = document.getElementById('flag-note').value;
+        flagWrongCitation(
+          currentFlagTarget.enquiryId,
+          currentFlagTarget.citation,
+          currentFlagTarget.draftText,
+          note
+        );
+        closeFlagModal();
+        showToast('Flag submitted for knowledge base review.');
+      }
+    });
+
+    // Close modal on overlay click
+    document.getElementById('flag-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'flag-modal') closeFlagModal();
+    });
+
+    // Initial render
+    renderEnquiry(0);
+  </script>
+</body>
+</html>
