@@ -56,11 +56,21 @@ Results show once 5 officers have each rated 3 or more drafts. The kill switch c
 
 | File | What it is for |
 |---|---|
-| `index.html` | The page and its logic, including the topic filter and the policy lookup failure handling |
+| `index.html` | The page layout only |
+| `app.js` | The page logic, including the topic filter and the policy lookup failure handling |
+| `tests.js` | Saved checks. See "How to run the checks" below |
 | `data.js` | The made-up enquiries, drafts, citations, policy sources and the list of 6 topics |
-| `log.js` | The feedback log and the comfort test rules |
+| `log.js` | The feedback log, the comfort test rules and `escapeHtml`, which makes text safe to show in the page |
 | `style.css` | Colours and layout. Colour meanings are in `../context-skill.md` |
 | `server.py` | Optional local server |
+
+## How to run the checks
+
+On a Mac, from this folder:
+
+`/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc tests.js`
+
+It prints "70 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
 
 ## Limits
 

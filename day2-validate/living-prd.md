@@ -20,9 +20,9 @@ These notes come from what was built, tested and read. "Solid" means tested on a
 
 - **There is no AI behind it.** The drafts, confidence figures, topics and the lookup are all hand-set in `data.js`. The failure is a checkbox. The rules in `context-skill.md` are not enforced by anything.
 - **The ratings are typed in by the tester.** The verdicts read like results but they only prove the logic works. A reload also wipes the ratings, the log and any typed text.
-- **No tests are saved in the repo.** The checks ran in a throwaway simulated page. The page script is inside `index.html`, so it is hard to test.
-- **Shared state is easy to break.** There are 11 shared variables (9 in the page, 2 logs) and 14 lines in the page that write HTML as text, and the action buttons are written out twice. Retry and the edit box had to be wired together by hand during Behavior.
-- **Officer notes go into the page as raw HTML.** `log.js` line 76 does this. It is harmless today, but it is a security problem once notes come from other people.
+- **Few tests are saved in the repo.** `tests.js` now holds 70 checks on a stand-in page. They have never run in a real browser, and nothing checks how the page looks. The page script now lives in `app.js`, outside `index.html`.
+- **Shared state is easy to break.** There are 11 shared variables (9 in the page, 2 logs), and 17 lines write HTML as text (14 in `app.js`, 3 in `log.js`). The draft buttons are now written out once. Retry and the edit box had to be wired together by hand during Behavior.
+- **Officer notes were written into the page as raw HTML.** Fixed: `log.js` now escapes the notes, and all text from data and officers is escaped before it is shown. A saved check proves it. Only fixed text and numbers are still written without escaping.
 - **Layout is unconfirmed.** Whether the buttons fit a laptop comes from a width estimate. Chrome hung here, so no real screenshot exists.
 
 ### [surprise]
@@ -182,15 +182,16 @@ All values are named constants at the top of the comfort test in `log.js`.
 | Sending | None. There is no send action anywhere |
 | Storage | None. The logs and state live in page variables, so a reload clears everything |
 | Network | None. `server.py` is optional and not needed |
-| Tests | None saved in the repo |
+| Tests | `tests.js`: 70 checks on a stand-in page, not a real browser |
 
 **Code shape:**
-- `index.html`: 717 lines, with one inline script of 30 functions and 9 shared state variables.
-- `log.js`: 217 lines. It holds both the feedback log and the comfort test (12 functions, 2 logs).
+- `index.html`: 151 lines of page layout only.
+- `app.js`: 562 lines, the page script of 30 functions and 9 shared state variables. It was inline in `index.html` before.
+- `tests.js`: 132 lines, 70 saved checks.
+- `log.js`: 224 lines. It holds the feedback log, the comfort test and `escapeHtml` (13 functions, 2 logs).
 - `data.js`: 364 lines of content.
 - `style.css`: 652 lines.
-- 17 lines write HTML as text (14 in `index.html`, 3 in `log.js`). Nothing escapes the text first.
-- The draft action buttons are written out in two places.
+- 17 lines write HTML as text (14 in `app.js`, 3 in `log.js`). Text from data and officers goes through `escapeHtml` first.
 
 **Draft data shape** (`data.js`). This is the contract a real model would have to meet:
 - `id`, `topic`, `timestamp`, `confidence`, `confidencePct`
@@ -214,7 +215,7 @@ All values are named constants at the top of the comfort test in `log.js`.
 | 8 | Image enquiries (1 in 5) can be handled | Feasibility | One placeholder case. The attachment is always unreadable | Decide whether to read images |
 | 9 | One tester can stand in for five officers | Validity | Nothing stops one person picking all five | Use real officers. Log the person, not a dropdown |
 | 10 | The thresholds are right | Validity | Chosen by the learner. Five officers is a small sample | Review after a real pilot |
-| 11 | Officer notes are safe to display | Security | Notes go into the page as raw HTML (`log.js`) | Escape all text |
+| 11 | Officer notes are safe to display | Security | Fixed: notes and data text are escaped, and `tests.js` checks it | Keep the check when the code changes |
 | 12 | The dates are current | Data | Enquiries and policy dates are all in 2024 | Refresh the made-up dates |
 
 ### 7. In and out of scope
@@ -260,8 +261,8 @@ All values are named constants at the top of the comfort test in `log.js`.
    - Fee, deadline, date and eligibility text appears word for word in the cited passage.
    - No outcome is promised.
    - Below 90% confidence, or a hand-off topic, means no draft.
-4. **Make it testable.** Move the script out of `index.html` into modules. Save the checks that so far exist only in a throwaway file.
-5. **Escape all text** before it goes into the page.
+4. **Make it testable.** Done in part: the script is out of `index.html` and 70 checks are saved in `tests.js`. Still to do: split `app.js` into modules and run the checks in a real browser.
+5. **Escape all text** before it goes into the page. Done for text from data and officers.
 6. **Keep the results.** Save the comfort and feedback logs outside the page, and record who the officer is, so five real officers' results survive a reload.
 7. **Run a real pilot** and meet the gates in `one-pager.md`:
    - All six `context-skill.md` test questions pass.
