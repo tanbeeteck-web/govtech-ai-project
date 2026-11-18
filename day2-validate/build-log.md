@@ -61,17 +61,20 @@
 
 **Why this one is riskiest:** All three leader objections above depend on officers using the draft with care. If they do not accept AI drafts at all, speed, consistency and safety do not matter.
 
-**How we test it (made-up data only):** Five test officers (O1 to O5, made up) each handle at least 3 of the 7 made-up enquiries in `day2-validate/prototype/`. For each draft they send it, edit it or discard it. Then they rate how comfortable they were, from 1 to 5. The prototype logs this and shows the result in the "Comfort test" panel.
+**How we test it (made-up data only):** Five test officers (O1 to O5, made up) each handle at least 3 of the 7 made-up enquiries in `day2-validate/prototype/`. For each draft they send it, edit it, or reject it. Then they rate how comfortable they were, from 1 to 5. The prototype logs this and shows the result in the "Comfort test" panel.
 
-**Kill switch (stop or rethink):** After 5 officers have each rated 3 or more drafts, stop if either is true:
-- Fewer than 3 of 5 officers are comfortable (average rating of 4 or more), or
-- More than 50% of drafts are discarded.
+**Kill switch (stop or rethink):** Stop if any of these is true:
+- 3 of 5 officers reject or majorly edit more than half of their drafts (each officer needs at least 3 drafts to count). This can trip early, before all 5 officers finish.
+- After 5 officers have each rated 3 or more drafts, fewer than 3 of 5 are comfortable (average rating of 4 or more).
+- After 5 officers have each rated 3 or more drafts, more than 50% of all drafts are rejected.
+
+**What counts as a major edit:** more than 50% of the draft text was changed. Anything at 50% or less is a minor edit. The officer does not choose. The prototype measures it by counting the words changed, added or removed, and dividing by the words in the original draft.
 
 If the kill switch trips, drop the AI-written draft. Try a version that only suggests the closest policy pages (like the low-confidence screen) and test that instead.
 
 **Success signal:** All of these are true:
 - At least 4 of 5 officers are comfortable (average rating of 4 or more), and
-- At least 60% of drafts are sent or edited, not discarded.
+- At least 60% of drafts are sent or given only a minor edit (not rejected or majorly edited).
 
 If the result is in between, run more officers or enquiries before deciding.
 
