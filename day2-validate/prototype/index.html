@@ -25,6 +25,14 @@
     <span class="topic-showing" id="topic-showing"></span>
   </div>
 
+  <div class="test-controls">
+    <label>
+      <input type="checkbox" id="force-failure">
+      Test control (made up): make the policy lookup return nothing for every enquiry about fees
+    </label>
+    <span class="topic-showing" id="force-failure-note"></span>
+  </div>
+
   <nav class="enquiry-nav" id="enquiry-nav"></nav>
 
   <main class="container">
@@ -200,6 +208,102 @@
       document.getElementById('draft-actions').innerHTML = '';
     }
 
+    // ---- Policy lookup (Behavior prompt) ----
+    // The lookup finds the policy pages a draft cites. It can fail. When it does:
+    //  - no AI draft is shown, because every draft must cite a policy page (context-skill.md rule 1)
+    //  - text the officer typed is kept and stays editable
+    //  - the officer can retry
+    let forceLookupFailure = false;    // test control: the lookup returns nothing for every enquiry about fees
+    let lookupState = {};              // per enquiry id: { status: 'ok' | 'failed' | 'retrying', attempts }
+    const officerText = {};            // per enquiry id: text the officer typed. A failure never throws it away.
+    const RETRY_DELAY_MS = 1500;
+
+    // An enquiry is about fees if its draft has a fee claim, or its subject or text mentions a fee
+    function isAboutFees(e) {
+      const fee = /\bfees?\b/i;
+      return (e.draft !== null && e.draft.paragraphs.some(p => p.highRisk === 'fee')) ||
+        fee.test(e.enquiry.subject) || fee.test(e.enquiry.body);
+    }
+    // true = policy pages found. false = the lookup returned nothing.
+    function lookupFinds(e) {
+      return !(forceLookupFailure && isAboutFees(e));
+    }
+    function lookupFor(e) {
+      if (!lookupState[e.id]) {
+        const ok = lookupFinds(e);
+        lookupState[e.id] = { status: ok ? 'ok' : 'failed', attempts: ok ? 0 : 1 };
+        if (!ok) logLookupFailed(e.id, 1);
+      }
+      return lookupState[e.id];
+    }
+    function retryLookup(e) {
+      const st = lookupState[e.id];
+      if (!st || st.status === 'retrying') return;
+      st.status = 'retrying';
+      renderEnquiry(currentEnquiryIndex);
+      setTimeout(() => {
+        if (lookupState[e.id] !== st) return;       // the test control was changed meanwhile
+        if (lookupFinds(e)) {
+          st.status = 'ok';
+        } else {
+          st.status = 'failed';
+          st.attempts++;
+          logLookupFailed(e.id, st.attempts);
+        }
+        const shown = syntheticEnquiries[currentEnquiryIndex];
+        if (shown && shown.id === e.id && document.getElementById('enquiry-id').textContent) {
+          renderEnquiry(currentEnquiryIndex);
+        }
+      }, RETRY_DELAY_MS);
+    }
+
+    function renderLookupFailed(enquiry, st) {
+      const retrying = st.status === 'retrying';
+      document.getElementById('draft-panel-title').textContent = 'No Draft Available';
+      const badge = document.getElementById('confidence-badge');
+      badge.textContent = retrying ? 'Retrying policy lookup...' : 'Policy lookup failed';
+      badge.style.color = retrying ? '#666' : '#fa5252';
+
+      let hint;
+      if (retrying) hint = 'Please wait a moment.';
+      else if (st.attempts >= 2) hint = `Still no result after ${st.attempts} tries. You can keep retrying, or escalate to a senior officer.`;
+      else hint = 'Press Retry lookup to try again.';
+
+      let html = `
+        <div class="low-confidence-notice">
+          <div class="notice-icon">⚠️</div>
+          <div class="notice-text">
+            <strong>${retrying ? 'Retrying the policy lookup...' : 'Policy lookup failed'}</strong>
+            <p>The tool could not find the policy pages for this enquiry (made up failure). No draft is shown, because every draft must cite a policy page. Nothing was sent.</p>
+            <p>${hint}</p>
+          </div>
+        </div>
+      `;
+      if (enquiry.draft !== null) {
+        html += `
+          <div class="kept-text">
+            <label for="kept-box">Your text. It is kept and you can keep editing it. It has not been checked against any policy page, so Approve is off until the lookup works.</label>
+            <textarea id="kept-box" placeholder="You can start your own reply here while you retry. It will be kept."></textarea>
+          </div>
+        `;
+      }
+      document.getElementById('draft-content').innerHTML = html;
+
+      const box = document.getElementById('kept-box');
+      if (box) {
+        box.value = officerText[enquiry.id] || '';
+        box.addEventListener('input', (ev) => { officerText[enquiry.id] = ev.target.value; });
+      }
+
+      document.getElementById('draft-actions').innerHTML = `
+        <button class="btn btn-primary" id="btn-retry" ${retrying ? 'disabled' : ''}>${retrying ? 'Retrying...' : 'Retry lookup'}</button>
+        ${st.attempts >= 2 && !retrying ? '<button class="btn btn-warning" id="btn-lookup-escalate">Escalate to senior officer</button>' : ''}
+      `;
+      document.getElementById('btn-retry').addEventListener('click', () => retryLookup(enquiry));
+      const esc = document.getElementById('btn-lookup-escalate');
+      if (esc) esc.addEventListener('click', () => showToast('Escalated to senior officer queue. (made up)'));
+    }
+
     // Short labels for each no-draft case (from context-skill.md rules 2, 7, 8, 9)
     const NO_DRAFT_INFO = {
       low_confidence:      { tab: 'Low conf',      badge: 'Low confidence',      title: 'No draft generated',        text: 'Confidence is below 90%. Here are the closest policy pages to help you draft a reply:' },
@@ -235,15 +339,24 @@
 
     function enterEditMode(enquiry) {
       const original = draftToText(enquiry.draft);
+      // Text the officer typed earlier is kept, even after a failed lookup or a switch to another enquiry
+      const kept = officerText[enquiry.id];
+      const hasKept = kept !== undefined && kept.trim() !== '' && kept !== original;
       document.getElementById('draft-content').innerHTML =
-        '<p style="font-size:13px;color:#666;margin-bottom:8px;">Edit the draft below. When you save, the tool measures how much you changed. (made up test)</p>' +
+        '<p style="font-size:13px;color:#666;margin-bottom:8px;">' + (hasKept ? 'Your earlier text was kept. ' : '') +
+        'Edit the draft below. When you save, the tool measures how much you changed. (made up test)</p>' +
         '<textarea id="edit-box" style="width:100%;min-height:320px;font:inherit;padding:8px;"></textarea>';
-      document.getElementById('edit-box').value = original;
+      const box = document.getElementById('edit-box');
+      box.value = hasKept ? kept : original;
+      box.addEventListener('input', (ev) => { officerText[enquiry.id] = ev.target.value; });
       document.getElementById('draft-actions').innerHTML = `
         <button class="btn btn-primary" id="btn-save-edit">Save edit</button>
-        <button class="btn btn-secondary" id="btn-cancel-edit">Cancel</button>
+        <button class="btn btn-secondary" id="btn-cancel-edit">Discard my edit</button>
       `;
-      document.getElementById('btn-cancel-edit').addEventListener('click', () => renderEnquiry(currentEnquiryIndex));
+      document.getElementById('btn-cancel-edit').addEventListener('click', () => {
+        delete officerText[enquiry.id];      // the officer chose to throw their text away
+        renderEnquiry(currentEnquiryIndex);
+      });
       document.getElementById('btn-save-edit').addEventListener('click', () => {
         const result = classifyEdit(original, document.getElementById('edit-box').value);
         pendingEditPercent = result.pct;
@@ -274,6 +387,7 @@
         edit_percent: pendingEditPercent
       });
       closeRatingModal();
+      delete officerText[syntheticEnquiries[currentEnquiryIndex].id];   // the edit was used, nothing left to keep
       const label = { sent: 'sent', edited_minor: 'used with minor edits', edited_major: 'majorly edited', discarded: 'rejected' }[action];
       const pctNote = pendingEditPercent === undefined ? '' : ` (${pendingEditPercent}% of text changed)`;
       showToast(`Draft ${label}${pctNote}. Rating ${rating} logged. (made up)`);
@@ -300,10 +414,22 @@
       attEl.textContent = att ? `Attachment: ${att.name}${att.readable ? '' : ' (could not be read)'}` : '';
       attEl.style.display = att ? 'block' : 'none';
 
+      // Policy lookup first. If it returned nothing, show no draft (see renderLookupFailed).
+      const st = lookupFor(enquiry);
+      if (st.status !== 'ok') {
+        renderLookupFailed(enquiry, st);
+        return;
+      }
+
       if (enquiry.draft === null) {
         renderNoDraft(enquiry);
       } else {
         renderDraft(enquiry);
+        // The officer typed here before: bring their text back
+        const typed = officerText[enquiry.id];
+        if (typed !== undefined && typed.trim() !== '' && typed !== draftToText(enquiry.draft)) {
+          enterEditMode(enquiry);
+        }
       }
     }
 
@@ -569,6 +695,21 @@
       currentTopic = ev.target.value;
       applyFilter();
     });
+    // Forced failure: the policy lookup returns nothing for every enquiry about fees.
+    // Turning it on makes already-opened fee enquiries fail the next time they are shown.
+    // Turning it off does not fix a failed enquiry by itself: the officer presses Retry lookup.
+    document.getElementById('force-failure-note').textContent =
+      'Affects: ' + syntheticEnquiries.filter(isAboutFees).map(e => e.id).join(', ') +
+      '. Turn it off, then press Retry lookup to recover.';
+    function setForcedFailure(on) {
+      forceLookupFailure = on;
+      if (on) {
+        Object.keys(lookupState).forEach(id => { if (lookupState[id].status === 'ok') delete lookupState[id]; });
+      }
+      if (document.getElementById('enquiry-id').textContent) renderEnquiry(currentEnquiryIndex);
+    }
+    document.getElementById('force-failure').addEventListener('change', (ev) => setForcedFailure(ev.target.checked));
+
     applyFilter();
     updateComfortDisplay();
   </script>

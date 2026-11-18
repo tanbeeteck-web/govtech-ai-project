@@ -8,7 +8,7 @@ function logFeedback(entry) {
     id: `LOG-${Date.now()}`,
     timestamp: new Date().toISOString(),
     enquiry_id: entry.enquiry_id,
-    flag_type: entry.flag_type, // 'wrong_citation', 'low_confidence', 'needs_clarification', 'handoff' or 'attachment'
+    flag_type: entry.flag_type, // 'wrong_citation', 'low_confidence', 'needs_clarification', 'handoff', 'attachment' or 'lookup_failed'
     cited_passage: entry.cited_passage || null,
     officer_note: entry.officer_note || "",
     draft_text: entry.draft_text || null
@@ -47,6 +47,15 @@ function logNoDraft(enquiryId, type, note) {
   });
 }
 
+// The policy lookup returned nothing, so no draft was shown
+function logLookupFailed(enquiryId, attempt) {
+  return logFeedback({
+    enquiry_id: enquiryId,
+    flag_type: "lookup_failed",
+    officer_note: `Policy lookup returned nothing (attempt ${attempt}). No draft shown.`
+  });
+}
+
 function getLog() {
   return feedbackLog;
 }
@@ -62,7 +71,7 @@ function updateLogDisplay() {
 
   const html = feedbackLog.map(entry => `
     <div class="log-entry">
-      <span class="log-type ${entry.flag_type}">${{ wrong_citation: 'Wrong citation', low_confidence: 'Low confidence', needs_clarification: 'Needs clarification', handoff: 'Hand-off', attachment: 'Attachment' }[entry.flag_type] || entry.flag_type}</span>
+      <span class="log-type ${entry.flag_type}">${{ wrong_citation: 'Wrong citation', low_confidence: 'Low confidence', needs_clarification: 'Needs clarification', handoff: 'Hand-off', attachment: 'Attachment', lookup_failed: 'Lookup failed' }[entry.flag_type] || entry.flag_type}</span>
       <span class="log-enquiry">${entry.enquiry_id}</span>
       ${entry.officer_note ? `<p class="log-note">"${entry.officer_note}"</p>` : ''}
     </div>
@@ -204,5 +213,5 @@ function updateComfortDisplay() {
 
 // Export for use in main script
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { editPercent, classifyEdit, logFeedback, flagWrongCitation, logLowConfidence, logNoDraft, getLog, logComfort, getComfortSummary, comfortLog };
+  module.exports = { editPercent, classifyEdit, logFeedback, flagWrongCitation, logLowConfidence, logNoDraft, logLookupFailed, getLog, logComfort, getComfortSummary, comfortLog };
 }
