@@ -28,7 +28,7 @@ All data is synthetic and labelled as made up.
 *What broke or needs a decision:*
 - Picking a topic opens its first enquiry. If that enquiry has no draft, the feedback log gets another entry, so the log fills faster than before.
 - No topic is empty in the data, so the 0 case can only be seen by removing an enquiry. It was tested with a temporary empty topic.
-- The prototype README still says 10 enquiries and does not mention the filter.
+- The prototype README did not mention the filter. It is now updated.
 
 ## 2. Behavior
 
@@ -74,4 +74,10 @@ All data is synthetic and labelled as made up.
 **Edge cases:**
 - Long enquiries still fit on a laptop screen.
 
-**Result:** _fill in after you run it: what worked, what broke._
+**Result:** Not run yet. No results to report.
+
+*What worked:* nothing to report until this prompt is run.
+
+*What broke:* nothing to report until this prompt is run.
+
+*Before running it:* the reply screen now also has the topic chip, the lookup-failure screen and its Retry button. Check those for label, spacing and button-name consistency too, for example "Reject draft" against "Discard my edit".
