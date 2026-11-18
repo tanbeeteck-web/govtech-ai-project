@@ -1,0 +1,52 @@
+# Build Log
+
+**Scenario:** A · ServiceSG enquiry response
+
+## Three leaders
+
+### 1. Director of Frontline Operations
+
+**Objection:** "My officers already know the policies. What slows them down isn't finding information — it's the judgment calls. When a resident's situation doesn't match the policy exactly, or when two policies seem to conflict, that's where time goes. Your prototype shows a clean passport renewal question with a clean answer. But 40% of our inbox is edge cases: expired documents, overseas applicants, appeals against earlier decisions. If the AI gives a confident-looking draft for those, my officers will spend *more* time checking whether it's right — or worse, they'll trust it and send something wrong."
+
+**My reply:** I can do these.
+
+**Requirement to prove:** Show logs from a two-week pilot where:
+- At least 30% of test enquiries are messy edge cases (not just FAQs)
+- The AI correctly routes ambiguous cases to "no draft" instead of guessing
+- Officers spot and flag wrong citations within 30 seconds (not 5 minutes)
+
+---
+
+### 2. Head of Product
+
+**Objection:** "You're solving the wrong problem. Your own metrics say 90% of enquiries already meet SLA. The real pain isn't speed — it's consistency. Two officers answering the same question give different answers because they interpret policy differently. Your prototype cites the policy, but it doesn't solve the variance problem. If the AI drafts slightly different wording each time, or picks different passages for similar questions, you've just moved the inconsistency from the officer to the machine — and now it's harder to audit. Before I fund a pilot, I need to know: does this make answers *more* consistent, or does it just make them faster while staying inconsistent?"
+
+**My reply:** I can do these too.
+
+**Requirement to prove:** Show a comparison where:
+- 10 similar enquiries (same topic, slight variations) are run through the AI
+- The drafts use the same core passages and phrasing for the same policy points
+- A side-by-side shows less variance than 10 officers answering the same 10 questions today
+
+---
+
+### 3. Chief Executive Sponsor
+
+**Objection:** "I'm accountable to the Minister if this goes wrong. One incorrect reply about fees, eligibility, or deadlines — and it's in the newspaper. You've built in citations and a Flag button, but that assumes officers will check every line. In reality, when they're rushing through 50 enquiries before lunch, they'll trust the draft and hit Approve. Your guardrail is human review, but humans under time pressure don't review — they rubber-stamp. What happens six months in when the novelty wears off and checking feels like extra work? I won't approve this unless you can show me the failure mode is *caught* before it reaches the resident, not *logged* after."
+
+**My reply:** Got these too.
+
+**Requirement to prove:** Show a design where:
+- The system forces a friction point on high-risk claims (fees, deadlines, eligibility cutoffs) — not just a flag, but a mandatory confirmation
+- There's a weekly audit sample where a supervisor reviews 5% of sent replies against the cited passages
+- You have a kill metric: if more than 2 wrong citations reach residents in any week, the tool auto-disables until reviewed
+
+---
+
+## Summary
+
+| Leader | Core concern | Evidence to prepare |
+|--------|--------------|---------------------|
+| **Director (Frontline)** | Edge cases will trip up the AI or slow officers down | Pilot with 30%+ messy cases; show AI routes ambiguous ones to "no draft"; officers flag errors in <30 sec |
+| **Head of Product** | Consistency matters more than speed | 10 similar enquiries → same core passages/phrasing; less variance than 10 officers today |
+| **Chief Executive Sponsor** | Rubber-stamping will let errors through | Mandatory confirmation on high-risk claims; 5% weekly audit; auto-disable kill switch at 2 errors/week |
