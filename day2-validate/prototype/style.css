@@ -30,8 +30,9 @@ header h1 {
 }
 
 .synthetic-badge {
-  background: #ff6b6b;
-  color: white;
+  /* Grey on purpose: it marks synthetic data, not a warning (see Colour meanings in context-skill.md) */
+  background: #dee2e6;
+  color: #343a40;
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 12px;
