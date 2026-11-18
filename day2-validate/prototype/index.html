@@ -19,6 +19,12 @@
     </span>
   </header>
 
+  <div class="topic-filter">
+    <label for="topic-select">Filter inbox by policy topic (made up):</label>
+    <select id="topic-select"></select>
+    <span class="topic-showing" id="topic-showing"></span>
+  </div>
+
   <nav class="enquiry-nav" id="enquiry-nav"></nav>
 
   <main class="container">
@@ -32,6 +38,7 @@
         <div class="enquiry-meta">
           <span id="enquiry-from"></span>
           <span id="enquiry-time"></span>
+          <span class="topic-chip" id="enquiry-topic"></span>
         </div>
         <div class="enquiry-subject" id="enquiry-subject"></div>
         <div class="enquiry-body" id="enquiry-body"></div>
@@ -141,6 +148,57 @@
     let pendingAction = null;
     let pendingEditPercent;
     let enquiryShownAt = Date.now();
+    let currentTopic = 'all';       // 'all', one of policyTopics, or 'Other'
+    const OTHER = 'Other';
+
+    // One topic per enquiry. No topic, or a topic not in the fixed list, goes under Other.
+    function topicOf(e) {
+      return policyTopics.includes(e.topic) ? e.topic : OTHER;
+    }
+    function visibleIndices() {
+      return syntheticEnquiries
+        .map((e, i) => i)
+        .filter(i => currentTopic === 'all' || topicOf(syntheticEnquiries[i]) === currentTopic);
+    }
+    function buildTopicFilter() {
+      const count = t => syntheticEnquiries.filter(e => topicOf(e) === t).length;
+      const options = [`<option value="all">All topics (${syntheticEnquiries.length})</option>`]
+        .concat([...policyTopics, OTHER].map(t => `<option value="${t}">${t} (${count(t)})</option>`));
+      const sel = document.getElementById('topic-select');
+      sel.innerHTML = options.join('');
+      sel.value = currentTopic;
+    }
+    function applyFilter() {
+      buildTopicFilter();
+      buildTabs();
+      const visible = visibleIndices();
+      document.getElementById('topic-showing').textContent =
+        `Showing ${visible.length} of ${syntheticEnquiries.length} enquiries`;
+      if (visible.length === 0) {
+        renderEmpty();
+      } else if (!visible.includes(currentEnquiryIndex) || !document.getElementById('enquiry-id').textContent) {
+        currentEnquiryIndex = visible[0];
+        renderEnquiry(currentEnquiryIndex);
+      } else {
+        markActiveTab(currentEnquiryIndex);   // current enquiry is still visible: keep it as it is
+      }
+    }
+    function markActiveTab(index) {
+      document.querySelectorAll('.enquiry-tab').forEach(tab => {
+        tab.classList.toggle('active', parseInt(tab.dataset.index) === index);
+      });
+    }
+    // Nothing under this topic: show a plain message and no actions
+    function renderEmpty() {
+      ['enquiry-id', 'enquiry-from', 'enquiry-time', 'enquiry-subject', 'enquiry-body', 'enquiry-topic']
+        .forEach(id => { document.getElementById(id).textContent = ''; });
+      document.getElementById('enquiry-attachment').style.display = 'none';
+      document.getElementById('draft-panel-title').textContent = 'No enquiry selected';
+      document.getElementById('confidence-badge').textContent = '';
+      document.getElementById('draft-content').innerHTML =
+        `<p class="empty-log">No enquiries under "${currentTopic}" right now (0). Pick another topic to see more.</p>`;
+      document.getElementById('draft-actions').innerHTML = '';
+    }
 
     // Short labels for each no-draft case (from context-skill.md rules 2, 7, 8, 9)
     const NO_DRAFT_INFO = {
@@ -158,9 +216,10 @@
 
     function buildTabs() {
       const nav = document.getElementById('enquiry-nav');
-      nav.innerHTML = syntheticEnquiries.map((e, i) =>
-        `<button class="enquiry-tab" data-index="${i}">${e.id}${e.draft === null ? ' (' + noDraftLabel(e.noDraft.type) + ')' : ''}</button>`
-      ).join('');
+      nav.innerHTML = visibleIndices().map(i => {
+        const e = syntheticEnquiries[i];
+        return `<button class="enquiry-tab" data-index="${i}">${e.id}${e.draft === null ? ' (' + noDraftLabel(e.noDraft.type) + ')' : ''}<span class="tab-topic">${topicOf(e)}</span></button>`;
+      }).join('');
       nav.querySelectorAll('.enquiry-tab').forEach(tab => {
         tab.addEventListener('click', () => {
           currentEnquiryIndex = parseInt(tab.dataset.index);
@@ -229,10 +288,10 @@
       document.getElementById('enquiry-subject').textContent = enquiry.enquiry.subject;
       document.getElementById('enquiry-body').textContent = enquiry.enquiry.body;
 
-      // Update tabs
-      document.querySelectorAll('.enquiry-tab').forEach((tab, i) => {
-        tab.classList.toggle('active', i === index);
-      });
+      document.getElementById('enquiry-topic').textContent = 'Topic: ' + topicOf(enquiry);
+
+      // Update tabs (match on the enquiry index, because the filter can hide some tabs)
+      markActiveTab(index);
 
       // Check confidence level
       // Show any attachment under the enquiry text
@@ -506,8 +565,11 @@
     });
 
     // Initial render
-    buildTabs();
-    renderEnquiry(0);
+    document.getElementById('topic-select').addEventListener('change', (ev) => {
+      currentTopic = ev.target.value;
+      applyFilter();
+    });
+    applyFilter();
     updateComfortDisplay();
   </script>
 </body>

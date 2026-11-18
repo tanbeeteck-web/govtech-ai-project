@@ -17,7 +17,18 @@ All data is synthetic and labelled as made up.
 - An enquiry that matches no topic goes under Other.
 - The filter shows a count of 0 without breaking.
 
-**Result:** _fill in after you run it: what worked, what broke._
+**Result:** Ran on 2024-11-18 (made-up data). Not yet checked in a real browser.
+
+*What worked:*
+- A dropdown filters the inbox by one of 6 fixed topics. Each option shows its count, and a line says how many enquiries are showing.
+- Each enquiry shows its topic. An enquiry with no topic (ENQ-2024-009) goes under Other.
+- A filter with 0 enquiries shows a plain message, removes the action buttons and recovers when All is picked.
+- 20 checks on a simulated page passed. Existing draft and no-draft screens still render.
+
+*What broke or needs a decision:*
+- Picking a topic opens its first enquiry. If that enquiry has no draft, the feedback log gets another entry, so the log fills faster than before.
+- No topic is empty in the data, so the 0 case can only be seen by removing an enquiry. It was tested with a temporary empty topic.
+- The prototype README still says 10 enquiries and does not mention the filter.
 
 ## 2. Behavior
 
