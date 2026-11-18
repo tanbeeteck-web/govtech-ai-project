@@ -21,11 +21,23 @@ const policySources = {
   "Appeals Procedure": "2024-06-05"
 };
 
+// Fixed list of 6 made-up policy topics. An enquiry has ONE topic. An enquiry with no topic,
+// or a topic not in this list, is shown under "Other" (see topicOf in index.html).
+const policyTopics = [
+  "Passports and ID cards",
+  "Concessions and transport",
+  "Community centres",
+  "Parking",
+  "Housing (HDB)",
+  "Appeals and overseas"
+];
+
 // Enquiries with draft: null show a no-draft screen. noDraft.type is one of:
 // low_confidence, needs_clarification, handoff, attachment (see context-skill.md rules 2, 7, 8, 9).
 const syntheticEnquiries = [
   {
     id: "ENQ-2024-001",
+    topic: "Passports and ID cards",
     timestamp: "2024-11-18 09:32",
     confidence: "high",
     confidencePct: 96,
@@ -73,6 +85,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-002",
+    topic: "Concessions and transport",
     timestamp: "2024-11-18 10:15",
     confidence: "high",
     confidencePct: 94,
@@ -112,6 +125,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-003",
+    topic: "Housing (HDB)",
     timestamp: "2024-11-18 11:42",
     confidence: "low",
     confidencePct: 62,
@@ -146,6 +160,7 @@ const syntheticEnquiries = [
   // ---- Extra made-up enquiries for the comfort test (Day 2 assumption test) ----
   {
     id: "ENQ-2024-004",
+    topic: "Passports and ID cards",
     timestamp: "2024-11-18 13:05",
     confidence: "high",
     confidencePct: 95,
@@ -182,6 +197,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-005",
+    topic: "Community centres",
     timestamp: "2024-11-18 14:20",
     confidence: "high",
     confidencePct: 97,
@@ -217,6 +233,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-006",
+    topic: "Parking",
     timestamp: "2024-11-18 15:10",
     confidence: "high",
     confidencePct: 93,
@@ -253,6 +270,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-007",
+    topic: "Appeals and overseas",
     timestamp: "2024-11-18 16:02",
     confidence: "low",
     confidencePct: 41,
@@ -286,6 +304,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-008",
+    topic: "Parking",
     timestamp: "2024-11-18 16:40",
     confidence: "none",
     confidencePct: null,
@@ -321,6 +340,7 @@ const syntheticEnquiries = [
   },
   {
     id: "ENQ-2024-010",
+    topic: "Passports and ID cards",
     timestamp: "2024-11-18 17:10",
     confidence: "none",
     confidencePct: null,
