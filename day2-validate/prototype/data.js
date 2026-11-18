@@ -32,7 +32,8 @@ const syntheticEnquiries = [
             source: "ICA Fee Schedule (made up)",
             passage: "Passport fees: 5-year validity - $70, 10-year validity - $80. Fees are non-refundable.",
             url: "#policy-ica-fees-001"
-          }
+          },
+          highRisk: "fee"
         },
         {
           text: "You can submit your application at any ICA Services Centre or online via the ICA website.",
@@ -69,7 +70,8 @@ const syntheticEnquiries = [
             source: "PTC Concession Policy (made up)",
             passage: "Eligibility: Singapore citizens aged 60 years and above qualify for senior concession fares on public buses and trains.",
             url: "#policy-ptc-senior-001"
-          }
+          },
+          highRisk: "eligibility"
         },
         {
           text: "Your father can apply at any TransitLink Ticket Office with his NRIC. The card is issued on the spot.",
@@ -83,6 +85,34 @@ const syntheticEnquiries = [
       closing: "We hope this helps. Feel free to reach out if you need further assistance.",
       signature: "ServiceSG Officer"
     }
+  },
+  {
+    id: "ENQ-2024-003",
+    timestamp: "2024-11-18 11:42",
+    confidence: "low",
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Appeal for late HDB application and fee waiver",
+      body: "Hi, I missed the deadline for my HDB BTO application by 2 days because I was hospitalized. I have the medical certificate. Can I still apply? Also my income dropped last month due to retrenchment - can I get the application fee waived? I am a first-timer. Thank you."
+    },
+    draft: null,
+    suggestedPolicies: [
+      {
+        source: "HDB BTO Late Application Policy (made up)",
+        passage: "Late applications may be considered on a case-by-case basis with supporting documentation. Approval is not guaranteed.",
+        url: "#policy-hdb-late-001"
+      },
+      {
+        source: "HDB Fee Waiver Guidelines (made up)",
+        passage: "Fee waivers are available for applicants facing financial hardship. Income assessment and supporting documents required.",
+        url: "#policy-hdb-waiver-001"
+      },
+      {
+        source: "HDB First-Timer Priority (made up)",
+        passage: "First-timer applicants receive priority allocation. Eligibility conditions apply.",
+        url: "#policy-hdb-firsttimer-001"
+      }
+    ]
   }
 ];
 

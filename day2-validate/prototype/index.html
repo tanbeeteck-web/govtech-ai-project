@@ -15,6 +15,7 @@
   <nav class="enquiry-nav">
     <button class="enquiry-tab active" data-index="0">ENQ-2024-001</button>
     <button class="enquiry-tab" data-index="1">ENQ-2024-002</button>
+    <button class="enquiry-tab" data-index="2">ENQ-2024-003 (Low conf)</button>
   </nav>
 
   <main class="container">
@@ -37,13 +38,13 @@
     <!-- Draft Panel (Right) -->
     <section class="panel" id="draft-panel">
       <div class="panel-header">
-        <span>AI Draft with Citations</span>
-        <span style="font-size: 12px; color: #51cf66;">High confidence</span>
+        <span id="draft-panel-title">AI Draft with Citations</span>
+        <span id="confidence-badge" style="font-size: 12px; color: #51cf66;">High confidence</span>
       </div>
       <div class="panel-body" id="draft-content">
         <!-- Draft content rendered by JS -->
       </div>
-      <div class="actions">
+      <div class="actions" id="draft-actions">
         <button class="btn btn-primary" id="btn-approve">Approve</button>
         <button class="btn btn-secondary" id="btn-edit">Edit</button>
         <button class="btn btn-secondary" id="btn-restore">Restore original</button>
@@ -79,6 +80,23 @@
     </div>
   </div>
 
+  <!-- High-Risk Confirmation Modal -->
+  <div class="modal-overlay" id="confirm-modal">
+    <div class="modal">
+      <h3>Confirm high-risk claims</h3>
+      <p style="margin-bottom: 12px; color: #666; font-size: 14px;">
+        This draft contains claims about <strong id="risk-types"></strong>. Please verify each one against the cited policy before approving.
+      </p>
+      <div id="confirm-checklist" style="margin-bottom: 16px;">
+        <!-- Checklist items rendered by JS -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="confirm-cancel">Go back</button>
+        <button class="btn btn-primary" id="confirm-approve" disabled>I have verified - Approve</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast notification -->
   <div class="toast" id="toast"></div>
 
@@ -87,6 +105,7 @@
   <script>
     let currentEnquiryIndex = 0;
     let currentFlagTarget = null;
+    let highRiskItems = [];
 
     function renderEnquiry(index) {
       const enquiry = syntheticEnquiries[index];
@@ -101,21 +120,98 @@
         tab.classList.toggle('active', i === index);
       });
 
-      renderDraft(enquiry);
+      // Check confidence level
+      if (enquiry.confidence === 'low') {
+        renderLowConfidence(enquiry);
+      } else {
+        renderDraft(enquiry);
+      }
+    }
+
+    function renderLowConfidence(enquiry) {
+      // Update header
+      document.getElementById('draft-panel-title').textContent = 'No Draft Available';
+      document.getElementById('confidence-badge').textContent = 'Low confidence';
+      document.getElementById('confidence-badge').style.color = '#fa5252';
+
+      // Log low confidence event
+      logLowConfidence(enquiry.id, 'Multiple topics detected; case requires officer judgment');
+
+      // Render suggested policies instead of draft
+      let html = `
+        <div class="low-confidence-notice">
+          <div class="notice-icon">⚠️</div>
+          <div class="notice-text">
+            <strong>No draft generated</strong>
+            <p>This enquiry involves multiple topics or edge cases that require officer judgment. Here are the closest policy pages to help you draft a reply:</p>
+          </div>
+        </div>
+        <div class="suggested-policies">
+          <h4>Suggested policy pages</h4>
+      `;
+
+      enquiry.suggestedPolicies.forEach((policy, i) => {
+        html += `
+          <div class="policy-card">
+            <div class="policy-source">${policy.source}</div>
+            <p class="policy-passage">"${policy.passage}"</p>
+            <a href="${policy.url}" class="policy-link">View full policy →</a>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+
+      document.getElementById('draft-content').innerHTML = html;
+
+      // Update actions for low confidence
+      document.getElementById('draft-actions').innerHTML = `
+        <button class="btn btn-primary" id="btn-start-scratch">Start from scratch</button>
+        <button class="btn btn-warning" id="btn-escalate">Escalate to senior officer</button>
+      `;
+
+      // Attach new event listeners
+      document.getElementById('btn-start-scratch').addEventListener('click', () => {
+        showToast('Opening blank reply editor. (not implemented in prototype)');
+      });
+      document.getElementById('btn-escalate').addEventListener('click', () => {
+        showToast('Escalated to senior officer queue. (made up)');
+      });
     }
 
     function renderDraft(enquiry) {
+      // Update header
+      document.getElementById('draft-panel-title').textContent = 'AI Draft with Citations';
+      document.getElementById('confidence-badge').textContent = 'High confidence';
+      document.getElementById('confidence-badge').style.color = '#51cf66';
+
       const draft = enquiry.draft;
+      highRiskItems = [];
       let html = `<p class="draft-greeting">${draft.greeting}</p>`;
 
       draft.paragraphs.forEach((para, i) => {
         const hasCitation = para.citation !== null;
-        html += `<div class="draft-paragraph ${hasCitation ? 'has-citation' : ''}">`;
+        const isHighRisk = para.highRisk;
+
+        if (isHighRisk) {
+          highRiskItems.push({
+            type: para.highRisk,
+            text: para.text,
+            source: para.citation.source
+          });
+        }
+
+        html += `<div class="draft-paragraph ${hasCitation ? 'has-citation' : ''} ${isHighRisk ? 'high-risk' : ''}">`;
+
+        if (isHighRisk) {
+          html += `<span class="high-risk-badge">${para.highRisk.toUpperCase()} - Verify before sending</span>`;
+        }
+
         html += `<p class="draft-text">${para.text}</p>`;
 
         if (hasCitation) {
           html += `
-            <div class="citation">
+            <div class="citation ${isHighRisk ? 'citation-high-risk' : ''}">
               <span class="citation-icon">📄</span>
               <div>
                 <span class="citation-source">${para.citation.source}</span>
@@ -133,7 +229,15 @@
 
       document.getElementById('draft-content').innerHTML = html;
 
-      // Attach flag handlers
+      // Restore default actions
+      document.getElementById('draft-actions').innerHTML = `
+        <button class="btn btn-primary" id="btn-approve">Approve</button>
+        <button class="btn btn-secondary" id="btn-edit">Edit</button>
+        <button class="btn btn-secondary" id="btn-restore">Restore original</button>
+        <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
+      `;
+
+      // Attach event listeners
       document.querySelectorAll('.flag-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const paraIndex = parseInt(e.target.dataset.para);
@@ -141,6 +245,67 @@
           openFlagModal(enquiry.id, para);
         });
       });
+
+      document.getElementById('btn-approve').addEventListener('click', handleApprove);
+      document.getElementById('btn-edit').addEventListener('click', () => {
+        showToast('Edit mode enabled. (not implemented in prototype)');
+      });
+      document.getElementById('btn-restore').addEventListener('click', () => {
+        renderEnquiry(currentEnquiryIndex);
+        showToast('Original draft restored.');
+      });
+      document.getElementById('btn-flag-all').addEventListener('click', () => {
+        const firstCitedPara = draft.paragraphs.find(p => p.citation);
+        if (firstCitedPara) {
+          openFlagModal(enquiry.id, firstCitedPara);
+        }
+      });
+    }
+
+    function handleApprove() {
+      if (highRiskItems.length > 0) {
+        openConfirmModal();
+      } else {
+        showToast('Draft approved and sent. (made up)');
+      }
+    }
+
+    function openConfirmModal() {
+      const riskTypes = [...new Set(highRiskItems.map(item => item.type))];
+      document.getElementById('risk-types').textContent = riskTypes.join(', ');
+
+      let checklistHtml = '';
+      highRiskItems.forEach((item, i) => {
+        checklistHtml += `
+          <label class="confirm-checkbox">
+            <input type="checkbox" data-index="${i}" class="risk-check">
+            <span class="checkmark"></span>
+            <div class="check-content">
+              <span class="check-type">${item.type.toUpperCase()}</span>
+              <span class="check-text">"${item.text}"</span>
+              <span class="check-source">Source: ${item.source}</span>
+            </div>
+          </label>
+        `;
+      });
+
+      document.getElementById('confirm-checklist').innerHTML = checklistHtml;
+      document.getElementById('confirm-approve').disabled = true;
+      document.getElementById('confirm-modal').classList.add('show');
+
+      // Attach checkbox listeners
+      document.querySelectorAll('.risk-check').forEach(cb => {
+        cb.addEventListener('change', updateConfirmButton);
+      });
+    }
+
+    function updateConfirmButton() {
+      const allChecked = Array.from(document.querySelectorAll('.risk-check')).every(cb => cb.checked);
+      document.getElementById('confirm-approve').disabled = !allChecked;
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirm-modal').classList.remove('show');
     }
 
     function openFlagModal(enquiryId, para) {
@@ -175,27 +340,6 @@
       });
     });
 
-    document.getElementById('btn-approve').addEventListener('click', () => {
-      showToast('Draft approved and sent. (made up)');
-    });
-
-    document.getElementById('btn-edit').addEventListener('click', () => {
-      showToast('Edit mode enabled. (not implemented in prototype)');
-    });
-
-    document.getElementById('btn-restore').addEventListener('click', () => {
-      renderEnquiry(currentEnquiryIndex);
-      showToast('Original draft restored.');
-    });
-
-    document.getElementById('btn-flag-all').addEventListener('click', () => {
-      const enquiry = syntheticEnquiries[currentEnquiryIndex];
-      const firstCitedPara = enquiry.draft.paragraphs.find(p => p.citation);
-      if (firstCitedPara) {
-        openFlagModal(enquiry.id, firstCitedPara);
-      }
-    });
-
     document.getElementById('flag-cancel').addEventListener('click', closeFlagModal);
 
     document.getElementById('flag-submit').addEventListener('click', () => {
@@ -212,9 +356,19 @@
       }
     });
 
-    // Close modal on overlay click
+    document.getElementById('confirm-cancel').addEventListener('click', closeConfirmModal);
+
+    document.getElementById('confirm-approve').addEventListener('click', () => {
+      closeConfirmModal();
+      showToast('High-risk claims verified. Draft approved and sent. (made up)');
+    });
+
+    // Close modals on overlay click
     document.getElementById('flag-modal').addEventListener('click', (e) => {
       if (e.target.id === 'flag-modal') closeFlagModal();
+    });
+    document.getElementById('confirm-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'confirm-modal') closeConfirmModal();
     });
 
     // Initial render
