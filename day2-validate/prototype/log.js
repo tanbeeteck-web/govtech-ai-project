@@ -73,8 +73,34 @@ const SUCCESS_OFFICERS = 4;          // success: at least 4 of 5 officers comfor
 const SUCCESS_ACCEPT_RATE = 0.6;     // ... and at least 60% of drafts used (sent or edited)
 const KILL_OFFICERS = 3;             // kill: fewer than 3 of 5 officers comfortable ...
 const KILL_DISCARD_RATE = 0.5;       // ... or more than 50% of drafts discarded
+const KILL_REJECTING_OFFICERS = 3;   // kill: 3 of 5 officers mostly rejected or majorly edited their drafts
+const REJECTING_SHARE = 0.5;         // "mostly" = more than half of that officer's drafts
+
+const MAJOR_EDIT_SHARE = 50;         // an edit is "major" when MORE than 50% of the draft text was changed
 
 const comfortLog = [];
+
+// How much of the draft was edited? Counts words changed, added or removed
+// (word-level edit distance) as a percent of the words in the original draft.
+function editPercent(original, edited) {
+  const a = original.trim().split(/\s+/).filter(Boolean);
+  const b = edited.trim().split(/\s+/).filter(Boolean);
+  if (a.length === 0) return b.length ? 100 : 0;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    prev = cur;
+  }
+  return Math.min(100, Math.round((prev[b.length] / a.length) * 100));
+}
+
+function classifyEdit(original, edited) {
+  const pct = editPercent(original, edited);
+  return { pct, action: pct > MAJOR_EDIT_SHARE ? 'edited_major' : 'edited_minor' };
+}
 
 function logComfort(entry) {
   const record = {
@@ -82,9 +108,10 @@ function logComfort(entry) {
     timestamp: new Date().toISOString(),
     officer: entry.officer,           // made-up id such as "O1"
     enquiry_id: entry.enquiry_id,
-    action: entry.action,             // 'sent', 'edited' or 'discarded'
+    action: entry.action,             // 'sent', 'edited_minor', 'edited_major' or 'discarded' (rejected)
     rating: entry.rating,             // 1-5, null if the officer skipped
-    seconds_to_decide: entry.seconds_to_decide
+    seconds_to_decide: entry.seconds_to_decide,
+    edit_percent: entry.edit_percent === undefined ? null : entry.edit_percent   // only set for edits
   };
   comfortLog.push(record);
   console.log("Comfort test result logged (made up data):", record);
@@ -105,13 +132,24 @@ function getComfortSummary() {
   );
 
   const total = comfortLog.length;
-  const used = comfortLog.filter(r => r.action !== 'discarded').length;
-  const discarded = total - used;
+  const isRejectOrMajor = r => r.action === 'discarded' || r.action === 'edited_major';
+  const used = comfortLog.filter(r => !isRejectOrMajor(r)).length;   // sent or minor edit
+  const discarded = comfortLog.filter(r => r.action === 'discarded').length;
+
+  // Officers who rejected or majorly edited more than half of their drafts
+  const actionsByOfficer = {};
+  comfortLog.forEach(r => { (actionsByOfficer[r.officer] = actionsByOfficer[r.officer] || []).push(r); });
+  const rejectingOfficers = Object.values(actionsByOfficer).filter(list =>
+    list.length >= MIN_RATINGS_PER_OFFICER &&
+    list.filter(isRejectOrMajor).length / list.length > REJECTING_SHARE
+  ).length;
   const acceptRate = total ? used / total : 0;
   const discardRate = total ? discarded / total : 0;
 
   let verdict = 'collecting';
-  if (counted.length >= PLANNED_OFFICERS) {
+  if (rejectingOfficers >= KILL_REJECTING_OFFICERS) {
+    verdict = 'kill';   // can trip early, as soon as 3 officers are rejecting
+  } else if (counted.length >= PLANNED_OFFICERS) {
     if (comfortable.length >= SUCCESS_OFFICERS && acceptRate >= SUCCESS_ACCEPT_RATE) {
       verdict = 'success';
     } else if (comfortable.length < KILL_OFFICERS || discardRate > KILL_DISCARD_RATE) {
@@ -125,7 +163,7 @@ function getComfortSummary() {
     totalActions: total,
     officersCounted: counted.length,
     officersComfortable: comfortable.length,
-    acceptRate, discardRate, verdict
+    rejectingOfficers, acceptRate, discardRate, verdict
   };
 }
 
@@ -144,13 +182,14 @@ function updateComfortDisplay() {
   el.innerHTML = `
     <p class="comfort-line">Officers counted: <strong>${s.officersCounted}</strong> of ${PLANNED_OFFICERS}</p>
     <p class="comfort-line">Officers comfortable (average rating ${COMFORT_CUTOFF}+): <strong>${s.officersComfortable}</strong> (success: ${SUCCESS_OFFICERS}+, kill: under ${KILL_OFFICERS})</p>
-    <p class="comfort-line">Drafts used (sent or edited): <strong>${pct(s.acceptRate)}</strong> (success: ${pct(SUCCESS_ACCEPT_RATE)}+)</p>
-    <p class="comfort-line">Drafts discarded: <strong>${pct(s.discardRate)}</strong> (kill: over ${pct(KILL_DISCARD_RATE)})</p>
+    <p class="comfort-line">Drafts used (sent or minor edit): <strong>${pct(s.acceptRate)}</strong> (success: ${pct(SUCCESS_ACCEPT_RATE)}+)</p>
+    <p class="comfort-line">Officers who rejected or majorly edited most drafts: <strong>${s.rejectingOfficers}</strong> of ${PLANNED_OFFICERS} (kill: ${KILL_REJECTING_OFFICERS}+)</p>
+    <p class="comfort-line">Drafts rejected: <strong>${pct(s.discardRate)}</strong> (kill: over ${pct(KILL_DISCARD_RATE)})</p>
     <p class="comfort-verdict verdict-${s.verdict}">${verdictText}</p>
   `;
 }
 
 // Export for use in main script
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { logFeedback, flagWrongCitation, logLowConfidence, getLog, logComfort, getComfortSummary, comfortLog };
+  module.exports = { editPercent, classifyEdit, logFeedback, flagWrongCitation, logLowConfidence, getLog, logComfort, getComfortSummary, comfortLog };
 }

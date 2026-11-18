@@ -138,6 +138,7 @@
     let currentFlagTarget = null;
     let highRiskItems = [];
     let pendingAction = null;
+    let pendingEditPercent;
     let enquiryShownAt = Date.now();
 
     function buildTabs() {
@@ -153,7 +154,31 @@
       });
     }
 
+    // Plain-text version of the draft, used for editing and for measuring how much was changed
+    function draftToText(draft) {
+      return [draft.greeting, ...draft.paragraphs.map(p => p.text), draft.closing, draft.signature].join('\n\n');
+    }
+
+    function enterEditMode(enquiry) {
+      const original = draftToText(enquiry.draft);
+      document.getElementById('draft-content').innerHTML =
+        '<p style="font-size:13px;color:#666;margin-bottom:8px;">Edit the draft below. When you save, the tool measures how much you changed. (made up test)</p>' +
+        '<textarea id="edit-box" style="width:100%;min-height:320px;font:inherit;padding:8px;"></textarea>';
+      document.getElementById('edit-box').value = original;
+      document.getElementById('draft-actions').innerHTML = `
+        <button class="btn btn-primary" id="btn-save-edit">Save edit</button>
+        <button class="btn btn-secondary" id="btn-cancel-edit">Cancel</button>
+      `;
+      document.getElementById('btn-cancel-edit').addEventListener('click', () => renderEnquiry(currentEnquiryIndex));
+      document.getElementById('btn-save-edit').addEventListener('click', () => {
+        const result = classifyEdit(original, document.getElementById('edit-box').value);
+        pendingEditPercent = result.pct;
+        openRatingModal(result.action);
+      });
+    }
+
     function openRatingModal(action) {
+      if (action !== 'edited_minor' && action !== 'edited_major') pendingEditPercent = undefined;
       pendingAction = action;
       document.getElementById('rating-modal').classList.add('show');
     }
@@ -171,11 +196,13 @@
         enquiry_id: syntheticEnquiries[currentEnquiryIndex].id,
         action: action,
         rating: rating,
-        seconds_to_decide: Math.round((Date.now() - enquiryShownAt) / 1000)
+        seconds_to_decide: Math.round((Date.now() - enquiryShownAt) / 1000),
+        edit_percent: pendingEditPercent
       });
       closeRatingModal();
-      const label = { sent: 'sent', edited: 'used with edits', discarded: 'discarded' }[action];
-      showToast(`Draft ${label}. Rating ${rating} logged. (made up)`);
+      const label = { sent: 'sent', edited_minor: 'used with minor edits', edited_major: 'majorly edited', discarded: 'rejected' }[action];
+      const pctNote = pendingEditPercent === undefined ? '' : ` (${pendingEditPercent}% of text changed)`;
+      showToast(`Draft ${label}${pctNote}. Rating ${rating} logged. (made up)`);
     }
 
     function renderEnquiry(index) {
@@ -307,7 +334,7 @@
         <button class="btn btn-secondary" id="btn-edit">Edit</button>
         <button class="btn btn-secondary" id="btn-restore">Restore original</button>
         <button class="btn btn-warning" id="btn-flag-all">Flag draft issue</button>
-        <button class="btn btn-secondary" id="btn-discard">Discard draft</button>
+        <button class="btn btn-secondary" id="btn-discard">Reject draft</button>
       `;
 
       // Attach event listeners
@@ -320,9 +347,7 @@
       });
 
       document.getElementById('btn-approve').addEventListener('click', handleApprove);
-      document.getElementById('btn-edit').addEventListener('click', () => {
-        openRatingModal('edited');
-      });
+      document.getElementById('btn-edit').addEventListener('click', () => enterEditMode(enquiry));
       document.getElementById('btn-discard').addEventListener('click', () => {
         openRatingModal('discarded');
       });
