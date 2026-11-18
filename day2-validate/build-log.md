@@ -76,6 +76,8 @@ If the kill switch trips, drop the AI-written draft. Try a version that only sug
 - At least 4 of 5 officers are comfortable (average rating of 4 or more), and
 - At least 80% (8 in 10) of drafts are sent or given only a minor edit (not rejected or majorly edited).
 
-If the result is in between, run more officers or enquiries before deciding.
+**Fail line:** After 5 officers have each rated 3 or more drafts, fail if fewer than 70% (7 in 10) of drafts are sent or given only a minor edit. The prototype shows a FAIL verdict.
+
+If the result is between the fail line and the success signal, run more officers or enquiries before deciding.
 
 **Caveat:** The ratings in the prototype are made-up test inputs. A real pilot needs real officers, and real data only after approval. Do not treat the prototype numbers as evidence.

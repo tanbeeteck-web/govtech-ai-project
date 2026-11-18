@@ -549,6 +549,7 @@ header h1 {
 
 .verdict-success { background: #d3f9d8; color: #2b8a3e; }
 .verdict-kill { background: #ffe3e3; color: #c92a2a; }
+.verdict-fail { background: #ffe3e3; color: #c92a2a; }
 .verdict-unclear { background: #fff3bf; color: #8a6d00; }
 
 /* ---- Context skill updates ---- */

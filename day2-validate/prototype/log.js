@@ -79,6 +79,7 @@ const PLANNED_OFFICERS = 5;          // test officers (made up: O1..O5)
 const MIN_RATINGS_PER_OFFICER = 3;   // an officer counts once they rate this many drafts
 const COMFORT_CUTOFF = 4;            // rating 4 or 5 on a 1-5 scale = comfortable
 const SUCCESS_OFFICERS = 4;          // success: at least 4 of 5 officers comfortable ...
+const FAIL_ACCEPT_RATE = 0.7;        // fail: fewer than 70% (7 in 10) of drafts used, once all 5 officers are counted
 const SUCCESS_ACCEPT_RATE = 0.8;     // ... and at least 80% (8 in 10) of drafts used (sent or minor edit)
 const KILL_OFFICERS = 3;             // kill: fewer than 3 of 5 officers comfortable ...
 const KILL_DISCARD_RATE = 0.5;       // ... or more than 50% of drafts discarded
@@ -163,6 +164,8 @@ function getComfortSummary() {
       verdict = 'success';
     } else if (comfortable.length < KILL_OFFICERS || discardRate > KILL_DISCARD_RATE) {
       verdict = 'kill';
+    } else if (acceptRate < FAIL_ACCEPT_RATE) {
+      verdict = 'fail';   // below the pilot fail line: fewer than 7 in 10 drafts used
     } else {
       verdict = 'unclear';
     }
@@ -185,13 +188,14 @@ function updateComfortDisplay() {
     collecting: `Collecting. Verdict shows once ${PLANNED_OFFICERS} officers have rated ${MIN_RATINGS_PER_OFFICER}+ drafts each.`,
     success: 'SUCCESS SIGNAL MET: keep going.',
     kill: 'KILL SWITCH HIT: stop and rethink (try search-only help, no AI draft).',
+    fail: `FAIL: fewer than ${pct(FAIL_ACCEPT_RATE)} of drafts were used. Below the fail line. Do not continue as is.`,
     unclear: 'In between: run more officers or enquiries before deciding.'
   }[s.verdict];
 
   el.innerHTML = `
     <p class="comfort-line">Officers counted: <strong>${s.officersCounted}</strong> of ${PLANNED_OFFICERS}</p>
     <p class="comfort-line">Officers comfortable (average rating ${COMFORT_CUTOFF}+): <strong>${s.officersComfortable}</strong> (success: ${SUCCESS_OFFICERS}+, kill: under ${KILL_OFFICERS})</p>
-    <p class="comfort-line">Drafts used (sent or minor edit): <strong>${pct(s.acceptRate)}</strong> (success: ${pct(SUCCESS_ACCEPT_RATE)}+)</p>
+    <p class="comfort-line">Drafts used (sent or minor edit): <strong>${pct(s.acceptRate)}</strong> (success: ${pct(SUCCESS_ACCEPT_RATE)}+, fail: under ${pct(FAIL_ACCEPT_RATE)})</p>
     <p class="comfort-line">Officers who rejected or majorly edited most drafts: <strong>${s.rejectingOfficers}</strong> of ${PLANNED_OFFICERS} (kill: ${KILL_REJECTING_OFFICERS}+)</p>
     <p class="comfort-line">Drafts rejected: <strong>${pct(s.discardRate)}</strong> (kill: over ${pct(KILL_DISCARD_RATE)})</p>
     <p class="comfort-verdict verdict-${s.verdict}">${verdictText}</p>
