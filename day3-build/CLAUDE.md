@@ -30,7 +30,7 @@ These are the only tools the agent may use. None of them exists yet. Only the pr
 | `read_passage` | Returns the exact passage from one policy page | Read only |
 | `save_draft` | Saves one draft or one no-draft result for the officer's review | Write, to the review queue only |
 | `write_log` | Adds one entry to the logs below | Append only |
-| `send_alert` | Sends a short notice to the ServiceSG team, passes on an officer's restart or reinstate request, or shows a notice or reminder to an officer. Staff only, never a resident | Write, internal only |
+| `notify_staff` | Notifies staff only: sends a short notice to the ServiceSG team, passes on an officer's restart or reinstate request, or shows a notice or reminder to an officer. Staff only, never a resident | Write, internal only |
 
 If a tool fails, for example the policy search returns nothing, do not draft from memory. Follow the stop conditions.
 
