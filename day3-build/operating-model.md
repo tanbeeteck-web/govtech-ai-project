@@ -10,7 +10,7 @@ This file says who decides what about the agent. It takes its roles and rules fr
 **How to read the marks.**
 - **Decided:** the learner decided it, or accepted my proposal.
 - **Earlier file:** an earlier file says it and the learner has not changed it.
-- **Proposed:** I suggest it and the learner has not decided it. On 2026-11-19 the learner accepted every earlier proposal, including the incident walkthrough. Nothing is Proposed now. The five detection routes and the settings of Permissions rows 33 to 40 in `ai-prd.md` were accepted on 2026-11-19.
+- **Proposed:** I suggest it and the learner has not decided it. On 2026-11-19 the learner accepted every earlier proposal, including the incident walkthrough. Nothing is Proposed now, and nothing has been since the learner marked every remaining proposal Decided on 2026-11-19. The five detection routes and the settings of Permissions rows 33 to 40 in `ai-prd.md` were accepted on 2026-11-19.
 
 The agent is not built. There is no model and no tool yet. This file describes how the agent will be run.
 

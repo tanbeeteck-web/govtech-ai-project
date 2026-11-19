@@ -122,7 +122,7 @@ One row for each tool the agent uses, with `notify_staff` split into two rows be
 Give no draft, give the reason, and show up to three closest pages. Say so when none is a real match.
 
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
-- The language cannot be worked out, or the enquiry cannot be understood well enough to draft. Show the English digest if there is one. A translation that cannot be made reliably, or that differs from the English in a figure, date or claim, is left out and the English draft stands. **(Proposed.)**
+- The language cannot be worked out, or the enquiry cannot be understood well enough to draft. Show the English digest if there is one. A translation that cannot be made reliably, or that differs from the English in a figure, date or claim, is left out and the English draft stands. **(Decided, 2026-11-19.)**
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION.
 - The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off to a human lead.
 - An attachment cannot be read and the reply depends on it.
