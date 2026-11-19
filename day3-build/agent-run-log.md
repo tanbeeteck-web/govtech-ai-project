@@ -962,3 +962,4 @@ On 2026-11-19 the learner decided that the agent can only draft in English. This
 - **What the rule means for an unusual language.** The agent no longer has to decide whether it can "write reliably" in a language, because it does not draft in one. It only has to understand the enquiry well enough to draft in English. If it cannot, it gives no draft and shows an English digest if it has one.
 - **Not run.** An enquiry in a language the agent cannot understand well enough to digest. The rule gives no draft there. It has not been run.
 
+**Update (2026-11-19).** The learner decided that whether and how the reference translation is checked is for the engineering team. Runs 8, 8b and 8c show the translation unchecked, which is the position until engineering decides.
