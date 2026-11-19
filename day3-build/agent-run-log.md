@@ -1022,3 +1022,43 @@ Three outcomes the rule allows. Each was walked through by hand:
 - **The third outcome is a deliberate weak point.** The officer can tick and keep a claim that no passage supports. The rule leaves the decision to the officer, because an officer may know something the pages do not. That leaves the same risk as any ticked blue item: a rubber-stamped tick. These ticks are logged, so the supervisor can see them.
 - **Not shown.** A real model will draw the line between a policy claim and ordinary wording unevenly. See 6g in `ai-prd.md`. Not run: an officer who adds a whole paragraph, an officer who changes a figure in an existing cited sentence (the old citation would no longer match), and an added claim in a language other than English (the officer edits only English, so this cannot happen).
 
+---
+
+## Run 8e: the new label on the reference translation
+
+The label "for easy reference only" in Run 8c was replaced on 2026-11-19. The learner chose option B: **"Unofficial machine translation. The English version is the official reply and prevails if there is any difference."** This reruns Run 8c with it. Hand run. Runs 8c, and the earlier notes in this log that quote "for easy reference only", show the wording used at that time and are not rewritten.
+
+- **Goal:** Put the reply together as the resident would see it, with the new label.
+- **Plan:** The officer's edited English version first, as the official reply. The Chinese follows under the new line, in English and in Chinese. Check that nothing presents the Chinese as official or as checked.
+- **Act:** Compose the reply for the officer to send. The agent does not send it.
+- **Observe:**
+
+  > **Official reply (English)**
+  > Dear Resident, ... (the edited English version, with its citations)
+  >
+  > **Unofficial machine translation (中文)**
+  > Unofficial machine translation. The English version is the official reply and prevails if there is any difference.
+  > 非正式机器翻译。英文版本为正式答复，如有任何差异，以英文版本为准。
+  > (the Chinese version, made again from the edited English)
+
+- **Check:**
+  - English first, called official: yes.
+  - The Chinese is called an unofficial machine translation, and not a reply: yes.
+  - The line says the English prevails on any difference: yes. This is the new part. The old line did not.
+  - The line does not say the translation was checked: yes. It is true, because no check exists.
+  - Figures, citations and the high-risk mark are the same in both: yes.
+  - Nothing sent by the agent: yes.
+  - The Chinese line was written by Claude. A fluent reader must confirm it. A Tamil line has not been written.
+
+**Outcome: as decided.**
+
+**What option B does not say.** It does not warn that the translation may contain errors, and it does not tell the resident to rely only on the English. Those were in option A, which was not chosen. "Prevails if there is any difference" covers the main point. It does not remove liability. The agency's legal counsel should confirm the final text before real use.
+
+| Field | Value |
+|---|---|
+| Enquiry | ENQ-2024-017 |
+| Official reply | English, edited by the officer |
+| Reference text | Chinese, labelled "Unofficial machine translation" |
+| Label | Option B |
+| Sent by the agent | No |
+
