@@ -6,7 +6,7 @@
 
 All enquiries, residents, policy pages, fees, dates and IDs are made up.
 
-**How these runs were done.** The five tools in `CLAUDE.md` are not built yet and there is no model behind them. Claude played the agent by hand. It followed `CLAUDE.md` and `day2-validate/context-skill.md`, and read the policy passages from the prototype's `data.js`. So "Act" and "Observe" show what each tool would return, not a live call. The runs show whether the instructions give the right behaviour. They are not evidence about a real model.
+**How these runs were done.** The tools in `CLAUDE.md` are not built yet and there is no model behind them. Claude played the agent by hand. It followed `CLAUDE.md` and `day2-validate/context-skill.md`, and read the policy passages from the prototype's `data.js`. So "Act" and "Observe" show what each tool would return, not a live call. The runs show whether the instructions give the right behaviour. They are not evidence about a real model.
 
 Each turn has five parts:
 - **Goal:** what this turn is for.
@@ -213,6 +213,7 @@ Each turn has five parts:
 
 - **The instructions were enough for these three.** Each run ended in the right place without a rule being missing or unclear.
 - **One gap in `CLAUDE.md`, now fixed.** For a hand-off it said to give "the three closest policy pages". In Run 2 none of the pages is a real match, so the agent had to show weak ones. `CLAUDE.md` now says "up to three closest pages" and says to state when none is a real match. Run 2 was run before this change, and its pages are flagged as weak matches.
+- **Not shown.** The alert, the mid-day stop notice, the restart prompt and the 5-in-a-row reminder were added to `CLAUDE.md` after these runs. They have not been run yet.
 - **Not shown.** The runs do not show a real model's behaviour. The six test questions in `context-skill.md` still need to run on a real model.
 
 **Change made to `CLAUDE.md` (2026-11-19):** the closest-pages rule now reads "up to three", and says to state when none is a real match. This matches the prototype, which shows up to three. Three places in `CLAUDE.md` changed: Goal, Human checkpoints and Stop conditions.
