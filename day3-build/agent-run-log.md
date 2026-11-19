@@ -26,6 +26,8 @@ Each turn has five parts:
 | 5 | ENQ-2024-014, cites a page that is not one of the 15 | Stop (stress) | **Stopped.** No draft, nothing confirmed. |
 | 6 | ENQ-2024-015, policy search returns nothing | Stop (stress) | **Stopped.** No draft from memory, retry offered, attempts logged. |
 | 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. |
+| 8 | ENQ-2024-017, Chinese enquiry about a passport | Complete (stress) | **Completed.** Two-version draft (Chinese and English), fee marked high risk. |
+| 9 | ENQ-2024-018, Tamil complaint with legal risk | Escalate (stress) | **Escalated.** No draft in any language. Hand-off with an English digest. |
 
 ---
 
@@ -546,4 +548,160 @@ Nothing else changed in this rule. A short real enquiry, such as "Fee?", has let
 - **A rule was too narrow.** "No text" was read as "no characters". Junk input slipped past it and was counted as a tool failure.
 - **One rule fixed it.** The change is in the rule's own words, with no new stop condition and no new threshold.
 - **The count is protected.** After the change, junk input cannot push the whole agent towards a stop.
-- **Not covered.** Text in another script, such as an enquiry in Chinese or Tamil, has letters but no English words. The new rule does not catch it and the agent treats it as readable. How it should be handled is not decided. A hand run does not show how a real model would read "?? ...". Run 4's reason text, "no subject and no text", is left as it was, because that run was run before the change.
+- **Covered later.** Text in another script, such as Chinese or Tamil, has letters but no English words. The new rule treats it as readable. How it is handled was decided afterwards and is tested in runs 8 and 9. A hand run does not show how a real model would read "?? ...". Run 4's reason text, "no subject and no text", is left as it was, because that run was run before the change.
+
+---
+
+## Runs 8 and 9: enquiries in another script
+
+Run 7 left one case open: an enquiry in Chinese or Tamil has letters but no English words, and the "no readable words" rule treats it as readable. The learner decided what the agent does with it, and `CLAUDE.md` now has a "Language" paragraph. Both runs were hand runs against that new wording. The Chinese and Tamil text is made up and was written by Claude, so a fluent reader should check it. A real model's translation is not tested here.
+
+**The rule being tested.** Work out the language of the enquiry. Draft in the same language. Always give an English version of the draft. The English version is the one checked word for word against the passage.
+
+---
+
+## Run 8: a Chinese enquiry, drafted in Chinese and in English
+
+**Input (made up).** ENQ-2024-017, received 2024-11-19 16:05.
+> **From:** Resident (made up)
+> **Subject:** 护照续期
+> **Body:** "护照续期要多少钱？需要带什么文件？"
+> *(English, for the officer: "How much does it cost to renew a passport? What documents do I bring?")*
+> **Attachment note:** none
+
+### Turn 1: read the enquiry and work out the language
+
+- **Goal:** Know what is being asked, in which language, and whether a draft is allowed.
+- **Plan:** Read the enquiry. Check "no readable words" first. Then work out the language and write a short English digest. Then check the other stop conditions.
+- **Act:** `read_enquiry(ENQ-2024-017)`
+- **Observe:** The subject and body hold Chinese characters. No attachment. Two questions: a fee and the documents. No complaint, legal or vulnerable-resident wording. No instruction aimed at the agent.
+- **Check:**
+  - "No readable words": not met. The text has letters, in a script other than the Latin one. Letters in any script count.
+  - Language: Chinese. The agent is sure, because the whole text is Chinese.
+  - English digest for the officer: "Resident asks the passport renewal fee and the documents to bring."
+  - No hand-off trigger. One topic, passports. Continue.
+
+### Turn 2: find the passages
+
+- **Goal:** Find the exact passages. Use only the 15 listed pages, which are in English.
+- **Plan:** Search in English from the digest, not with the Chinese text. Read the exact passages.
+- **Act:** `search_policy_pages("passport renewal fee documents")`, then `read_passage` on each page returned.
+- **Observe:**
+  - ICA Passport Services (made up), updated 2024-10-01: "Citizens renewing passports must present: (1) current passport, (2) one recent photograph taken within the last 3 months."
+  - ICA Fee Schedule (made up), updated 2024-10-01: "Passport fees: 5-year validity - $70, 10-year validity - $80. Fees are non-refundable."
+  - Match confidence: 95%.
+- **Check:** Both pages are in the 15. 95% is not below 90%. Every point has a passage. The language of the enquiry does not change which pages may be used. Continue.
+
+### Turn 3: write the English version first, then the Chinese version
+
+- **Goal:** One draft in two versions, each with a citation under every claim.
+- **Plan:** Write the English version from the passages, word for word on the fee and documents. Mark the fee as high risk. Then write the Chinese version from the English one. Keep every figure and the citations as they are.
+- **Act:** Compose the draft:
+
+  **English version (for the officer to check)**
+  > Dear Resident,
+  > Thank you for your enquiry about passport renewal.
+  > Citizens renewing passports must present: (1) current passport, (2) one recent photograph taken within the last 3 months. `[ICA Passport Services, updated 2024-10-01]`
+  > Passport fees: 5-year validity - $70, 10-year validity - $80. Fees are non-refundable. `[ICA Fee Schedule, updated 2024-10-01]` **High risk: fee. Officer to confirm.**
+  > ServiceSG Officer
+
+  **Chinese version (the reply in the resident's language)**
+  > 您好，
+  > 感谢您就护照续期来信。
+  > 公民续期护照时，请带上：(1) 现有护照；(2) 一张三个月内拍摄的近照。`[ICA Passport Services，更新于 2024-10-01]`
+  > 护照费用：5年有效期 $70，10年有效期 $80。费用不予退还。`[ICA Fee Schedule，更新于 2024-10-01]` **高风险：费用。请官员确认。**
+  > ServiceSG Officer
+
+- **Observe:** 2 cited claims in each version. 1 claim marked high risk in each version (the fee).
+- **Check:**
+  - Every claim has a citation, in both versions: yes. The policy page names stay in English, as in the passages.
+  - The English fee matches the passage word for word: yes.
+  - The Chinese fee shows the same figures, $70 and $80, and the same non-refundable statement: yes. No figure was converted and none was added.
+  - No outcome promised: yes.
+  - The English version is complete and is not a shortened summary: yes.
+  - The high-risk mark is on both versions: yes. The officer ticks the item once, against the English passage.
+
+### Turn 4: save and log
+
+- **Goal:** Put both versions in front of the officer. Do not send.
+- **Plan:** Save one draft with two versions, the English digest of the enquiry and the language. The badge is blue, "Verification required", because one section is blue. Write the log.
+- **Act:** `save_draft(ENQ-2024-017, draft = [English, Chinese], language = Chinese, digest)` then `write_log(...)`
+- **Observe:** Saved. The officer sees the English digest of the enquiry, then the English version, then the Chinese version. Log entry written.
+- **Check:** Nothing left the review queue. The fee needs the officer's tick. Nothing marked resolved. The agent did not choose which version is sent. The officer does.
+
+**Outcome: completed.** A two-version draft is saved. 2 citations and 1 high-risk claim in each version. Not sent, not closed.
+
+**Caught by / held by:** **Instructions** (the Language paragraph), **Stop conditions** (the checks all ran in English terms), **Permissions** (no send, no skipping the fee confirmation).
+
+**Log entry written (Run 8):**
+
+| Field | Value |
+|---|---|
+| Enquiry | ENQ-2024-017 |
+| Result | Draft |
+| Language of the enquiry | Chinese |
+| English version provided | Yes |
+| Policy pages used | ICA Passport Services (2024-10-01), ICA Fee Schedule (2024-10-01) |
+| Confidence | 95% |
+| High-risk claims | 1: fee |
+| Sent | No |
+| Waiting on | Officer review |
+
+---
+
+## Run 9: a Tamil complaint, still handed off
+
+**Input (made up).** ENQ-2024-018, received 2024-11-19 16:40.
+> **From:** Resident (made up)
+> **Subject:** (empty)
+> **Body:** "நான் மூன்றாவது முறையாக எழுதுகிறேன். யாரும் பதிலளிக்கவில்லை. இந்த வாரம் சரியான பதில் கிடைக்காவிட்டால் வழக்கறிஞரிடம் செல்வேன்."
+> *(English, for the officer: "I am writing for the third time. Nobody has replied. If I do not get a proper answer this week, I will go to a lawyer.")*
+
+### Turn 1: read the enquiry, work out the language, check the hand-off triggers
+
+- **Goal:** Make sure the language does not hide a trigger.
+- **Plan:** Read the enquiry. Work out the language and write the English digest first. Check the hand-off triggers on the digest, before any search.
+- **Act:** `read_enquiry(ENQ-2024-018)`
+- **Observe:** The body is Tamil. Language: Tamil. English digest: "Third message, no reply. Says they will go to a lawyer if there is no proper answer this week."
+- **Check:** A complaint, and a threat of legal action. Both are hand-off triggers, whatever the language. Stop the drafting path. **Do not write a reply, in Tamil or in English.**
+
+### Turn 2: hand off with the English digest
+
+- **Goal:** Give the human lead what they need, and nothing more.
+- **Plan:** Save a hand-off with the language and the English digest, so the human lead knows what the resident wrote and which language to answer in. No search is needed. Show no pages, and say none is a real match.
+- **Act:** `save_draft(ENQ-2024-018, no_draft = handoff, language = Tamil, digest)` then `write_log(...)`
+- **Observe:** Saved for the human lead. Log entry written.
+- **Check:**
+  - No text written to the resident in either language: yes.
+  - Case not closed, nothing sent: yes.
+  - The digest holds no resident detail: yes. It uses the enquiry ID only.
+  - Human checkpoint reached: yes. The human lead takes the case.
+
+**Outcome: escalated.** The hand-off rule held in a language other than English.
+
+**Caught by:** **Stop conditions** (hand-off for a complaint and legal action) and **Human checkpoints** (the human lead). The Language paragraph made sure the triggers were read on the digest.
+
+**Log entry written (Run 9):**
+
+| Field | Value |
+|---|---|
+| Enquiry | ENQ-2024-018 |
+| Result | No draft, hand-off |
+| Language of the enquiry | Tamil |
+| English version provided | Digest of the enquiry only. There is no draft |
+| Trigger | Complaint and legal action |
+| Sent | No |
+| Waiting on | Human lead |
+
+---
+
+## What runs 8 and 9 show
+
+- **The rule works on both inputs.** Run 8 gives a draft in two versions with the fee checked against the English passage. Run 9 hands off a complaint without drafting in any language.
+- **The English version is the check.** The officer may not read Chinese or Tamil. So the word-for-word match, the blue tick and the citations are all done on the English version. The other language is a faithful copy of it.
+- **Open, not decided.** See "Open decisions" in `ai-prd.md`:
+  - Who checks that a Chinese or Tamil version says the same as the English one, since the officer and the supervisor may not read it.
+  - How the edit size and the rubber-stamp count work for a two-version draft.
+  - Which languages the agent may draft in, and what it does for one it cannot write reliably.
+  - Which version the officer sends.
+- **Not shown.** These are hand runs. A real model's translation, and its accuracy on fees, are not tested. Not run: an enquiry in two languages, and an enquiry in a language the agent cannot write reliably. The rule says the agent gives no draft then, but that is not run.
