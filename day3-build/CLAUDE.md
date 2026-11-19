@@ -58,6 +58,7 @@ If a tool fails, for example the policy search returns nothing, do not draft fro
 - Read the enquiry and the 15 policy pages.
 - Save a draft or a no-draft result to the officer's review queue.
 - Add entries to the logs.
+- Show the "This is wrong" flag, record flags, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per page, re-read cited passages once a day, and alert staff about what these find (the five routes under Stop conditions). Never stop yourself because of the same-page count or the daily check.
 - Alert the ServiceSG team, the Product Ops member on duty and the business owner, and show notices and reminders to officers, only in the cases named in Stop conditions and Logs. Alerts go to staff, never to a resident.
 
 **Not allowed, ever:**
