@@ -31,7 +31,7 @@ The agent is not built. There is no model and no tool yet. This file describes h
 
 **Two roles are not in any earlier file, and I have not added them.** A role for data protection or security, and a role for the agent's own budget. Both may matter for the vendor and model row. See Open decisions.
 
-**One person can hold more than one role.** The supervisor, the knowledge base lead and the project owner are all in the ServiceSG team. A person in the ServiceSG team cannot approve a restart they asked for themselves.
+**One person can hold more than one role.** The supervisor, the knowledge base lead, the project owner and the Product Ops specialist are all in the ServiceSG team. A person in the ServiceSG team cannot approve a restart they asked for themselves.
 
 ## Decision rights
 

@@ -118,13 +118,27 @@ All figures are made up.
 
 ## Roles and operating model
 
-- **Officer:** reviews, edits and sends every reply. Verifies every blue item before approving.
-- **Supervisor:** reviews 5% of sent replies each week against the cited passages.
-- **Knowledge base lead (role, made up):** owns the policy pages and what goes in or out of Sources.
+**Roles** (roles, not names; the full table is in `day3-build/operating-model.md`)
+- **Officer:** reviews, edits and sends every reply. Verifies every blue item before approving. May request a restart or a reinstatement. Sees the reminder and the notice when drafting is off.
+- **Supervisor:** reviews 5% of sent replies each week against the cited passages. Is informed at each reminder and each per-officer stop. The only role that can reinstate an officer.
+- **Knowledge base lead (role, made up):** owns the policy pages and what goes in or out of Sources. Reviews wrong-citation flags and is alerted at a wrong-citation stop.
 - **Human lead:** takes hand-offs, such as complaints with legal risk.
-- **Project owner:** keeps the context skill and prototype in line.
-- **Product Ops specialist:** an additional member of the ServiceSG team. The Product Ops team is on duty in and out of hours. The member on duty is notified as soon as an incident happened, acts first, and must act within 3 hours.
-- **Business owner:** the sponsor in the build log. Notified as soon as an incident happened.
+- **Project owner:** keeps the context skill and prototype in line. Approves changes to rules, sources, colours and the success, fail and kill thresholds.
+- **ServiceSG team:** the project owner, the supervisor, the knowledge base lead and the Product Ops specialist. Gets every stop alert. One member approves a restart, and not the member who asked. Any member may adjust the rubber-stamp streak threshold and the 28 days, alone. Reviews the logged data at least once a week.
+- **Product Ops team:** on duty in and out of hours. The member on duty is notified as soon as an incident happened, acts first, must act within 3 hours, and can switch the agent off by hand, alone. The Product Ops specialist is in the ServiceSG team.
+- **Business owner:** the sponsor in the build log. Told directly, as soon as an incident happened.
+- **Engineering team:** builds and runs the agent, and decides the items under "What engineering decides" in `day3-build/ai-prd.md`.
+- **Resident:** never uses the agent. Sees only a reply an officer has sent.
+
+**Who decides what**
+- **Scope, permissions, vendor and model, go-live, retire:** the project owner decides. Consulted: the ServiceSG team and the engineering team, and others named for each decision in `operating-model.md`. Told: all officers, the ServiceSG team and the engineering team.
+- **Incident:** the agent stops itself at a stop condition. The Product Ops member on duty can switch it off by hand. One ServiceSG team member who did not ask approves a restart. The supervisor reinstates an officer.
+- **Always the officer:** confirming a fee, deadline, date or eligibility claim, sending a reply, and closing a case.
+- **The weekly audit:** the supervisor.
+
+**When something goes wrong:** the member on duty and the business owner are told as soon as the incident happened. The member on duty acts first, within 3 hours, holds drafts already in the queue, and the supervisor decides whether the resident needs a correction, which an officer sends. A restart request states the cause and what changed. A wrong answer the agent cannot detect reaches a person by five routes: an officer's "This is wrong" flag, a prompt when an enquiry is reopened, an alert when 2 or more officers flag the same page in a day, a daily re-check of cited passages, and the weekly audit.
+
+**Not decided yet:** a data protection or security role, a budget owner, and who investigates after an incident. None of this is built.
 
 **Review trigger:** review the context skill when a policy page changes, an officer flags a wrong citation, the kill switch trips, a new kind of enquiry appears, thresholds change, or a colour changes meaning.
 
