@@ -18,13 +18,13 @@ The agent is not built. There is no model and no tool yet. This file describes h
 
 | Role | What they do for the agent | Source |
 |---|---|---|
-| **Officer** | Reviews, edits and sends every reply. Ticks every blue item before approving. May request a restart, or a reinstatement. Sees the reminder and the notice when drafting is off. | Earlier file |
+| **Officer** | Reviews, edits and sends every reply. Ticks every blue item before approving. May request a restart, or a reinstatement. Edits only the English version. Sees the reminder and the notice when drafting is off. | Earlier file |
 | **Supervisor** | Checks 5% of sent replies each week against the cited passages. Is informed at each reminder and each per-officer stop. Is the only role that can reinstate an officer. Is a member of the ServiceSG team. | Earlier file, Decided |
 | **Knowledge base lead** | Owns the policy pages and what goes in or out of the 15 sources. Reviews wrong-citation flags. Is alerted when a wrong-citation stop happens. Is a member of the ServiceSG team. | Earlier file, Decided |
 | **Human lead** | Takes hand-offs, such as a complaint with legal risk. | Earlier file |
 | **Project owner** | Keeps the context skill and prototype in line. Approves changes to the rules, sources, colours and the success, fail and kill thresholds. Is a member of the ServiceSG team. | Earlier file |
 | **ServiceSG team** | The project owner, the supervisor, the knowledge base lead and the Product Ops specialist, an additional member added on 2026-11-19. Gets every stop alert. One member approves a restart, and it cannot be the member who asked. Any member may adjust the rubber-stamp streak threshold and the 28 days, alone. Must review the logged data at least once a week. | Decided |
-| **Engineering team** | Builds and runs the agent. Decides the items listed under "What engineering decides" in `ai-prd.md`, such as how the policy search works and where logs are kept. It is named in `ai-prd.md` and not defined in `one-pager.md`. | Earlier file (named only) |
+| **Engineering team** | Builds and runs the agent. Decides the items listed under "What engineering decides" in `ai-prd.md`, such as how the policy search works, where logs are kept, and whether and how the reference translation is checked. It is named in `ai-prd.md` and not defined in `one-pager.md`. | Earlier file (named only) |
 | **Resident** | Never uses the agent. Sees only a reply that an officer has sent. | Earlier file |
 | **Product Ops team (on duty)** | On duty both in and out of hours. The member on duty takes the first report of an incident, acts first, and is told as soon as it happens. The member on duty must act within 3 hours of being notified. The Product Ops team sets its own rota. The team's specialist is a member of the ServiceSG team. See the ServiceSG team row. | Decided on 2026-11-19 |
 | **Business owner** | The sponsor in `day2-validate/build-log.md` (the Chief Executive Sponsor). Is told directly, as soon as an incident happens. Is not told by the project owner. A role, not a name. | Decided on 2026-11-19 |

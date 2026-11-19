@@ -95,6 +95,7 @@ The agent never moves past these without a person.
 |---|---|---|
 | Every draft | Officer | Reads the draft and its citations, edits if needed, and sends. Nothing leaves without them. |
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving |
+| Text the officer adds that makes a policy claim with no matching passage | Officer | Sees it marked blue, "No matching passage. Check before sending". Ticks it, rewords it to match a passage, or removes it, before approving |
 | No-draft cases | Officer | Writes the reply from the closest pages, or escalates |
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page |

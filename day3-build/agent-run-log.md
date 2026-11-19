@@ -26,8 +26,10 @@ Each turn has five parts:
 | 5 | ENQ-2024-014, cites a page that is not one of the 15 | Stop (stress) | **Stopped.** No draft, nothing confirmed. |
 | 6 | ENQ-2024-015, policy search returns nothing | Stop (stress) | **Stopped.** No draft from memory, retry offered, attempts logged. |
 | 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. **7c: rerun** with the tool-level block, caught by the rule and by the tool. **7d: digits-only and gibberish** now unreadable, caught. |
-| 8 | ENQ-2024-017, Chinese enquiry about a passport | Complete (stress) | **Completed.** Two-version draft (Chinese and English), fee marked high risk. |
+| 8 | ENQ-2024-017, Chinese enquiry about a passport | Complete (stress) | **Completed.** English draft with a Chinese reference translation, fee marked high risk. |
 | 9 | ENQ-2024-018, Tamil complaint with legal risk | Escalate (stress) | **Escalated.** No draft in any language. Hand-off with an English digest. |
+
+**Follow-up runs.** 7b, 7c and 7d rerun the punctuation-only input as the rule and the search tool changed, and added digits-only and gibberish. 8b, 8c, 8d and 8e rerun Run 8 as decisions were made: the officer edits the English, the resident receives the English as official, the officer's own text is checked, and the label changed. Each follow-up is hand-run. The runs written before a decision still show the wording of the time. Wording differences are explained in the notes after each.
 
 ---
 
@@ -422,7 +424,7 @@ This is an ordinary enquiry. The test is that `search_policy_pages` returns noth
 
 ---
 
-## What the three stress runs show
+## What runs 4 to 6 show
 
 | Run | Input | Outcome | Which harness part caught it |
 |---|---|---|---|
