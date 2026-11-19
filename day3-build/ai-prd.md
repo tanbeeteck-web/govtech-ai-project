@@ -439,6 +439,10 @@ For the learner. I have not chosen for you. Options are listed only to show what
 6g. **How does the agent tell a policy claim from ordinary wording?** The rule says "any statement about policy". A model's judgement draws that line, and it will sometimes be wrong in both directions. Engineering decides how to test it. The learner may confirm that a missed claim is acceptable, because the officer still reviews everything.
 6h. **Should an unmatched claim stop the officer approving?** I wrote that the officer must tick, reword or remove it, which is the same as every other blue item. If you meant it should be harder than a tick, say so.
 
+**About the 3-in-a-row search stop (found by the regression pass, not decided)**
+6i. **Does it count enquiries or failed searches?** `CLAUDE.md` says enquiries in one place and failed searches in another. A retry on one enquiry would count differently. I suggest counting each enquiry once.
+6j. **Can the tool tell a failure from "found nothing"?** An enquiry no page answers, and an officer's unsupported added claim, both give an empty result. I suggest only a tool failure counts towards the 3. Engineering decides if the tool can report the two separately.
+
 **About the agent and the pilot**
 7. **The 30-second stuck signal.** `one-pager.md` asks for it, and nothing is built. When an officer is stuck for 30 seconds, what should happen and who is told?
 8. **What the officer sees while the agent is off.** A stop notice is decided. What the screen shows to an officer who is working a new enquiry, mid-day, is not.

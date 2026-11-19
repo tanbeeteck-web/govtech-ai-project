@@ -1064,3 +1064,52 @@ The label "for easy reference only" in Run 8c was replaced on 2026-11-19. The le
 | Label | Option B |
 | Sent by the agent | No |
 
+---
+
+## Regression pass: runs 1 to 9 against the current rules
+
+Run on 2026-11-19, after the consistency pass. Two kinds of test were run.
+
+**1. The automated checks.** `day2-validate/prototype/tests.js` ran with macOS `jsc`: **70 passed, 0 failed.** These cover the Day 2 prototype only (escaping, the draft screens, the forced lookup failure, edit size and the comfort-test verdicts). **No automated test covers anything in Day 3.** The agent and its tools are not built.
+
+**2. A hand re-walk of every run.** Each input was taken through the current `CLAUDE.md`, from the top, as if for the first time. Hand runs, no model, no tools. "Same" means the outcome is as logged. The wording in an old run may still differ from today's rules, which the notes after those runs explain.
+
+| Run | Input | Current result | Same as logged? | Note |
+|---|---|---|---|---|
+| 1 | Parking renewal (English) | Draft, 2 citations, deadline blue | Same | English enquiry: no translation, no digest needed. |
+| 2 | Complaint with legal risk | Hand-off, no draft | Same | Up to three closest pages, none a real match, said so. |
+| 3 | Officer asks to send, close and skip | Refused | Same | Not a stop of the whole agent. |
+| 4 | Empty enquiry | No draft, NEEDS CLARIFICATION, no search | Same outcome | The reason text now reads "no readable words". The log table in Run 4 still says "no subject and no text". |
+| 5 | Cites a page not among the 15 | No draft, page name logged, nobody alerted | Same | See finding 2: the search may return nothing here. |
+| 6 | Policy search returns nothing | No draft, retry, advice after 2 tries, attempts logged | Same outcome | See finding 1: attempts and enquiries are counted differently. |
+| 7 | "?? ..." | No search, NEEDS CLARIFICATION, count unchanged | Better | Run 7a (counted as a failed search) cannot happen now. |
+| 7d | "12345", gibberish, junk with one real word, short Chinese | Unreadable, unreadable, readable, readable | Same | |
+| 8 | Chinese passport enquiry | English draft, Chinese reference translation, fee blue | Same outcome | Run 8 says "two versions". Today it is an English draft with a reference. |
+| 8b to 8e | Officer edits, own text checked, label | English official, own claim marked blue, new label | Same | |
+| 9 | Tamil complaint | Hand-off, English digest, nothing written in Tamil | Same | |
+
+**Result.** All nine runs still reach the right place. None needed a rule change to pass. Two ambiguities came up that the runs did not expose before, because the rules they test were written afterwards. Both are in the 3-in-a-row stop. Neither is decided.
+
+### Finding 1: the count says "enquiries" in one place and "failed searches" in another
+
+- `CLAUDE.md` says the whole agent stops when the policy search returns nothing "for **3 enquiries** in a row".
+- The Logs section says to log "the running count of **failed searches** in a row".
+- Run 6 shows why it matters. One enquiry failed twice, once on the first search and once on the officer's retry. That is 2 failed searches but 1 enquiry.
+- **Effect.** If it counts searches, one officer pressing Retry three times on one enquiry stops the whole agent. If it counts enquiries, it takes three different enquiries.
+- **My suggestion, not decided:** count enquiries, with each enquiry counted once however many retries it has. A retry should not stop everyone's agent. The stop is meant to catch a tool that is down for everyone.
+
+### Finding 2: "returns nothing" cannot tell a tool failure from a real "no match"
+
+- The stop says "the policy search returns nothing". The same wording is used for a tool that is down and for a search that works but finds no matching page.
+- **Where it can matter.**
+  - An enquiry whose answer is not in any listed passage (NEEDS CLARIFICATION). If the search returns an empty result for it, that counts towards the stop.
+  - An officer's added claim that no passage supports (Run 8d). The check searches, and an empty result there is the right answer.
+  - A page the resident names that is not listed (Run 5). In Run 5 the search returned weak matches. A different wording could return nothing.
+- **Effect.** Three honest enquiries that no page answers, in a row, from any officers, would stop the whole agent and alert the ServiceSG team, the Product Ops member on duty and the business owner. No tool is broken.
+- **My suggestion, not decided:** the tool reports a failure (an error, or "could not search") separately from "searched, found nothing". Only the failure counts towards the 3. "Searched, found nothing" gives NEEDS CLARIFICATION and is not counted. This needs a tool that can tell the two apart, which is for engineering. If that is not possible, the count would need a different test.
+
+### What was not rerun
+
+- **No real model.** These re-walks show the rules read consistently. They do not show how a real model behaves.
+- **The tools do not exist,** so "the tool refuses", the 3-in-a-row stop, the alerts and the translation are all described, not run.
+- **Not run in any run:** the alerts and Product Ops steps, the rubber-stamp reminder and per-officer stop, the five detection routes, and a restart.
