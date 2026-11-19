@@ -10,7 +10,7 @@ This file says who decides what about the agent. It takes its roles and rules fr
 **How to read the marks.**
 - **Decided:** the learner decided it, or accepted my proposal.
 - **Earlier file:** an earlier file says it and the learner has not changed it.
-- **Proposed:** I suggest it and the learner has not decided it. On 2026-11-19 the learner accepted every earlier proposal, including the incident walkthrough. The only Proposed item left is the suggestion for how the agent learns of a wrong answer it cannot detect itself.
+- **Proposed:** I suggest it and the learner has not decided it. On 2026-11-19 the learner accepted every earlier proposal, including the incident walkthrough. Nothing is Proposed now. The suggestion for how the agent learns of a wrong answer it cannot detect itself was accepted on 2026-11-19.
 
 The agent is not built. There is no model and no tool yet. This file describes how the agent will be run.
 
@@ -135,15 +135,15 @@ For the learner. I have not chosen for you.
 8. ~~Who is on duty?~~ **Settled on 2026-11-19:** the Product Ops team, in and out of hours. The Product Ops specialist is an additional ServiceSG team member. The rota is the Product Ops team's own.
 9. ~~May one member switch the agent off alone?~~ **Settled on 2026-11-19:** the Product Ops member on duty, alone. Restart still needs one other ServiceSG team member.
 10. ~~Is the business owner the sponsor?~~ **Settled on 2026-11-19:** yes, the Chief Executive Sponsor in `day2-validate/build-log.md`.
-11. ~~How fast?~~ **Settled on 2026-11-19:** the member on duty and the business owner are notified **as soon as the incident happened**, and the member on duty must act **within 3 hours**. How the agent learns of an incident it cannot detect itself is the suggestion below (item 15).
+11. ~~How fast?~~ **Settled on 2026-11-19:** the member on duty and the business owner are notified **as soon as the incident happened**, and the member on duty must act **within 3 hours**. How the agent learns of an incident it cannot detect itself is settled in item 15.
 12. ~~Hold drafts in the queue after an incident?~~ **Settled on 2026-11-19:** yes. Drafts already in the queue are marked "held, do not send" until checked. This changes the earlier rule that drafts stay.
 13. ~~Who corrects a resident?~~ **Settled on 2026-11-19:** the supervisor decides whether a correction is needed and what it says. An officer sends it.
 14. ~~Which go into other files?~~ **Settled on 2026-11-19:** on duty, the business owner, immediate notification, the 3 hours, the hand switch-off, the queue hold and the Product Ops specialist are in `CLAUDE.md`, `agent-control-panel.md`, `ai-prd.md` and `one-pager.md`.
-15. **How does the agent learn of a wrong answer it cannot detect itself? (Proposed, see below.)**
+15. ~~How does the agent learn of a wrong answer it cannot detect itself?~~ **Settled on 2026-11-19:** the five routes below, all accepted.
 
-### How the agent could learn of a wrong answer it cannot detect itself (Proposed)
+### How the agent learns of a wrong answer it cannot detect itself (Decided on 2026-11-19)
 
-The agent only stops at conditions it can check. A wrong answer that passes its own checks needs a person or a signal from outside it. I suggest five routes, from fastest to slowest. Each sends the Product Ops member on duty and the business owner an alert as soon as it fires.
+The agent only stops at conditions it can check. A wrong answer that passes its own checks needs a person or a signal from outside it. There are five routes, from fastest to slowest. Routes 1 to 4 send the Product Ops member on duty and the business owner an alert as soon as they fire. Routes 1, 3 and 4 also alert the knowledge base lead.
 
 | Route | How it works | Speed |
 |---|---|---|
@@ -156,6 +156,6 @@ The agent only stops at conditions it can check. A wrong answer that passes its 
 Notes:
 - Routes 1 and 2 need officers to act. Route 3 and route 4 need the agent to count and compare, so they need new tools or logs.
 - Route 4 is not a Permissions row yet. It would be a read of the policy pages and a write to a log, both auto.
-- None of this is built.
+- None of this is built. The flag, the prompt, the same-page count and the daily re-check do not exist in the prototype or in any tool.
 
 **Not built.** None of this is in place. There is no agent, no alert and no team yet. The operating model is a plan.
