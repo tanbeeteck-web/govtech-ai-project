@@ -205,6 +205,7 @@ These are never given to the agent, however well it performs.
 
 ### Open questions
 
+- **The 3-in-a-row search stop (found by the regression pass).** It is not clear whether it counts enquiries or failed searches, and an honest "no page answers this" result looks the same as a broken tool. Both are listed as 6i and 6j in `ai-prd.md`. Nothing is decided.
 - **Translation check.** The engineering team decides whether and how the reference translation is checked. Until then it is assumed correct.
 - **The label in each language.** The line is written in English only. A fluent reader must confirm it in Chinese and Tamil, and the agency's legal counsel should confirm the final text before real use.
 - **How the agent tells a policy claim from ordinary wording** in text the officer adds. Engineering decides how to test it (6g in `ai-prd.md`).
