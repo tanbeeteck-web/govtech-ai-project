@@ -951,3 +951,14 @@ On 2026-11-19 the learner restated the language rule: the agent always drafts in
 
 **Not run.** A case where the translation cannot be made, such as a language the agent cannot write reliably, has not been run. It would be a new hand run.
 
+---
+
+## Update: English is the only drafting language
+
+On 2026-11-19 the learner decided that the agent can only draft in English. This settles the open question "which languages the agent may draft in" in Run 8 and the notes after it.
+
+- **Runs 8 and 9 still stand.** Run 8 drafted in English and gave the Chinese as a reference translation. Run 9 handed off a complaint with an English digest and wrote nothing in Tamil.
+- **Nothing in any run had the agent write a reply in another language.** The only non-English text it produced was the reference translation in Runs 8, 8b and 8c.
+- **What the rule means for an unusual language.** The agent no longer has to decide whether it can "write reliably" in a language, because it does not draft in one. It only has to understand the enquiry well enough to draft in English. If it cannot, it gives no draft and shows an English digest if it has one.
+- **Not run.** An enquiry in a language the agent cannot understand well enough to digest. The rule gives no draft there. It has not been run.
+
