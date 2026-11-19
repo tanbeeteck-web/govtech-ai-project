@@ -934,3 +934,20 @@ The learner decided on 2026-11-19 to treat both gaps from Run 7c as unreadable. 
 - **The tool block is complete only for the characters it can test.** Digits-only and punctuation are certain. Gibberish needs a word or language check, which is not decided. I added that to "What engineering decides" in `ai-prd.md`.
 - **One real word is the line.** It keeps "asdfghjkl passport fee??" readable, and it keeps short enquiries in any script readable.
 - **Not shown.** These are hand runs. A real model may judge some strings differently, such as a name, an abbreviation, a reference number like "ENQ-2024-001" on its own, or a word from a language it does not know. Those are not run and the rule does not say what to do. They are left to the knowledge of the agent and to the officer, who sees the NEEDS CLARIFICATION result and can read the enquiry.
+
+---
+
+## Update on runs 8, 8b and 8c: English is the draft, the translation is the reference
+
+On 2026-11-19 the learner restated the language rule: the agent always drafts in English, adds an automatic translation into the original language as a reference, and the officer edits only the English version. Runs 8, 8b and 8c describe "a draft in two versions" and call the Chinese text "the reply in the resident's language". The behaviour they show is the same: English first, the officer edits English, the Chinese follows from it, and the resident receives English as official. Only the wording of those runs is out of date. I have not rewritten them, and have not rerun them. The reading is now:
+
+| Run 8 said | Now reads |
+|---|---|
+| "Chinese version (the reply in the resident's language)" | The Chinese reference translation of the English draft |
+| "A two-version draft" | An English draft with a reference translation |
+| "No draft if the versions differ" | The translation is left out and the English draft stands (**Proposed**, see below) |
+
+**One rule changed with the restatement, and it is Proposed.** `CLAUDE.md` used to say that if the translation could not be made reliably or differed from the English in a figure, date or claim, the agent gave no draft. That made a weak translation block the English reply, which the officer can still check and send. I changed it so the English draft stands and the translation is left out, with the officer told why. You have not decided this. If you prefer the old rule, a translation problem would again stop the whole draft.
+
+**Not run.** A case where the translation cannot be made, such as a language the agent cannot write reliably, has not been run. It would be a new hand run.
+
