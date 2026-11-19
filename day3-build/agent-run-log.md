@@ -945,9 +945,9 @@ On 2026-11-19 the learner restated the language rule: the agent always drafts in
 |---|---|
 | "Chinese version (the reply in the resident's language)" | The Chinese reference translation of the English draft |
 | "A two-version draft" | An English draft with a reference translation |
-| "No draft if the versions differ" | The translation is left out and the English draft stands (**Proposed**, see below) |
+| "No draft if the versions differ" | The translation is left out and the English draft stands (**Decided 2026-11-19**, see below) |
 
-**One rule changed with the restatement, and it is Proposed.** `CLAUDE.md` used to say that if the translation could not be made reliably or differed from the English in a figure, date or claim, the agent gave no draft. That made a weak translation block the English reply, which the officer can still check and send. I changed it so the English draft stands and the translation is left out, with the officer told why. You have not decided this. If you prefer the old rule, a translation problem would again stop the whole draft.
+**One rule changed with the restatement, and the learner decided it on 2026-11-19.** `CLAUDE.md` used to say that if the translation could not be made reliably or differed from the English in a figure, date or claim, the agent gave no draft. That made a weak translation block the English reply, which the officer can still check and send. I changed it so the English draft stands and the translation is left out, with the officer told why. The learner confirmed this rule. Under the old rule, a translation problem would have stopped the whole draft.
 
 **Not run.** A case where the translation cannot be made, such as a language the agent cannot write reliably, has not been run. It would be a new hand run.
 
