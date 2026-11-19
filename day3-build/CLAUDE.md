@@ -32,7 +32,7 @@ These are the only tools the agent may use. None of them exists yet. Only the pr
 | `write_log` | Adds one entry to the logs below | Append only |
 | `notify_staff` | Notifies staff only: sends a short notice to the ServiceSG team, passes on an officer's restart or reinstate request, or shows a notice or reminder to an officer. On any stop, it also notifies the Product Ops member on duty and the business owner. Staff only, never a resident | Write, internal only |
 
-If a tool fails, for example the policy search returns nothing, do not draft from memory. Follow the stop conditions.
+If a tool fails, for example the policy search reports an error, do not draft from memory. Follow the stop conditions.
 
 ## Context and memory
 
@@ -123,7 +123,8 @@ The agent never moves past these without a person.
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION. Do not guess or invent a number.
 - The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off.
 - An attachment cannot be read and the reply depends on it. Say so. Do not guess what it says.
-- The policy search returns nothing. Show no draft, say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
+- The policy search fails. A **search failure** means the tool reported that it could not search, such as an error or a timeout. It does not mean the search worked and found nothing. Show no draft (type: lookup failed), say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
+- The policy search works and finds nothing, or only weak matches. This is not a failure and is not counted. Write NEEDS CLARIFICATION, show up to three closest pages, and say so when none is a real match.
 - The enquiry has no readable words. That means the subject and body are empty, or hold only spaces, punctuation or symbols, or only digits, or letters that form no real word in any language (gibberish, such as "asdfghjkl"). One real word, in any language, is enough to make it readable. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no readable words", show no pages, and log "no search run". Letters in any script count as words, so an enquiry in another script is read, not stopped here. An enquiry like this does not count towards the search-failure stop below.
 - The enquiry names a policy page that is not one of the 15. Do not use, quote or confirm it. Write NEEDS CLARIFICATION, say the page is not among the pages you may use, and log the page name the resident gave. The officer may ask the knowledge base lead whether such a page exists. Do not alert anyone yourself.
 - A fee, deadline, date or eligibility statement cannot be matched word for word to the cited passage.
@@ -136,7 +137,7 @@ The agent never moves past these without a person.
 - A reply is found to have gone out without an officer sending it.
 - A real resident detail appears in an enquiry or a log.
 - A policy page in the sources is changed or withdrawn. Review `context-skill.md` first.
-- The policy search returns nothing for 3 enquiries in a row, across all officers. A search that works resets the count to 0. An empty enquiry, which runs no search, is not counted. The threshold of 3 is a starting value that any ServiceSG team member may adjust, alone, after reviewing the logged data. It means the search tool is probably down, so the agent stops and alerts, as for any whole-agent stop.
+- The policy search fails for 3 enquiries in a row, across all officers. Count each enquiry once, however many times it is retried. A search that works resets the count to 0, even if it found nothing. An enquiry that runs no search, or whose search was refused, is not counted. The threshold of 3 is a starting value that any ServiceSG team member may adjust, alone, after reviewing the logged data. It means the search tool is probably down, so the agent stops and alerts, as for any whole-agent stop.
 
 **When the whole agent stops:**
 1. **Alert the ServiceSG team, the Product Ops member on duty and the business owner at once.** Product Ops is on duty in and out of hours. The member on duty must act within 3 hours of being notified. The business owner is the sponsor in `day2-validate/build-log.md`. Say which stop it was, the time, and the enquiry IDs involved. Use IDs only, no resident details. The ServiceSG team means the project owner, the supervisor, the knowledge base lead and the Product Ops specialist. The Product Ops team is on duty in and out of hours.
@@ -185,7 +186,7 @@ Write an entry for every enquiry and every stop. Logs are append only, and the a
 
 **Flags and stops**
 - Wrong-citation flags, sent to the knowledge base lead.
-- Failed policy searches, with the attempt number, and the running count of failed searches in a row across all enquiries (it resets when a search works).
+- Failed policy searches, with the attempt number, and the running count of enquiries in a row whose search failed (each enquiry counted once, reset when a search works). Also log each search that worked and found nothing, as "no match", separately from a failure.
 - Each officer-added policy claim that matched a passage, and each one marked "No matching passage", with the enquiry ID, and what the officer then did (ticked, reworded, removed).
 - Any enquiry with no readable words ("no search run"), and any policy page a resident named that is not one of the 15.
 - Any refused request, such as an officer asking the agent to send.
