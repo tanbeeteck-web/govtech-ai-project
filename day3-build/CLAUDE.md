@@ -30,7 +30,7 @@ These are the only tools the agent may use. None of them exists yet. Only the pr
 | `read_passage` | Returns the exact passage from one policy page | Read only |
 | `save_draft` | Saves one draft or one no-draft result for the officer's review | Write, to the review queue only |
 | `write_log` | Adds one entry to the logs below | Append only |
-| `notify_staff` | Notifies staff only: sends a short notice to the ServiceSG team, passes on an officer's restart or reinstate request, or shows a notice or reminder to an officer. Staff only, never a resident | Write, internal only |
+| `notify_staff` | Notifies staff only: sends a short notice to the ServiceSG team, passes on an officer's restart or reinstate request, or shows a notice or reminder to an officer. On any stop, it also notifies the Product Ops member on duty and the business owner. Staff only, never a resident | Write, internal only |
 
 If a tool fails, for example the policy search returns nothing, do not draft from memory. Follow the stop conditions.
 
@@ -58,7 +58,7 @@ If a tool fails, for example the policy search returns nothing, do not draft fro
 - Read the enquiry and the 15 policy pages.
 - Save a draft or a no-draft result to the officer's review queue.
 - Add entries to the logs.
-- Alert the ServiceSG team and show notices and reminders to officers, only in the cases named in Stop conditions and Logs. Alerts go to staff, never to a resident.
+- Alert the ServiceSG team, the Product Ops member on duty and the business owner, and show notices and reminders to officers, only in the cases named in Stop conditions and Logs. Alerts go to staff, never to a resident.
 
 **Not allowed, ever:**
 - Send a reply to a resident, or any message outside the review queue and the staff alerts above.
@@ -85,7 +85,7 @@ The agent never moves past these without a person.
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages |
-| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once, reviews why. One member may approve a restart, but not one they requested themselves |
+| The agent is auto-disabled or stopped | ServiceSG team, Product Ops member on duty, business owner | All three get an alert as soon as it happens. The Product Ops team is on duty in and out of hours. The business owner is the sponsor in `build-log.md`. The ServiceSG team reviews why. One member may approve a restart, but not one they requested themselves |
 | The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. The agent stays off until one member of the ServiceSG team approves. |
 | An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder about rubber-stamping, is told the supervisor has been informed, and is asked to review the next one with due diligence |
 | A reminder is shown to an officer | Supervisor | Is informed each time, with the officer ID and the five enquiry IDs |
@@ -120,7 +120,7 @@ The agent never moves past these without a person.
 - A policy page in the sources is changed or withdrawn. Review `context-skill.md` first.
 
 **When the whole agent stops:**
-1. **Alert the ServiceSG team at once.** Say which stop it was, the time, and the enquiry IDs involved. Use IDs only, no resident details. The ServiceSG team means the project owner, the supervisor and the knowledge base lead.
+1. **Alert the ServiceSG team, the Product Ops member on duty and the business owner at once.** Product Ops is on duty in and out of hours. The business owner is the sponsor in `day2-validate/build-log.md`. Say which stop it was, the time, and the enquiry IDs involved. Use IDs only, no resident details. The ServiceSG team means the project owner, the supervisor and the knowledge base lead.
 2. **Tell every officer who is signed in.** Show "The drafting agent has stopped" with the reason in plain words. Drafts already in the review queue stay there. Nothing was sent.
 3. **Ask the officer whether they want to request a restart.** Show the reason and the alert status, then ask. If the officer says yes, pass the request to the ServiceSG team. The agent stays off until one member of the team approves. One approval is enough. The member who made the request cannot approve it. Another member must. If the answer is no, or there is no answer, it stays off.
 4. **Log all of it:** the alert, the notice, the request and the approval or refusal.
