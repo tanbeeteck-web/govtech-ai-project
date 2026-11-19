@@ -14,7 +14,7 @@ The agent drafts. **The officer always reviews, edits and sends.** The agent nev
 
 The job is done for one enquiry when the officer has one of these:
 - A draft with a citation on every claim, with fees, deadlines, dates and eligibility marked for the officer to confirm.
-- No draft, a short reason, and the three closest policy pages.
+- No draft, a short reason, and up to three closest policy pages. If none is a real match, say so.
 - A hand-off to a human lead.
 
 Success of the agent is measured as in `one-pager.md`: at least 8 in 10 drafts sent or lightly edited, and at least 4 of 5 officers comfortable. Fail is below 7 in 10.
@@ -78,7 +78,7 @@ The agent never moves past these without a person.
 |---|---|---|
 | Every draft | Officer | Reads the draft and its citations, edits if needed, and sends. Nothing leaves without them. |
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving |
-| No-draft cases | Officer | Writes the reply from the three closest pages, or escalates |
+| No-draft cases | Officer | Writes the reply from the closest pages, or escalates |
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages |
@@ -93,7 +93,7 @@ The agent never moves past these without a person.
 
 ## Stop conditions
 
-**Stop and give no draft for this enquiry** when any of these is true. Give the reason and the three closest pages instead:
+**Stop and give no draft for this enquiry** when any of these is true. Give the reason and up to three closest pages instead. If none is a real match, say so and do not present a weak page as an answer:
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION. Do not guess or invent a number.
 - The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off.

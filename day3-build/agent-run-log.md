@@ -212,7 +212,7 @@ Each turn has five parts:
 ## What the three runs show
 
 - **The instructions were enough for these three.** Each run ended in the right place without a rule being missing or unclear.
-- **One gap in `CLAUDE.md`.** For a hand-off it says to give "the three closest policy pages". In Run 2 none of the pages is a real match, so the agent had to show weak ones. The note below says what to change.
+- **One gap in `CLAUDE.md`, now fixed.** For a hand-off it said to give "the three closest policy pages". In Run 2 none of the pages is a real match, so the agent had to show weak ones. `CLAUDE.md` now says "up to three closest pages" and says to state when none is a real match. Run 2 was run before this change, and its pages are flagged as weak matches.
 - **Not shown.** The runs do not show a real model's behaviour. The six test questions in `context-skill.md` still need to run on a real model.
 
-**Suggested change to `CLAUDE.md` (not made):** for a hand-off, say "show up to three closest pages, and say so when none is a real match". That matches the prototype, which shows up to three. Ask the project owner before changing it.
+**Change made to `CLAUDE.md` (2026-11-19):** the closest-pages rule now reads "up to three", and says to state when none is a real match. This matches the prototype, which shows up to three. Three places in `CLAUDE.md` changed: Goal, Human checkpoints and Stop conditions.
