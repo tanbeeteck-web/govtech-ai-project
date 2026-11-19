@@ -735,7 +735,7 @@ The learner decided on 2026-11-19 that the officer always edits the English vers
 | Translation checked by a person | No. Assumed correct |
 | Sent by the agent | No |
 
-**Not decided.** Whether an officer's own added sentence needs a citation. The resident-facing question (6f) was settled afterwards: see Run 8c. Whether an officer's own added sentence needs a citation is still open.
+**Decided afterwards (see Run 8d).** Whether an officer's own added sentence needs a citation. The resident-facing question (6f) was settled afterwards: see Run 8c. Whether an officer's own added sentence needs a citation was decided afterwards: see Run 8d.
 
 ---
 
@@ -963,3 +963,62 @@ On 2026-11-19 the learner decided that the agent can only draft in English. This
 - **Not run.** An enquiry in a language the agent cannot understand well enough to digest. The rule gives no draft there. It has not been run.
 
 **Update (2026-11-19).** The learner decided that whether and how the reference translation is checked is for the engineering team. Runs 8, 8b and 8c show the translation unchecked, which is the position until engineering decides.
+
+---
+
+## Run 8d: the officer's added sentence, checked
+
+The learner decided on 2026-11-19 that text the officer adds is always checked against a proper citation where it applies. This reruns the sentence from Run 8b against that rule. Hand run: no tool exists, so this shows what the check must do.
+
+**Input (made up).** In ENQ-2024-017 the officer edited the English fee paragraph and added: "If you pay at a counter, bring your NRIC." They then added a second sentence, "Thank you for your patience."
+
+### Turn 1: check the officer's edit
+
+- **Goal:** Check each added sentence against the passages, where it makes a policy claim.
+- **Plan:** Split the edit into sentences. For each, decide whether it makes a policy claim. If it does, look for a passage that supports it word for word.
+- **Act:** `search_policy_pages("pay at counter bring NRIC")`, then `read_passage` on any page returned.
+- **Observe:**
+  - "Thank you for your patience." makes no policy claim. Not checked.
+  - "If you pay at a counter, bring your NRIC." is a requirement, so a policy claim. The fee passages in ICA Fee Schedule and ICA Application Channels say nothing about NRIC or paying at a counter. No match.
+- **Check:** One claim with no matching passage. The agent does not delete it and does not stop the officer.
+
+### Turn 2: mark it for the officer
+
+- **Goal:** Make the officer decide, without taking the decision away.
+- **Plan:** Mark the sentence blue, "No matching passage. Check before sending". The badge stays blue, "Verification required", and is never green. Log it.
+- **Act:** Update the draft view, then `write_log(...)`
+- **Observe:** The officer sees the sentence in blue, with the words, and a tick box like the fee. The thanks line is unmarked.
+- **Check:**
+  - The text is still there: yes.
+  - The agent has not said the sentence is wrong. It said no passage supports it: yes. The officer may know a rule the agent does not.
+  - The translation follows the English: the Chinese sentence is carried over, and the same mark is shown against it.
+  - Nothing sent: yes.
+
+### Turn 3: the officer decides
+
+Three outcomes the rule allows. Each was walked through by hand:
+
+| What the officer does | What the agent does |
+|---|---|
+| **Removes it** | Removes the mark and the Chinese sentence. Logs "removed". |
+| **Rewords it to match a passage** | Checks again. If the new wording matches, attaches the citation and clears the mark. |
+| **Ticks it and keeps it** | Keeps it, still labelled as the officer's own wording with no passage. Logs "ticked, no matching passage". |
+
+**Outcome: caught.** In Run 8b this sentence went through with no check. It now needs the officer's decision.
+
+| Field | Value |
+|---|---|
+| Enquiry | ENQ-2024-017 |
+| Officer-added claims checked | 1 |
+| Matched a passage | 0 |
+| Marked "No matching passage" | 1 |
+| Not checked (no policy claim) | 1 ("Thank you for your patience.") |
+| Officer's choice | Recorded: removed, reworded or ticked |
+| Sent by the agent | No |
+
+### What Run 8d shows
+
+- **The check closes the gap from Run 8b.** The officer's own claim is no longer invisible.
+- **The third outcome is a deliberate weak point.** The officer can tick and keep a claim that no passage supports. The rule leaves the decision to the officer, because an officer may know something the pages do not. That leaves the same risk as any ticked blue item: a rubber-stamped tick. These ticks are logged, so the supervisor can see them.
+- **Not shown.** A real model will draw the line between a policy claim and ordinary wording unevenly. See 6g in `ai-prd.md`. Not run: an officer who adds a whole paragraph, an officer who changes a figure in an existing cited sentence (the old citation would no longer match), and an added claim in a language other than English (the officer edits only English, so this cannot happen).
+
