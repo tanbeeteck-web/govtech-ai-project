@@ -100,7 +100,7 @@ Give no draft, give the reason, and show up to three closest pages. Say so when 
 - The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off to a human lead.
 - An attachment cannot be read and the reply depends on it.
 - The policy search returns nothing. Say nothing was sent, and let the officer retry. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
-- The enquiry has no subject and no text. Do not search. Write NEEDS CLARIFICATION and log "no search run".
+- The enquiry has no readable words: empty, or only spaces, punctuation or symbols. Do not search. Write NEEDS CLARIFICATION and log "no search run".
 - The enquiry names a policy page that is not one of the 15. Do not confirm it. Write NEEDS CLARIFICATION, and log the page name. The officer may ask the knowledge base lead. The agent does not alert anyone.
 - A fee, deadline, date or eligibility statement cannot be matched word for word to its passage.
 - A claim has no citation.
