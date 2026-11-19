@@ -772,3 +772,5 @@ The learner decided on 2026-11-19 that the resident receives the English version
 | Official reply | English, edited by the officer |
 | Reference text | Chinese, labelled for easy reference only |
 | Sent by the agent | No |
+
+**Update (2026-11-19).** The learner decided that the search tool itself refuses to run when the enquiry has no readable words, as well as the rule telling the agent not to. This is a tool-level block on `search_policy_pages`, in `CLAUDE.md` and `ai-prd.md`. Run 7b was a hand run before that block, so it has not been rerun against it.
