@@ -37,8 +37,8 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 | Knowledge base lead | Wrong-citation flags. Owns the policy pages. |
 | Human lead | Hand-offs, such as complaints with legal risk |
 | Project owner | The rules, sources, colours, and the success, fail and kill thresholds |
-| ServiceSG team | The project owner, the supervisor and the knowledge base lead. Gets stop alerts. One member may approve a restart. |
-| Product Ops team | On duty in and out of hours. The member on duty is notified as soon as an incident happened and acts first. |
+| ServiceSG team | The project owner, the supervisor, the knowledge base lead and the Product Ops specialist. Gets stop alerts. One member may approve a restart. |
+| Product Ops team | On duty in and out of hours. Its specialist is a ServiceSG team member. The member on duty is notified as soon as an incident happened, acts first, and must act within 3 hours. The member on duty, alone, can switch the agent off by hand. |
 | Business owner | The sponsor in `day2-validate/build-log.md`. Notified as soon as an incident happened. |
 | Resident | Never uses the agent and never sees its output until an officer sends a reply |
 
@@ -322,9 +322,9 @@ Each rule says where it came from. Engineering must not change a rule marked Dec
 31. Every stop of the whole agent alerts the ServiceSG team, the Product Ops member on duty and the business owner, as soon as it happens. **Decided 2026-11-19.** Product Ops is on duty in and out of hours. The business owner is the sponsor in `build-log.md`.
 32. An officer may request a restart. One approval from one member of the ServiceSG team is enough. The agent never restarts itself.
 32a. A team member cannot approve their own restart request. Another member must.
-32b. A wrong-citation stop alerts the knowledge base lead. Any of the three ServiceSG team members can take that role for the review. *My reading, to confirm.*
+32b. A wrong-citation stop alerts the knowledge base lead. Any ServiceSG team member can take that role for the review. **Decided 2026-11-19.**
 32c. When the whole agent stops, tell the ServiceSG team, not only the project owner.
-33. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
+33. The ServiceSG team is the project owner, the supervisor, the knowledge base lead and the Product Ops specialist. **Decided 2026-11-19.**
 
 **Design rules for engineering** (Earlier file, from the handoff note)
 34. Never red on a section of a draft. Never green while any section is blue. Every colour has words.
@@ -368,7 +368,7 @@ For the learner. I have not chosen for you. Options are listed only to show what
 - **All 32 permission settings are confirmed**, including row 5 (reading an officer's status).
 
 **Settled on 2026-11-19, second round** (no longer open)
-- A wrong-citation stop alerts the knowledge base lead, and any of the three team members can take that role. *My reading, see question 1.*
+- A wrong-citation stop alerts the knowledge base lead, and any ServiceSG team member can take that role.
 - A team member cannot approve their own restart request.
 - "Tell the project owner" in `CLAUDE.md` now says "tell the ServiceSG team".
 - Straightforward drafts that meet the high-confidence definition do not count in the streak.
@@ -376,10 +376,16 @@ For the learner. I have not chosen for you. Options are listed only to show what
 - Any team member may adjust the streak threshold, alone. The 28 days is also theirs to adjust.
 - A second ignored reminder disables auto-draft for that officer. It is clearly shown on their screen, with advice on what they can do.
 
+**Settled on 2026-11-19, third round** (no longer open)
+- The Product Ops specialist is an additional member of the ServiceSG team. The Product Ops team is on duty in and out of hours.
+- The member on duty must act within 3 hours of being notified.
+- The Product Ops member on duty, alone, can switch the agent off by hand. A restart still needs one other ServiceSG team member.
+- Drafts in the queue are held after an incident, a restart request states the cause and the change, and the supervisor decides whether a resident is corrected. See `operating-model.md`.
+
 **Open**
 
 **About the stop and restart rules**
-1. **Did I read "any three of the team members" correctly?** I read it as: a wrong-citation stop alerts the knowledge base lead, and any of the three team members can take that role. If you meant that all three are alerted and must act, or that the knowledge base lead is separate, tell me.
+1. ~~Did I read "any three of the team members" correctly?~~ **Settled on 2026-11-19:** yes. Any ServiceSG team member can take the knowledge base lead's role for the review.
 2. **What does "kill switch trips" mean in production?** It was written for the 5-officer test.
 3. **How is "not their own request" checked** in a real system, and by whom?
 
@@ -387,6 +393,9 @@ For the learner. I have not chosen for you. Options are listed only to show what
 4. **How is high confidence measured?** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
 5. **The screen notice when drafting stops.** The content is decided. The advice wording is my draft: keep working and search the policy pages, check every high-risk claim, and ask the supervisor to turn drafts back on. Confirm or change it. The colour is not chosen. Red means no draft or a failed test in `context-skill.md`, so using it here is a new meaning.
 6. **What follows if the team misses the weekly review?** Nothing says.
+
+**About incidents the agent cannot detect**
+6a. **How the agent learns of a wrong answer it cannot detect itself.** I suggest five routes in `operating-model.md`: a one-click "This is wrong" flag, a prompt when an enquiry is reopened, an alert when 2 or more officers flag the same page in a day, a daily re-check of cited passages, and the weekly audit. Confirm, change or drop any of them. They are Proposed. None is built.
 
 **About the agent and the pilot**
 7. **The 30-second stuck signal.** `one-pager.md` asks for it, and nothing is built. When an officer is stuck for 30 seconds, what should happen and who is told?

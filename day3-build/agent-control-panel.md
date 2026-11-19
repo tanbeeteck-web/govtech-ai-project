@@ -106,12 +106,12 @@ Give no draft, give the reason, and show up to three closest pages. Say so when 
 ### Stop the whole agent
 
 Stop all drafting. Then, in this order:
-1. **Alert the ServiceSG team, the Product Ops member on duty and the business owner.** Product Ops is on duty in and out of hours. The business owner is the sponsor in `build-log.md`. All are told as soon as it happens. The project owner, the supervisor and the knowledge base lead. Say which stop it was, the time and the enquiry IDs.
+1. **Alert the ServiceSG team, the Product Ops member on duty and the business owner.** Product Ops is on duty in and out of hours. The member on duty must act within 3 hours of being notified. The business owner is the sponsor in `build-log.md`. All are told as soon as it happens. The project owner, the supervisor and the knowledge base lead. Say which stop it was, the time and the enquiry IDs.
 2. **Tell the officers.** Everyone signed in sees that the agent stopped and why. Drafts in the queue stay there. Nothing was sent.
 3. **Ask the officer** whether they want to request a restart. If yes, the request goes to the ServiceSG team. The agent stays off until one member of the team approves. One approval is enough.
 4. **Do not restart on your own.** Log the alert, the notice, the request and the approval or refusal.
 
-The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
+The ServiceSG team is the project owner, the supervisor, the knowledge base lead and the Product Ops specialist.
 
 ### Stop drafting for one officer
 
@@ -151,10 +151,10 @@ These are never given to the agent, however well it performs.
 
 ### Decided on 2026-11-19
 
-- **Who is on duty and who is told (2026-11-19).** The Product Ops team is on duty in and out of hours. The business owner is the sponsor in `day2-validate/build-log.md`. The member on duty and the business owner are notified as soon as an incident happened.
-- **Auto-disable alert.** The ServiceSG team is alerted when the agent is auto-disabled or stopped. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
+- **Who is on duty and who is told (2026-11-19).** The Product Ops specialist is an additional member of the ServiceSG team, and the Product Ops team is on duty in and out of hours. The business owner is the sponsor in `day2-validate/build-log.md`. The member on duty and the business owner are notified as soon as an incident happened. The member on duty must act within 3 hours. The member on duty, alone, can switch the agent off by hand.
+- **Auto-disable alert.** The ServiceSG team is alerted when the agent is auto-disabled or stopped. The ServiceSG team is the project owner, the supervisor, the knowledge base lead and the Product Ops specialist.
 - **Restart needs approval from one member of the ServiceSG team.** One approval is enough. **A team member cannot approve their own restart request.** Another member must.
-- **A wrong-citation stop alerts the knowledge base lead.** Any of the three ServiceSG team members can take that role for the review. *My reading, to confirm: see Open questions.*
+- **A wrong-citation stop alerts the knowledge base lead.** Any ServiceSG team member can take that role for the review. **Decided 2026-11-19.**
 - **The ServiceSG team is told, not only the project owner,** when the whole agent stops.
 - **Rubber-stamping.** Officer actions are logged. The reminder fires only on flagged drafts, meaning drafts with a blue item that needs the officer's attention. **Straightforward drafts that meet the high-confidence definition do not count in the streak.** After 5 flagged drafts in a row accepted with no change, the officer gets a reminder about the risk and about reviewing with due diligence.
 - **The officer is told the supervisor has been informed.** The supervisor is informed each time a reminder is shown and when drafting stops for an officer.
@@ -167,7 +167,7 @@ These are never given to the agent, however well it performs.
 
 ### Open questions
 
-- **My reading of "any three of the team members".** I read it as: a wrong-citation stop alerts the knowledge base lead, and any of the three team members can take that role. If you meant that all three are alerted and must act, or that the knowledge base lead is a separate fourth person, tell me.
+- **How the agent learns of a wrong answer it cannot detect itself.** See the suggestion in `operating-model.md`. None of it is built.
 - **How the high-confidence definition is measured.** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
 - **The screen notice.** The content is decided (clear, stays on screen, says why, says the supervisor was informed, advises what to do). The advice list and its wording are my draft. The colour is not chosen. In `context-skill.md` red means no draft or a failed test. Using it here is a new meaning, which is a review trigger for that file.
 - **What happens if the team does not review weekly.** The rule says at least once a week. Nothing says what follows if it is missed.
