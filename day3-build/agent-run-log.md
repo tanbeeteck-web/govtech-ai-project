@@ -1113,3 +1113,27 @@ Run on 2026-11-19, after the consistency pass. Two kinds of test were run.
 - **No real model.** These re-walks show the rules read consistently. They do not show how a real model behaves.
 - **The tools do not exist,** so "the tool refuses", the 3-in-a-row stop, the alerts and the translation are all described, not run.
 - **Not run in any run:** the alerts and Product Ops steps, the rubber-stamp reminder and per-officer stop, the five detection routes, and a restart.
+
+---
+
+## Rerun of the findings: the search stop after the decision
+
+On 2026-11-19 the learner decided both findings from the regression pass: the 3-in-a-row stop counts **enquiries**, each once, and counts **only a tool failure**. A search that worked and found nothing is a normal result. Hand runs, no tools, so "the tool reports" shows what it must do.
+
+| Case | What happens now | Counts towards the 3? |
+|---|---|---|
+| **Run 6, first search** (tool error, ENQ-2024-015) | Lookup failed. Officer may retry. | Yes, once |
+| **Run 6, officer retries and it fails again** (same enquiry) | Attempt 2 logged. The officer is told they can retry or escalate. | **No.** The enquiry is already counted. The count stays at 1 |
+| **Run 6, officer retries three more times** | Attempts 3 to 5 logged. | **No.** One officer cannot stop the whole agent by retrying |
+| **Run 5** (page not among the 15, search works, weak matches only) | NEEDS CLARIFICATION. | **No.** The search worked |
+| **An enquiry no page answers** (search works, no match) | NEEDS CLARIFICATION, logged "no match". | **No** |
+| **Run 8d, officer's added claim with no passage** | Marked blue "No matching passage". | **No.** This is a normal result, not a failure |
+| **Three different enquiries, each a tool error, in a row** | The whole agent stops. ServiceSG team, the Product Ops member on duty and the business owner are alerted. | **Yes: 1, 2, 3, stop** |
+| **Two failures, then an enquiry whose search works and finds nothing, then a failure** | The count resets at the working search. | Back to 1 |
+
+**What this fixes.** Before, one officer pressing Retry could stop everyone's agent, and three honest "no page answers this" enquiries could do the same with no tool broken.
+
+**What it needs.** The tool must report a failure separately from "found nothing". That is for engineering (6j in `ai-prd.md`). If a tool cannot, the decided count cannot work, and the learner would have to decide again.
+
+**Not run.** A real tool that times out part-way, or returns a partial result. Not covered: is that a failure or a weak match? The rule does not say.
+
