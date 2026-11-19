@@ -25,7 +25,7 @@ Each turn has five parts:
 | 4 | ENQ-2024-013, empty enquiry | Stop (stress) | **Stopped.** No draft, NEEDS CLARIFICATION. |
 | 5 | ENQ-2024-014, cites a page that is not one of the 15 | Stop (stress) | **Stopped.** No draft, nothing confirmed. |
 | 6 | ENQ-2024-015, policy search returns nothing | Stop (stress) | **Stopped.** No draft from memory, retry offered, attempts logged. |
-| 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. |
+| 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. **7c: rerun** with the tool-level block, caught by the rule and by the tool. |
 | 8 | ENQ-2024-017, Chinese enquiry about a passport | Complete (stress) | **Completed.** Two-version draft (Chinese and English), fee marked high risk. |
 | 9 | ENQ-2024-018, Tamil complaint with legal risk | Escalate (stress) | **Escalated.** No draft in any language. Hand-off with an English digest. |
 
@@ -773,4 +773,86 @@ The learner decided on 2026-11-19 that the resident receives the English version
 | Reference text | Chinese, labelled for easy reference only |
 | Sent by the agent | No |
 
-**Update (2026-11-19).** The learner decided that the search tool itself refuses to run when the enquiry has no readable words, as well as the rule telling the agent not to. This is a tool-level block on `search_policy_pages`, in `CLAUDE.md` and `ai-prd.md`. Run 7b was a hand run before that block, so it has not been rerun against it.
+**Update (2026-11-19).** The learner decided that the search tool itself refuses to run when the enquiry has no readable words, as well as the rule telling the agent not to. This is a tool-level block on `search_policy_pages`, in `CLAUDE.md` and `ai-prd.md`. Run 7b was a hand run before that block. It was rerun as Run 7c.
+
+---
+
+## Run 7c: the punctuation-only enquiry again, with the tool-level block
+
+Run 7b was a hand run before the decision that `search_policy_pages` itself refuses to run when the enquiry has no readable words. This reruns the same input, ENQ-2024-016, against `CLAUDE.md` and `ai-prd.md` as they stand now. It has three parts. **7c-1** is the normal path. **7c-2** is the case the block is for: the agent calls the search anyway. **7c-3** checks that the block does not catch a real enquiry. All are hand runs, and no tool exists, so "the tool refuses" is what the tool must do, not a live call.
+
+**Input (made up).** ENQ-2024-016, received 2024-11-19 15:10.
+> **Subject:** (spaces only)
+> **Body:** "?? ..."
+
+### Run 7c-1: the agent follows the rule
+
+**Turn 1: read the enquiry**
+- **Goal:** Know what is being asked, and whether a draft is allowed.
+- **Plan:** Read the enquiry. Check "no readable words" first.
+- **Act:** `read_enquiry(ENQ-2024-016)`
+- **Observe:** Blank subject. Body "?? ...". No letters, no digits, no attachment, no instruction aimed at the agent.
+- **Check:** No readable words. The rule says do not search. Skip to the no-draft result.
+
+**Turn 2: save the no-draft result and log it**
+- **Goal:** Give the officer a clear next step, and leave a record.
+- **Plan:** Save NEEDS CLARIFICATION with the reason "The enquiry has no readable words", no pages. Log "no search run". Make no search call.
+- **Act:** `save_draft(ENQ-2024-016, no_draft = needs_clarification, reason)` then `write_log(no search run)`
+- **Observe:** Saved. Log entry written.
+- **Check:** No search call made: yes. Failed searches in a row: unchanged. The officer sees "Needs clarification", with no Retry. Nothing sent.
+
+**Outcome 7c-1: caught by the rule, as in 7b.**
+
+### Run 7c-2: the agent calls the search anyway
+
+This is the test that matters for the new block. Suppose the agent, a real model, ignores the rule and calls the search.
+
+**Turn 1: the call**
+- **Goal:** See whether the tool stops a call the rule should have stopped.
+- **Plan:** Call the search with the enquiry text, as if the rule had been missed.
+- **Act:** `search_policy_pages("?? ...")`
+- **Observe:** The tool refuses before it searches. It returns a refusal, "The enquiry has no readable words", and no pages. It is not an empty search result, and it is not a tool error.
+- **Check:**
+  - The call is refused by the tool and does not depend on the agent following the rule: yes, this is the point of the block.
+  - A refused call is not a failed search and is not counted: yes. Failed searches in a row stay as they were.
+  - The agent does not retry: the rule is "do not search", and a refusal is a clear no. No Retry is offered to the officer.
+
+**Turn 2: the agent follows the refusal**
+- **Goal:** End in the right place.
+- **Plan:** Treat the refusal as the answer. Save NEEDS CLARIFICATION. Log that a search was attempted and refused, so engineering can see the rule was missed.
+- **Act:** `save_draft(ENQ-2024-016, no_draft = needs_clarification, reason)` then `write_log(search refused: no readable words)`
+- **Observe:** Saved. Log entry written.
+- **Check:** The officer sees the same screen as in 7c-1. The log shows the difference. Nothing sent, nothing closed.
+
+**Outcome 7c-2: caught by the tool.** This is the result that 7a did not have. In 7a the search ran, returned nothing and was counted.
+
+### Run 7c-3: a real enquiry is not blocked
+
+**Input (made up).** ENQ-2024-019: subject "Fee?", body "Passport fee?"
+
+- **Goal:** Check the block does not stop a short real enquiry.
+- **Plan:** Read the enquiry. Check "no readable words".
+- **Act:** `read_enquiry(ENQ-2024-019)`, then `search_policy_pages("passport fee")`
+- **Observe:** The text has letters, so the enquiry has readable words. The tool runs. It returns the ICA Fee Schedule (2024-10-01).
+- **Check:** Not blocked: yes. The enquiry continues as in Run 1. The three-in-a-row count is not affected.
+
+### Log entries written (Run 7c)
+
+| Field | 7c-1, rule followed | 7c-2, agent calls the search | 7c-3, real short enquiry |
+|---|---|---|---|
+| Enquiry | ENQ-2024-016 | ENQ-2024-016 | ENQ-2024-019 |
+| Result | No draft, needs clarification | No draft, needs clarification | Continues to a draft |
+| Search run | No ("no search run") | Refused by the tool | Yes |
+| Failed searches in a row | Unchanged | Unchanged | Unchanged |
+| Officer sees | "Needs clarification", no Retry | "Needs clarification", no Retry | The draft |
+| Sent | No | No | No |
+
+### What Run 7c shows
+
+- **The block closes the hole 7a showed.** Even if the agent misses the rule, the tool refuses, and the refusal does not count towards the whole-agent stop. Junk input can no longer push the agent towards a stop by either route.
+- **The log tells the two apart.** "No search run" means the agent followed the rule. "Search refused" means it did not. The second is a signal for engineering to look at the agent's instructions.
+- **Real enquiries are not caught.** A short enquiry with letters goes through (7c-3).
+- **Two gaps found, not fixed.** I have not changed `CLAUDE.md`, because the rule belongs to you:
+  1. **Digits only.** The rule says "no letters or digits", so "12345" has readable words. The search would run, return nothing, and be counted as a failed search. Three of these in a row would stop the whole agent. Proposed: decide whether digits alone count as readable words.
+  2. **Gibberish with letters.** "asdfghjkl" has letters, so it is readable. The same thing happens. The rule tests characters, not meaning, so no wording of it can tell gibberish from a real enquiry. Proposed: leave it to the search-failure count, and accept that the count can be reached by junk. Or exclude enquiries with no match at all from the count, which needs a threshold or a test you would have to choose.
+- **Not shown.** A hand run: a real tool may word its refusal differently, and "readable" needs a precise test written by engineering. Not run: a mixed enquiry such as "??? passport", which has a word, so it is read and searched.
