@@ -89,12 +89,12 @@ All figures are made up.
 - A draft, which waits for the officer.
 - A no-draft result, which waits for the officer.
 - A hand-off, which waits for a human lead.
-- A suggested change to a rule, source, colour or threshold, which waits for the project owner.
+- A suggested change to a rule, source, colour or threshold, which waits for a person: the project owner for rules, sources, colours and the success, fail and kill thresholds, and the ServiceSG team for the rubber-stamp streak threshold.
 
 **Alerts and prompts:**
 - When the agent is auto-disabled or stopped, the ServiceSG team gets an alert at once. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
 - Officers are told the agent stopped and why. An officer can request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough. It never restarts itself.
-- Officer actions are logged. After 5 flagged drafts in a row accepted with no change, the officer gets a reminder about the risk of rubber-stamping and is asked to review with due diligence. The reminder tells the officer the supervisor has been informed, and the supervisor is informed each time. The threshold of 5 is a starting value, to be adjusted from the logged data. A flagged draft is one with a blue item that needs the officer's attention. Straightforward high-confidence drafts do not count. An edit, a rejection or a flag resets the count.
+- Officer actions are logged. After 5 flagged drafts in a row accepted with no change, the officer gets a reminder about the risk of rubber-stamping and is asked to review with due diligence. The reminder tells the officer the supervisor has been informed, and the supervisor is informed each time. The threshold of 5 is a starting value. The ServiceSG team reviews the logged data and may adjust it. A flagged draft is one with a blue item that needs the officer's attention. Straightforward high-confidence drafts do not count. An edit, a rejection or a flag resets the count.
 - After 2 reminders, if the officer does it again, drafting stops for that officer. They ask the supervisor to reinstate it.
 - The reminder count clears after a period of good practice, set for now at 28 days with no new reminder.
 
