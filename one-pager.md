@@ -81,7 +81,7 @@ All figures are made up.
 
 **Decides alone** (safe, or only makes the outcome more careful):
 - Read the enquiry and the policy pages, and search them.
-- Give no draft when a stop condition is met, and show up to three closest pages. Say so when none is a real match. This includes an enquiry with no text, and an enquiry that names a page that is not one of the 15.
+- Give no draft when a stop condition is met, and show up to three closest pages. Say so when none is a real match. This includes an enquiry with no readable words, and an enquiry that names a page that is not one of the 15.
 - Refuse a request to send, close a case or skip a confirmation.
 - Mark fees, deadlines, dates and eligibility as high risk, and write the logs.
 

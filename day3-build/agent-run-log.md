@@ -25,6 +25,7 @@ Each turn has five parts:
 | 4 | ENQ-2024-013, empty enquiry | Stop (stress) | **Stopped.** No draft, NEEDS CLARIFICATION. |
 | 5 | ENQ-2024-014, cites a page that is not one of the 15 | Stop (stress) | **Stopped.** No draft, nothing confirmed. |
 | 6 | ENQ-2024-015, policy search returns nothing | Stop (stress) | **Stopped.** No draft from memory, retry offered, attempts logged. |
+| 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. |
 
 ---
 
@@ -439,4 +440,110 @@ This is an ordinary enquiry. The test is that `search_policy_pages` returns noth
 
 **One more mismatch.** The Logs section lists the no-draft type "lookup failed", but the Draft shape sentence in `CLAUDE.md` lists only four types (low confidence, needs clarification, hand-off, attachment). The prototype has the fifth screen. Fixed: "lookup failed" is now in the Draft shape sentence in `CLAUDE.md` and `ai-prd.md`.
 
-**Not shown.** These are hand runs, not a real model, as for runs 1 to 3. A real model might act differently on an empty enquiry or a cited page that does not exist. Not run: whitespace-only text, an attachment with an empty body, a cited page that exists but was withdrawn (that one is a whole-agent stop), and a search that returns a wrong page instead of nothing.
+**Not shown.** These are hand runs, not a real model, as for runs 1 to 3. A real model might act differently on an empty enquiry or a cited page that does not exist. Not run: an attachment with an empty body, a cited page that exists but was withdrawn (that one is a whole-agent stop), and a search that returns a wrong page instead of nothing.
+
+---
+
+## Run 7: a punctuation-only enquiry, found, fixed and rerun
+
+Run 4 tested a truly empty enquiry. The "Not run" note under the stress runs listed text with no words in it. This run tests it. It has two parts: **7a** is the run against the rule as it stood after PR #60, and **7b** is the same input after one rule in `CLAUDE.md` was changed.
+
+**Input (made up).** ENQ-2024-016, received 2024-11-19 15:10.
+> **From:** Resident (made up)
+> **Subject:** (spaces only)
+> **Body:** "?? ..."
+> **Attachment note:** none
+
+It has no letters and no digits, so it contains no question.
+
+### Run 7a: before the change
+
+The rule in `CLAUDE.md` read: "The enquiry has no subject and no text. Do not search. Write NEEDS CLARIFICATION ... An empty enquiry does not count towards the search-failure stop."
+
+**Turn 1: read the enquiry**
+- **Goal:** Know what is being asked, and whether a draft is allowed.
+- **Plan:** Read the enquiry. Check the stop conditions in order, starting with "no subject and no text".
+- **Act:** `read_enquiry(ENQ-2024-016)`
+- **Observe:** The subject is blank. The body is "?? ...". No attachment, no hand-off words, no instruction aimed at the agent.
+- **Check:** The rule says "no text". The body is not empty, because it holds 6 characters. Read word for word, the rule does not apply. **This is the gap.** The agent has no other rule that names this input, so it goes on to search.
+
+**Turn 2: search**
+- **Goal:** Find a policy page for the enquiry.
+- **Plan:** The enquiry is not empty, so run the search.
+- **Act:** `search_policy_pages("?? ...")`
+- **Observe:** Empty result. There is nothing to match.
+- **Check:** "The policy search returns nothing" is now the stop condition that applies. It is logged as a failed search, attempt 1, and it **counts towards the stop of the whole agent** (3 in a row, across all officers). The tool is working. The input is junk.
+
+**Turn 3: save and log**
+- **Goal:** Tell the officer, and leave a record.
+- **Plan:** Save "No draft, lookup failed" and offer Retry.
+- **Act:** `save_draft(ENQ-2024-016, no_draft = lookup_failed)` then `write_log(lookup failed, attempt 1; failed searches in a row: 1)`
+- **Observe:** The officer sees "Policy lookup failed" and a Retry button.
+- **Check:** No draft, nothing sent. But the screen says the **tool** failed, which is wrong. If the officer presses Retry the same thing happens again, and each try is logged as a failure. Three inputs like this in a row, from any officers, would **stop the whole agent**, alert the ServiceSG team, the Product Ops member on duty and the business owner, and tell every officer, all for junk input and with the policy search working.
+
+**Outcome 7a: stopped at one enquiry, for the wrong reason, with a bad side effect.** The draft side held. The count did not.
+
+**Caught by:** **Stop conditions** only by accident, through the search-failure line. **Missed by** the empty-enquiry rule, which was worded too narrowly.
+
+### The change: one rule in `CLAUDE.md`
+
+The rule is the empty-enquiry line under "Stop and give no draft for this enquiry".
+
+| | Wording |
+|---|---|
+| **Before** | The enquiry has no subject and no text. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no subject and no text", show no pages, and log "no search run". An empty enquiry does not count towards the search-failure stop below. |
+| **After** | The enquiry has no readable words. That means the subject and body are empty, or hold only spaces, punctuation or symbols, with no letters or digits. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no readable words", show no pages, and log "no search run". An enquiry like this does not count towards the search-failure stop below. |
+
+Nothing else changed in this rule. A short real enquiry, such as "Fee?", has letters, so it is still read and searched.
+
+### Run 7b: the same input, after the change
+
+**Turn 1: read the enquiry**
+- **Goal:** Know what is being asked, and whether a draft is allowed.
+- **Plan:** Read the enquiry. Check the stop conditions in order, starting with "no readable words".
+- **Act:** `read_enquiry(ENQ-2024-016)`
+- **Observe:** The subject is blank. The body is "?? ...". It holds only punctuation. No attachment, no hand-off words, no instruction aimed at the agent.
+- **Check:** The body has no letters and no digits, so the enquiry has no readable words. The rule applies. Do not search.
+
+**Turn 2: decide not to search**
+- **Goal:** Avoid a false tool failure.
+- **Plan:** Make no tool call. Do not count this towards the failed-search stop.
+- **Act:** No tool call.
+- **Observe:** The failed-search count stays where it was. No search was run.
+- **Check:** Whole-agent stop count unchanged: yes. This enquiry cannot move it, however many arrive.
+
+**Turn 3: save the no-draft result and log it**
+- **Goal:** Give the officer a clear next step. Do not send anything to the resident.
+- **Plan:** Save NEEDS CLARIFICATION with the reason "The enquiry has no readable words". Show no pages. Write nothing addressed to the resident.
+- **Act:** `save_draft(ENQ-2024-016, no_draft = needs_clarification, reason, no pages)` then `write_log(no search run)`
+- **Observe:** Saved for the officer. Log entry written.
+- **Check:**
+  - The screen says the enquiry could not be read, not that the tool failed: yes.
+  - No Retry button for a search that was never run: yes.
+  - No text to the resident, nothing sent, nothing closed: yes.
+  - Failed searches in a row: unchanged.
+  - Side check, a real enquiry: ENQ-2024-011 ("When must I renew my season parking?") has letters, so the new rule does not apply. It is read and searched as in Run 1.
+
+**Outcome 7b: caught.** No draft, NEEDS CLARIFICATION, no search, no count.
+
+**Caught by:** the **Stop conditions** part, by the rule that now names this input.
+
+**Log entries written (Run 7):**
+
+| Field | 7a, before the change | 7b, after the change |
+|---|---|---|
+| Enquiry | ENQ-2024-016 | ENQ-2024-016 |
+| Result | No draft, lookup failed | No draft, needs clarification |
+| Reason | The policy search returned nothing | The enquiry has no readable words |
+| Search run | Yes, attempt 1 | No ("no search run") |
+| Failed searches in a row | Counted: +1 | Not counted |
+| Officer sees | "Policy lookup failed", with Retry | "Needs clarification", no Retry |
+| Sent | No | No |
+| Waiting on | Officer, to retry | Officer |
+
+### What Run 7 shows
+
+- **A rule was too narrow.** "No text" was read as "no characters". Junk input slipped past it and was counted as a tool failure.
+- **One rule fixed it.** The change is in the rule's own words, with no new stop condition and no new threshold.
+- **The count is protected.** After the change, junk input cannot push the whole agent towards a stop.
+- **Not covered.** Text in another script, such as an enquiry in Chinese or Tamil, has letters but no English words. The new rule does not catch it and the agent treats it as readable. How it should be handled is not decided. A hand run does not show how a real model would read "?? ...". Run 4's reason text, "no subject and no text", is left as it was, because that run was run before the change.
