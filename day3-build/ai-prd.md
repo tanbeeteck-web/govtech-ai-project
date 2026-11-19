@@ -70,14 +70,16 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 
 None of these exists yet. All are to be built. This PRD does not say how.
 
-| Tool | Tier (Proposed) | What it does | Limits |
+| Tool | Tier (Decided) | What it does | Limits |
 |---|---|---|---|
 | `read_enquiry` | read | Reads one enquiry: sender label, subject, body, attachment note | Read only |
 | `search_policy_pages` | read | Finds matching pages among the 15 listed pages and returns each with its last-updated date | Read only. Only the 15 listed pages. |
 | `read_passage` | read | Returns the exact passage from one policy page | Read only |
 | `save_draft` | write | Saves one draft, or one no-draft or hand-off result, to the review queue | Review queue only |
 | `write_log` | write | Adds one entry to the logs | Append only. The agent cannot edit or delete. |
-| `notify_staff` | write | Alerts the ServiceSG team, shows notices and reminders to officers, informs the supervisor, passes on restart and reinstate requests | Staff only. Never a resident. Renamed from `send_alert` on 2026-11-19, because it notifies staff and sends nothing outside. |
+| `notify_staff` | write | Alerts the ServiceSG team, the Product Ops member on duty, the business owner and the knowledge base lead, shows notices, reminders and the "Was the earlier reply wrong?" prompt to officers, informs the supervisor, passes on restart and reinstate requests | Staff only. Never a resident. Renamed from `send_alert` on 2026-11-19, because it notifies staff and sends nothing outside. |
+
+The tiers match the confirmed Permissions rows. The learner confirmed them on 2026-11-19. The detection routes (rows 33 to 39) need no new tool, except a way to read sent replies for row 38, which engineering decides.
 
 **If a tool fails,** for example the policy search returns nothing, the agent does not draft from memory. It follows the stop conditions.
 
