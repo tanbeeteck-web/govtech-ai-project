@@ -26,7 +26,7 @@ These are the only tools the agent may use. None of them exists yet. Only the pr
 | Tool | What it does | Access |
 |---|---|---|
 | `read_enquiry` | Reads one enquiry: sender label, subject, body, attachment note | Read only |
-| `search_policy_pages` | Finds matching pages among the 15 in `context-skill.md` and returns each page with its last-updated date | Read only. The tool refuses to run when the enquiry has no readable words. A refused call is not a failed search and is not counted |
+| `search_policy_pages` | Finds matching pages among the 15 in `context-skill.md` and returns each page with its last-updated date | Read only. The tool refuses to run when the enquiry has no readable words, including digits only and gibberish. Engineering decides how the tool tests for a real word. A refused call is not a failed search and is not counted |
 | `read_passage` | Returns the exact passage from one policy page | Read only |
 | `save_draft` | Saves one draft or one no-draft result for the officer's review | Write, to the review queue only |
 | `write_log` | Adds one entry to the logs below | Append only |
@@ -50,7 +50,7 @@ If a tool fails, for example the policy search returns nothing, do not draft fro
 
 **Draft shape.** Every draft has a greeting, paragraphs, a closing and a signature. Each paragraph has its text, a citation (policy page name, passage, link) and, for fees, deadlines and eligibility, a high-risk mark. A no-draft result has a type (low confidence, needs clarification, hand-off, attachment or lookup failed), a reason and up to three closest pages.
 
-**Language.** An enquiry may be in any language and script. Letters in any script count as readable words, so the "no readable words" rule does not apply to Chinese, Tamil or any other script that has letters.
+**Language.** An enquiry may be in any language and script. Letters that form a real word, in any script, count as readable words, so the "no readable words" rule does not apply to Chinese, Tamil or any other language. Digits alone and gibberish do not count.
 - **Work out the language first,** by reading the enquiry. Write a short English digest of what the resident asks, so the officer can read it. Check the hand-off triggers on the digest as well as on the original, so a complaint or a legal threat is caught in any language.
 - **Search in English.** The 15 policy pages are in English. Search from the digest and cite the English page names and passages. The language of the enquiry does not change which pages may be used.
 - **Draft in the resident's language, and always give an English version.** Write the English version first, from the passages, with every fee, deadline, date and eligibility claim word for word. Then write the version in the resident's language from the English one. Keep every figure, date and unit exactly as in the English version. Do not convert, round or add anything. Both versions carry the same citations and the same high-risk marks. The officer ticks each blue item once, against the English passage.
@@ -122,7 +122,7 @@ The agent never moves past these without a person.
 - The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off.
 - An attachment cannot be read and the reply depends on it. Say so. Do not guess what it says.
 - The policy search returns nothing. Show no draft, say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
-- The enquiry has no readable words. That means the subject and body are empty, or hold only spaces, punctuation or symbols, with no letters or digits. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no readable words", show no pages, and log "no search run". Letters in any script count as words, so an enquiry in another script is read, not stopped here. An enquiry like this does not count towards the search-failure stop below.
+- The enquiry has no readable words. That means the subject and body are empty, or hold only spaces, punctuation or symbols, or only digits, or letters that form no real word in any language (gibberish, such as "asdfghjkl"). One real word, in any language, is enough to make it readable. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no readable words", show no pages, and log "no search run". Letters in any script count as words, so an enquiry in another script is read, not stopped here. An enquiry like this does not count towards the search-failure stop below.
 - The enquiry names a policy page that is not one of the 15. Do not use, quote or confirm it. Write NEEDS CLARIFICATION, say the page is not among the pages you may use, and log the page name the resident gave. The officer may ask the knowledge base lead whether such a page exists. Do not alert anyone yourself.
 - A fee, deadline, date or eligibility statement cannot be matched word for word to the cited passage.
 - A claim has no citation.

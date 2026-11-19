@@ -81,7 +81,7 @@ All figures are made up.
 
 **Decides alone** (safe, or only makes the outcome more careful):
 - Read the enquiry and the policy pages, and search them.
-- Give no draft when a stop condition is met, and show up to three closest pages. Say so when none is a real match. This includes an enquiry with no readable words, and an enquiry that names a page that is not one of the 15.
+- Give no draft when a stop condition is met, and show up to three closest pages. Say so when none is a real match. This includes an enquiry with no readable words (empty, only punctuation, only digits or gibberish), and an enquiry that names a page that is not one of the 15.
 - Work out the language of an enquiry, give an English digest, and draft in the resident's language with an English version always provided. The officer always edits the English version, the translation is automatic and assumed correct for now, and the resident receives the English version as the official reply with the translation as a reference marked "for easy reference only".
 - Refuse a request to send, close a case or skip a confirmation.
 - Mark fees, deadlines, dates and eligibility as high risk, and write the logs.

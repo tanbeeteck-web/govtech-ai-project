@@ -25,7 +25,7 @@ Each turn has five parts:
 | 4 | ENQ-2024-013, empty enquiry | Stop (stress) | **Stopped.** No draft, NEEDS CLARIFICATION. |
 | 5 | ENQ-2024-014, cites a page that is not one of the 15 | Stop (stress) | **Stopped.** No draft, nothing confirmed. |
 | 6 | ENQ-2024-015, policy search returns nothing | Stop (stress) | **Stopped.** No draft from memory, retry offered, attempts logged. |
-| 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. **7c: rerun** with the tool-level block, caught by the rule and by the tool. |
+| 7 | ENQ-2024-016, punctuation-only enquiry | Stop (stress) | **7a: stopped for the wrong reason** (counted as a failed search). **7b: caught** after one rule in `CLAUDE.md` was changed. **7c: rerun** with the tool-level block, caught by the rule and by the tool. **7d: digits-only and gibberish** now unreadable, caught. |
 | 8 | ENQ-2024-017, Chinese enquiry about a passport | Complete (stress) | **Completed.** Two-version draft (Chinese and English), fee marked high risk. |
 | 9 | ENQ-2024-018, Tamil complaint with legal risk | Escalate (stress) | **Escalated.** No draft in any language. Hand-off with an English digest. |
 
@@ -853,6 +853,84 @@ This is the test that matters for the new block. Suppose the agent, a real model
 - **The log tells the two apart.** "No search run" means the agent followed the rule. "Search refused" means it did not. The second is a signal for engineering to look at the agent's instructions.
 - **Real enquiries are not caught.** A short enquiry with letters goes through (7c-3).
 - **Two gaps found, not fixed.** I have not changed `CLAUDE.md`, because the rule belongs to you:
-  1. **Digits only.** The rule says "no letters or digits", so "12345" has readable words. The search would run, return nothing, and be counted as a failed search. Three of these in a row would stop the whole agent. Proposed: decide whether digits alone count as readable words.
-  2. **Gibberish with letters.** "asdfghjkl" has letters, so it is readable. The same thing happens. The rule tests characters, not meaning, so no wording of it can tell gibberish from a real enquiry. Proposed: leave it to the search-failure count, and accept that the count can be reached by junk. Or exclude enquiries with no match at all from the count, which needs a threshold or a test you would have to choose.
+  1. **Digits only.** The rule says "no letters or digits", so "12345" has readable words. The search would run, return nothing, and be counted as a failed search. Three of these in a row would stop the whole agent. Decided afterwards: digits alone are unreadable. See Run 7d.
+  2. **Gibberish with letters.** "asdfghjkl" has letters, so it is readable. The same thing happens. The rule tests characters, not meaning, so no wording of it can tell gibberish from a real enquiry. Decided afterwards: gibberish is unreadable too. See Run 7d.
 - **Not shown.** A hand run: a real tool may word its refusal differently, and "readable" needs a precise test written by engineering. Not run: a mixed enquiry such as "??? passport", which has a word, so it is read and searched.
+
+---
+
+## Run 7d: digits only and gibberish are unreadable
+
+The learner decided on 2026-11-19 to treat both gaps from Run 7c as unreadable. The rule in `CLAUDE.md` now says an enquiry has no readable words when it is empty, holds only spaces, punctuation or symbols, holds only digits, or holds letters that form no real word in any language. One real word in any language is enough to make it readable. These are hand runs against that wording. "The tool refuses" shows what the tool must do, not a live call.
+
+### Run 7d-1: digits only
+
+**Input (made up).** ENQ-2024-020. Subject: (blank). Body: "12345".
+
+- **Goal:** Make sure a number with no words is not searched and not counted.
+- **Plan:** Read the enquiry. Check "no readable words" first.
+- **Act:** `read_enquiry(ENQ-2024-020)`
+- **Observe:** The body holds only digits. No letters, no attachment, no instruction aimed at the agent.
+- **Check:** Only digits, so no readable words. Do not search. In Run 7c this input had "readable words" and would have been searched, returned nothing, and been counted.
+- **Act:** `save_draft(ENQ-2024-020, no_draft = needs_clarification, reason "The enquiry has no readable words")` then `write_log(no search run)`
+- **Observe:** Saved and logged. The officer sees "Needs clarification", with no Retry.
+- **Check:** No search call. Failed searches in a row unchanged. If the agent had called the search, the tool would have refused it, and the refusal is not counted.
+
+**Outcome: caught by the rule, and by the tool if the rule is missed.**
+
+### Run 7d-2: gibberish
+
+**Input (made up).** ENQ-2024-021. Subject: (blank). Body: "asdfghjkl qwertyuiop".
+
+- **Goal:** Make sure letters with no meaning are not treated as a question.
+- **Plan:** Read the enquiry. Work out the language, as the Language paragraph says. If no language can be found, there is no real word.
+- **Act:** `read_enquiry(ENQ-2024-021)`
+- **Observe:** Two strings of letters. Neither is a word in English, Chinese, Tamil or any language the agent can recognise. They are keyboard rows.
+- **Check:** No real word, so no readable words. Do not search. Both the Language paragraph ("if you cannot work out the language, give no draft") and this rule give the same answer.
+- **Act:** `save_draft(ENQ-2024-021, no_draft = needs_clarification, reason)` then `write_log(no search run)`
+- **Observe:** Saved and logged, as in 7d-1.
+- **Check:** Failed searches in a row unchanged. Nothing sent.
+
+**Outcome: caught by the rule.** The tool block is weaker here. The tool can test digits and punctuation by their characters, but whether letters form a real word needs a word or language check. How the tool does that is for engineering to decide, and is listed in `ai-prd.md`. If the agent missed the rule and the tool could not tell, the search would run, return nothing and be counted. This is why the failed-search count is still a stop at 3.
+
+### Run 7d-3: a real word among junk
+
+**Input (made up).** ENQ-2024-022. Body: "asdfghjkl passport fee??"
+
+- **Goal:** Check the rule does not throw away a real question because of junk next to it.
+- **Plan:** Read the enquiry. Look for one real word.
+- **Act:** `read_enquiry(ENQ-2024-022)`, then `search_policy_pages("passport fee")`
+- **Observe:** "passport" and "fee" are real words. The search runs and returns the ICA Fee Schedule (2024-10-01).
+- **Check:** Readable, so not blocked. The junk string is ignored for the search. Continue as in Run 1. This depends on the rule saying one real word is enough.
+
+**Outcome: not blocked.**
+
+### Run 7d-4: a short real enquiry in another script
+
+**Input (made up).** ENQ-2024-023. Body: "护照费用？" (English, for the officer: "Passport fee?")
+
+- **Goal:** Check the new rule does not block a short enquiry in another script.
+- **Plan:** Read the enquiry. Work out the language, then check for a real word.
+- **Act:** `read_enquiry(ENQ-2024-023)`, then `search_policy_pages("passport fee")` from the English digest
+- **Observe:** Chinese, and a real word ("passport", "fee"). The search runs on the English digest and finds the ICA Fee Schedule.
+- **Check:** Readable, so not blocked. The tool test must accept a real word in any script. This is the part engineering has to get right, because a test written only for English letters would block this.
+
+**Outcome: not blocked.**
+
+### Log entries written (Run 7d)
+
+| Field | 7d-1 | 7d-2 | 7d-3 | 7d-4 |
+|---|---|---|---|---|
+| Enquiry | ENQ-2024-020 | ENQ-2024-021 | ENQ-2024-022 | ENQ-2024-023 |
+| Input | Digits only | Gibberish | One real word among junk | Short Chinese enquiry |
+| Result | No draft, needs clarification | No draft, needs clarification | Continues to a draft | Continues to a draft |
+| Search run | No ("no search run") | No ("no search run") | Yes | Yes |
+| Failed searches in a row | Unchanged | Unchanged | Unchanged | Unchanged |
+| Sent | No | No | No | No |
+
+### What Run 7d shows
+
+- **Both gaps from 7c are closed in the rule.** Digits alone and gibberish are no longer searched, and cannot be counted towards the 3-in-a-row stop by this route.
+- **The tool block is complete only for the characters it can test.** Digits-only and punctuation are certain. Gibberish needs a word or language check, which is not decided. I added that to "What engineering decides" in `ai-prd.md`.
+- **One real word is the line.** It keeps "asdfghjkl passport fee??" readable, and it keeps short enquiries in any script readable.
+- **Not shown.** These are hand runs. A real model may judge some strings differently, such as a name, an abbreviation, a reference number like "ENQ-2024-001" on its own, or a word from a language it does not know. Those are not run and the rule does not say what to do. They are left to the knowledge of the agent and to the officer, who sees the NEEDS CLARIFICATION result and can read the enquiry.
