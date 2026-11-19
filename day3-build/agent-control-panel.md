@@ -62,7 +62,7 @@ The agent acts without asking. These actions are safe because they can be undone
 - Alert the ServiceSG team, the Product Ops member on duty and the business owner the moment the agent stops. Tell officers it stopped. Show the rubber-stamp reminder after 5 flagged drafts in a row accepted with no change, tell the officer the supervisor has been informed, and inform the supervisor.
 - Stop drafting for one officer who has ignored the reminder twice. Show a clear notice on their screen with advice on what they can do.
 - Reuse the same core passage and wording for the same policy point.
-- **The five detection routes (Proposed settings).** Show the "This is wrong" flag, record flags with a reason, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per policy page, re-read the cited passages once a day, and alert the knowledge base lead, the Product Ops member on duty and the business owner. These are rows 33 to 39 in `ai-prd.md`. The agent never stops itself because of the same-page count or the daily check (row 40, block). A person decides.
+- **The five detection routes (Decided).** Show the "This is wrong" flag, record flags with a reason, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per policy page, re-read the cited passages once a day, and alert the knowledge base lead, the Product Ops member on duty and the business owner. These are rows 33 to 39 in `ai-prd.md`. The agent never stops itself because of the same-page count or the daily check (row 40, block). A person decides.
 
 ### Proposes and waits
 
