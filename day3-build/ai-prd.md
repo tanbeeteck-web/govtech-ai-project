@@ -10,7 +10,7 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 - It takes its content from `day2-validate/living-prd.md`, `day2-validate/handoff-note.md`, `day3-build/CLAUDE.md` and `day3-build/agent-control-panel.md`. The agent follows `CLAUDE.md` today. If this file and `CLAUDE.md` disagree, `CLAUDE.md` wins until the learner decides.
 - Each rule is marked with where it came from: **Decided** (the learner said so), **Earlier file** (written in an earlier file, not changed since), or **Starting value** (a number or setting the assistant chose and the learner has not confirmed). A starting value the learner has since confirmed becomes Decided.
 - Every setting in the Permissions table is **Decided**. The learner confirmed rows 1 to 32 on 2026-11-19, and rows 33 to 40 for the detection routes later the same day. Open decisions at the end lists what the learner still has to settle.
-- Nothing in this file is built. There is no model and no tool. Three runs were done by hand in `day3-build/agent-run-log.md`.
+- Nothing in this file is built. There is no model and no tool. Six runs were done by hand in `day3-build/agent-run-log.md`: three normal and three stress runs.
 
 ## Problem and user
 

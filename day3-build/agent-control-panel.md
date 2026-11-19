@@ -6,7 +6,7 @@
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. This page is for the person who watches the agent. It says what the agent does, what it may decide alone, and when to stop it. If this page and `CLAUDE.md` disagree, `CLAUDE.md` wins.
 
-**Status today:** The agent is not built. No model and no tools exist yet. Three runs were done by hand in `agent-run-log.md`. Everything below describes how the agent must behave once built.
+**Status today:** The agent is not built. No model and no tools exist yet. Six runs were done by hand in `agent-run-log.md`: three normal and three stress runs. Everything below describes how the agent must behave once built.
 
 ## What the agent is doing
 
