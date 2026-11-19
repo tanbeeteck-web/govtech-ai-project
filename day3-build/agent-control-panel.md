@@ -151,6 +151,7 @@ These are never given to the agent, however well it performs.
 
 ### Decided on 2026-11-19
 
+- **How a wrong answer the agent cannot detect reaches a person (2026-11-19).** Five routes: an officer's "This is wrong" flag, a prompt when an enquiry is reopened, an alert when 2 or more officers flag the same page in a day, a daily re-check of cited passages, and the weekly audit. Routes 1 to 4 alert the Product Ops member on duty and the business owner at once. Routes 3 and 4 only alert, and a person decides whether to stop.
 - **Who is on duty and who is told (2026-11-19).** The Product Ops specialist is an additional member of the ServiceSG team, and the Product Ops team is on duty in and out of hours. The business owner is the sponsor in `day2-validate/build-log.md`. The member on duty and the business owner are notified as soon as an incident happened. The member on duty must act within 3 hours. The member on duty, alone, can switch the agent off by hand.
 - **Auto-disable alert.** The ServiceSG team is alerted when the agent is auto-disabled or stopped. The ServiceSG team is the project owner, the supervisor, the knowledge base lead and the Product Ops specialist.
 - **Restart needs approval from one member of the ServiceSG team.** One approval is enough. **A team member cannot approve their own restart request.** Another member must.
@@ -167,7 +168,7 @@ These are never given to the agent, however well it performs.
 
 ### Open questions
 
-- **How the agent learns of a wrong answer it cannot detect itself.** See the suggestion in `operating-model.md`. None of it is built.
+- **Not built: the ways a wrong answer the agent cannot detect reaches a person.** The five routes are decided. See `operating-model.md`. None of them exist yet.
 - **How the high-confidence definition is measured.** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
 - **The screen notice.** The content is decided (clear, stays on screen, says why, says the supervisor was informed, advises what to do). The advice list and its wording are my draft. The colour is not chosen. In `context-skill.md` red means no draft or a failed test. Using it here is a new meaning, which is a review trigger for that file.
 - **What happens if the team does not review weekly.** The rule says at least once a week. Nothing says what follows if it is missed.

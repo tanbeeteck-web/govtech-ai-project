@@ -129,6 +129,8 @@ The ServiceSG team means the project owner, the supervisor, the knowledge base l
 
 After any stop, do not retry on your own. An officer cannot restart the agent alone. Only approval from one member of the ServiceSG team can, and the approver must not be the person who asked. Log who asked and who approved.
 
+**Wrong answers you cannot detect yourself.** Do not assume your checks are enough. Offer the officer a "This is wrong" flag on every draft and sent reply, with a short reason. When an enquiry is reopened, ask the officer whether the earlier reply was wrong. When 2 or more officers flag or reject drafts that cite the same page in one day, alert people. Once a day, re-read the passages cited in that day's sent replies and compare them with the current page. Alert, and do not stop yourself, for the same-page count and the daily check. Each alert goes to the Product Ops member on duty and the business owner, and the knowledge base lead for a flag or a page problem. The supervisor's weekly audit is the fifth route.
+
 **Stop drafting for one officer** when the officer has ignored the rubber-stamp reminder twice (see the Logs section). Drafting stops for that officer only. Other officers are not affected.
 1. **Show a clear notice on the officer's screen** that the auto-draft feature is now off for them. The notice must be impossible to miss and must stay on screen while drafting is off. It says in plain words:
    - drafts are off for them, and only for them;
