@@ -705,3 +705,34 @@ Run 7 left one case open: an enquiry in Chinese or Tamil has letters but no Engl
   - Which languages the agent may draft in, and what it does for one it cannot write reliably.
   - Which version the officer sends.
 - **Not shown.** These are hand runs. A real model's translation, and its accuracy on fees, are not tested. Not run: an enquiry in two languages, and an enquiry in a language the agent cannot write reliably. The rule says the agent gives no draft then, but that is not run.
+
+---
+
+## Run 8b: the officer edits the English version
+
+The learner decided on 2026-11-19 that the officer always edits the English version, and that the translation is automatic and assumed correct for now. This continues Run 8 (hand run).
+
+**Input (made up).** The officer opens the saved draft for ENQ-2024-017 and edits the English version. In the fee paragraph they add one sentence: "If you pay at a counter, bring your NRIC." They tick the fee and approve.
+
+- **Goal:** Keep the Chinese version in step with the officer's English edit.
+- **Plan:** The officer edits English only. Make the Chinese version again from the edited English. Keep the figures and citations. Check the match before showing it.
+- **Act:** Translate the edited English version. `write_log(...)`
+- **Observe:** The Chinese version now has the new sentence, "如果您在柜台付款，请带上身份证。". The fee figures $70 and $80, both citations and the fee's high-risk mark are unchanged. The officer was not asked to check the Chinese.
+- **Check:**
+  - Figures, dates, citations and the high-risk mark match the edited English: yes.
+  - The new sentence is not a policy claim and has no citation. It is the officer's own wording. **This shows a rule is missing:** the rules say "a claim has no citation" is a stop. Nothing says whether an officer's own added sentence needs a citation. The agent did not block the officer, because the officer decides. Not decided.
+  - Edit size: measured on the English version only. 1 added sentence in a draft of about 40 words is under 50%, so it counts as a minor edit.
+  - The translation is not measured, and is not checked by anyone: this is the known risk. If the translation were wrong, nobody would see it.
+  - Nothing sent by the agent: yes.
+
+**Outcome: translation followed the edit.** Logged as an edited_minor action on the English version, with "translation regenerated".
+
+| Field | Value |
+|---|---|
+| Enquiry | ENQ-2024-017 |
+| Action | Edited, minor, on the English version |
+| Translation | Regenerated from the edited English |
+| Translation checked by a person | No. Assumed correct |
+| Sent by the agent | No |
+
+**Not decided.** Whether an officer's own added sentence needs a citation. Whether the resident gets the translation only, or both versions (6f in `ai-prd.md`). Both are listed as open.

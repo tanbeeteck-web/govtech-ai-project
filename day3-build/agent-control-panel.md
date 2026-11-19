@@ -62,7 +62,7 @@ The agent acts without asking. These actions are safe because they can be undone
 - Alert the ServiceSG team, the Product Ops member on duty and the business owner the moment the agent stops. Tell officers it stopped. Show the rubber-stamp reminder after 5 flagged drafts in a row accepted with no change, tell the officer the supervisor has been informed, and inform the supervisor.
 - Stop drafting for one officer who has ignored the reminder twice. Show a clear notice on their screen with advice on what they can do.
 - Reuse the same core passage and wording for the same policy point.
-- **Work out the language of an enquiry,** write an English digest, and draft in the resident's language with an English version always provided. Search the English pages. Check the hand-off triggers on the digest. The officer ticks each blue item once, against the English passage.
+- **Work out the language of an enquiry,** write an English digest, and draft in the resident's language with an English version always provided. Search the English pages. Check the hand-off triggers on the digest. The officer ticks each blue item once, against the English passage. The officer always edits the English version. The translation is automatic, is made again after each edit, and is assumed correct for now.
 - **The five detection routes (Decided).** Show the "This is wrong" flag, record flags with a reason, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per policy page, re-read the cited passages once a day, and alert the knowledge base lead, the Product Ops member on duty and the business owner. These are rows 33 to 39 in `ai-prd.md`. The agent never stops itself because of the same-page count or the daily check (row 40, block). A person decides.
 
 ### Proposes and waits
@@ -173,7 +173,7 @@ These are never given to the agent, however well it performs.
 
 ### Open questions
 
-- **Replies in other languages.** The rule is decided (draft in the resident's language, always with an English version). Open: who checks that the other-language version says the same as the English one; how edit size and the rubber-stamp count work for a two-version draft; which languages the agent may draft in; and which version the officer sends. Runs 8 and 9 in `agent-run-log.md` cover it by hand.
+- **Replies in other languages.** Decided: draft in the resident's language, always with an English version. The officer always edits the English version. The translation is automatic and assumed correct for now (2026-11-19). Edit size and the rubber-stamp count are measured on the English version. Open: who checks the translation once "assumed correct" is no longer enough; which languages the agent may draft in; and whether the resident receives the translation only, or both versions. Runs 8 and 9 in `agent-run-log.md` cover it by hand.
 
 - **Not built: the ways a wrong answer the agent cannot detect reaches a person.** The five routes are decided. See `operating-model.md`. None of them exist yet.
 - **How the high-confidence definition is measured.** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
