@@ -167,7 +167,7 @@ Write an entry for every enquiry and every stop. Logs are append only, and the a
 - The reminder is a prompt. It does not block the officer or change the draft.
 - The officer **ignores** a reminder when they reach another 5 flagged drafts in a row with no change after it.
 - **After 2 reminders**, if the officer reaches 5 flagged drafts in a row again, stop drafting for that officer (see Stop conditions). The reminder count stays until the supervisor reinstates them. Reinstating sets the reminder count and the streak back to 0.
-- **Good practice clears the reminder count.** If an officer goes 28 days without a new reminder, set their reminder count back to 0 and log it. The 28 days is a starting value, adjusted later from the same logs. It does not apply once drafting has stopped for that officer. Only the supervisor can reinstate them.
+- **Good practice clears the reminder count.** If an officer goes 28 days without a new reminder, set their reminder count back to 0 and log it. The 28 days was confirmed by the learner. It does not apply once drafting has stopped for that officer. Only the supervisor can reinstate them.
 - Log each reminder: officer ID, time, the five enquiry IDs, whether it was reminder 1 or 2, and that the supervisor was informed.
 - Log each time a reminder count is cleared after 28 days.
 - Also log, for each accepted draft, the seconds the officer took and how many blue items they ticked, so the supervisor can see fast accepts.
