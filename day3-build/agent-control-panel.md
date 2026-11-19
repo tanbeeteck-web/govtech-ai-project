@@ -59,7 +59,7 @@ The agent acts without asking. These actions are safe because they can be undone
 - Refuse a request to send, close a case or skip a confirmation, and show the draft instead.
 - Mark a fee, deadline, date or eligibility claim as high risk.
 - Write log entries. The logs are append only.
-- Alert the ServiceSG team the moment the agent stops. Tell officers it stopped. Show the rubber-stamp reminder after 5 flagged drafts in a row accepted with no change, tell the officer the supervisor has been informed, and inform the supervisor.
+- Alert the ServiceSG team, the Product Ops member on duty and the business owner the moment the agent stops. Tell officers it stopped. Show the rubber-stamp reminder after 5 flagged drafts in a row accepted with no change, tell the officer the supervisor has been informed, and inform the supervisor.
 - Stop drafting for one officer who has ignored the reminder twice. Show a clear notice on their screen with advice on what they can do.
 - Reuse the same core passage and wording for the same policy point.
 
@@ -106,7 +106,7 @@ Give no draft, give the reason, and show up to three closest pages. Say so when 
 ### Stop the whole agent
 
 Stop all drafting. Then, in this order:
-1. **Alert the ServiceSG team.** The project owner, the supervisor and the knowledge base lead. Say which stop it was, the time and the enquiry IDs.
+1. **Alert the ServiceSG team, the Product Ops member on duty and the business owner.** Product Ops is on duty in and out of hours. The business owner is the sponsor in `build-log.md`. All are told as soon as it happens. The project owner, the supervisor and the knowledge base lead. Say which stop it was, the time and the enquiry IDs.
 2. **Tell the officers.** Everyone signed in sees that the agent stopped and why. Drafts in the queue stay there. Nothing was sent.
 3. **Ask the officer** whether they want to request a restart. If yes, the request goes to the ServiceSG team. The agent stays off until one member of the team approves. One approval is enough.
 4. **Do not restart on your own.** Log the alert, the notice, the request and the approval or refusal.
@@ -151,6 +151,7 @@ These are never given to the agent, however well it performs.
 
 ### Decided on 2026-11-19
 
+- **Who is on duty and who is told (2026-11-19).** The Product Ops team is on duty in and out of hours. The business owner is the sponsor in `day2-validate/build-log.md`. The member on duty and the business owner are notified as soon as an incident happened.
 - **Auto-disable alert.** The ServiceSG team is alerted when the agent is auto-disabled or stopped. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
 - **Restart needs approval from one member of the ServiceSG team.** One approval is enough. **A team member cannot approve their own restart request.** Another member must.
 - **A wrong-citation stop alerts the knowledge base lead.** Any of the three ServiceSG team members can take that role for the review. *My reading, to confirm: see Open questions.*

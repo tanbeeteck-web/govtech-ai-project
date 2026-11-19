@@ -38,6 +38,8 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 | Human lead | Hand-offs, such as complaints with legal risk |
 | Project owner | The rules, sources, colours, and the success, fail and kill thresholds |
 | ServiceSG team | The project owner, the supervisor and the knowledge base lead. Gets stop alerts. One member may approve a restart. |
+| Product Ops team | On duty in and out of hours. The member on duty is notified as soon as an incident happened and acts first. |
+| Business owner | The sponsor in `day2-validate/build-log.md`. Notified as soon as an incident happened. |
 | Resident | Never uses the agent and never sees its output until an officer sends a reply |
 
 **Riskiest assumption (desirability):** Officers are comfortable with AI-generated draft replies that carry policy citations. **No real officer has tested this.** Every rating so far is made up.
@@ -149,7 +151,7 @@ Every action the agent takes, or must never take. **All 32 settings are Decided.
 | 14 | Clear an officer's reminder count after 28 days without a reminder | write | auto (Decided) | Decided | 28 days confirmed by the learner |
 | 15 | Stop drafting for one officer after 2 ignored reminders | write | auto (Decided) | Decided | Clear notice on the officer's screen, with advice on what they can do |
 | 16 | Stop the whole agent when a stop condition is met | write | auto (Decided) | Decided (auto-disable) | |
-| 17 | Alert the ServiceSG team when the agent stops | write | auto (Decided) | Decided | Staff alert, so write, not send. A wrong-citation stop also alerts the knowledge base lead. |
+| 17 | Alert the ServiceSG team, the Product Ops member on duty and the business owner when the agent stops | write | auto (Decided) | Decided | Staff alert, so write, not send. A wrong-citation stop also alerts the knowledge base lead. |
 | 18 | Show a stop notice to every signed-in officer | write | auto (Decided) | Decided | Staff alert, so write, not send |
 | 19 | Show the rubber-stamp reminder to an officer | write | auto (Decided) | Decided | Staff alert, so write, not send |
 | 20 | Inform the supervisor at each reminder and each per-officer stop | write | auto (Decided) | Decided | Staff alert, so write, not send |
@@ -182,7 +184,7 @@ The agent never moves past these without a person.
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. | Earlier file |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page | Earlier file |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages | Earlier file |
-| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once and reviews why. One member may approve a restart, but not one they asked for. A wrong-citation stop also alerts the knowledge base lead. | Decided |
+| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once and reviews why. One member may approve a restart, but not one they asked for. A wrong-citation stop also alerts the knowledge base lead. The Product Ops member on duty and the business owner are alerted at the same moment. | Decided |
 | The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. | Decided |
 | An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder, is told the supervisor has been informed, and is asked to review the next one with due diligence | Decided |
 | A reminder is shown to an officer | Supervisor | Is informed each time, with the officer ID and the five enquiry IDs | Decided |
@@ -214,7 +216,7 @@ The agent never moves past these without a person.
 - A listed policy page is changed or withdrawn.
 
 When it stops, in this order:
-1. Alert the ServiceSG team: which stop, the time, the enquiry IDs. IDs only.
+1. Alert the ServiceSG team, the Product Ops member on duty and the business owner at once: which stop, the time, the enquiry IDs. IDs only.
 2. Tell every signed-in officer why. Drafts already in the queue stay. Nothing was sent.
 3. Ask the officer whether they want to request a restart. If yes, pass the request on. The agent stays off until one member of the ServiceSG team approves. The approver cannot be the member who asked.
 4. Log the alert, the notice, the request and the approval or refusal.
@@ -264,7 +266,7 @@ Append only. The agent cannot edit or delete. Made-up IDs only. No resident name
 - Each per-officer stop and each reinstatement.
 
 **Alerts, requests and approvals**
-- Each alert to the ServiceSG team.
+- Each alert to the ServiceSG team, the Product Ops member on duty and the business owner.
 - Each notice shown to officers.
 - Each restart request, and each approval or refusal, with who made it.
 
@@ -317,7 +319,7 @@ Each rule says where it came from. Engineering must not change a rule marked Dec
 30. The reminder count clears after 28 days with no new reminder. **Decided.** The learner confirmed 28 days. Any member of the ServiceSG team may adjust the 28 days, alone.
 
 **Restart rules** (**Decided**)
-31. Every stop of the whole agent alerts the ServiceSG team.
+31. Every stop of the whole agent alerts the ServiceSG team, the Product Ops member on duty and the business owner, as soon as it happens. **Decided 2026-11-19.** Product Ops is on duty in and out of hours. The business owner is the sponsor in `build-log.md`.
 32. An officer may request a restart. One approval from one member of the ServiceSG team is enough. The agent never restarts itself.
 32a. A team member cannot approve their own restart request. Another member must.
 32b. A wrong-citation stop alerts the knowledge base lead. Any of the three ServiceSG team members can take that role for the review. *My reading, to confirm.*
