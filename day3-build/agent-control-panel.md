@@ -62,7 +62,7 @@ The agent acts without asking. These actions are safe because they can be undone
 - Alert the ServiceSG team, the Product Ops member on duty and the business owner the moment the agent stops. Tell officers it stopped. Show the rubber-stamp reminder after 5 flagged drafts in a row accepted with no change, tell the officer the supervisor has been informed, and inform the supervisor.
 - Stop drafting for one officer who has ignored the reminder twice. Show a clear notice on their screen with advice on what they can do.
 - Reuse the same core passage and wording for the same policy point.
-- **Work out the language of an enquiry,** write an English digest, and draft in the resident's language with an English version always provided. Search the English pages. Check the hand-off triggers on the digest. The officer ticks each blue item once, against the English passage. The officer always edits the English version. The translation is automatic, is made again after each edit, and is assumed correct for now. The resident receives the English version as the official reply, with the translated text as a reference marked "for easy reference only".
+- **Work out the language of an enquiry,** write an English digest, and always draft in English, with an automatic translation into the resident's language as a reference. Search the English pages. Check the hand-off triggers on the digest. The officer ticks each blue item once, against the English passage. The officer always edits the English version. The translation is automatic, is made again after each edit, and is assumed correct for now. The resident receives the English version as the official reply, with the translated text as a reference marked "for easy reference only".
 - **The five detection routes (Decided).** Show the "This is wrong" flag, record flags with a reason, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per policy page, re-read the cited passages once a day, and alert the knowledge base lead, the Product Ops member on duty and the business owner. These are rows 33 to 39 in `ai-prd.md`. The agent never stops itself because of the same-page count or the daily check (row 40, block). A person decides.
 
 ### Proposes and waits
@@ -122,7 +122,7 @@ One row for each tool the agent uses, with `notify_staff` split into two rows be
 Give no draft, give the reason, and show up to three closest pages. Say so when none is a real match.
 
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
-- The language cannot be worked out, or a reliable reply cannot be written in it. Show the English digest. If the two versions differ in a figure, date or claim, give no draft.
+- The language cannot be worked out, or the enquiry cannot be understood well enough to draft. Show the English digest if there is one. A translation that cannot be made reliably, or that differs from the English in a figure, date or claim, is left out and the English draft stands. **(Proposed.)**
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION.
 - The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off to a human lead.
 - An attachment cannot be read and the reply depends on it.
@@ -198,7 +198,7 @@ These are never given to the agent, however well it performs.
 
 ### Open questions
 
-- **Replies in other languages.** Decided: draft in the resident's language, always with an English version. The officer always edits the English version. The translation is automatic and assumed correct for now (2026-11-19). Edit size and the rubber-stamp count are measured on the English version. The resident receives the English version as the official reply, with the text in their own language as a reference marked "for easy reference only" (2026-11-19). Open: who checks the translation once "assumed correct" is no longer enough, and which languages the agent may draft in. Runs 8 and 9 in `agent-run-log.md` cover it by hand.
+- **Replies in other languages.** Decided: the agent always drafts in English and adds an automatic translation into the resident's language as a reference. The officer always edits the English version and works only on it. The translation is automatic and assumed correct for now (2026-11-19). Edit size and the rubber-stamp count are measured on the English version. The resident receives the English version as the official reply, with the text in their own language as a reference marked "for easy reference only" (2026-11-19). Open: who checks the translation once "assumed correct" is no longer enough, and which languages the agent may draft in. Runs 8 and 9 in `agent-run-log.md` cover it by hand.
 
 - **Not built: the ways a wrong answer the agent cannot detect reaches a person.** The five routes are decided. See `operating-model.md`. None of them exist yet.
 - **How the high-confidence definition is measured.** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
