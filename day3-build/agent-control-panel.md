@@ -60,7 +60,7 @@ The agent acts without asking. These actions are safe because they can be undone
 - Mark a fee, deadline, date or eligibility claim as high risk.
 - Write log entries. The logs are append only.
 - Alert the ServiceSG team the moment the agent stops. Tell officers it stopped. Show the rubber-stamp reminder after 5 flagged drafts in a row accepted with no change, tell the officer the supervisor has been informed, and inform the supervisor.
-- Stop drafting for one officer who has ignored the reminder twice, and tell them.
+- Stop drafting for one officer who has ignored the reminder twice. Show a clear notice on their screen with advice on what they can do.
 - Reuse the same core passage and wording for the same policy point.
 
 ### Proposes and waits
@@ -71,9 +71,9 @@ The agent prepares something and stops. Nothing happens until a person acts.
 - **A no-draft result.** Saved with the reason and the closest pages. It waits for the officer to write the reply or escalate.
 - **A hand-off.** Saved for a human lead. It waits for them to take the case.
 - **A flag on a wrong citation** (raised by an officer). It waits for the knowledge base lead.
-- **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough. It never restarts itself.
+- **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough, and it cannot be the member who asked. It never restarts itself.
 - **Reinstating an officer** whose drafting was stopped. The officer asks the supervisor. Only the supervisor can turn it back on.
-- **A change to a rule, source, colour or threshold.** The agent may suggest one in a log or a note. It waits for a person and does not make the change. The project owner approves changes to rules, sources, colours and the success, fail and kill thresholds. The ServiceSG team adjusts the rubber-stamp streak threshold.
+- **A change to a rule, source, colour or threshold.** The agent may suggest one in a log or a note. It waits for a person and does not make the change. The project owner approves changes to rules, sources, colours and the success, fail and kill thresholds. Any member of the ServiceSG team adjusts the rubber-stamp streak threshold and the 28 days, alone.
 
 ### A person reviews
 
@@ -84,7 +84,8 @@ A person checks these, whatever the agent says.
 - **5% of sent replies, every week.** The supervisor checks them against the cited passages.
 - **Every hand-off.** The human lead.
 - **Wrong-citation flags.** The knowledge base lead reviews the flag and the policy page.
-- **Every stop of the whole agent.** The ServiceSG team gets an alert, reviews why, and may approve a restart. One approval is enough.
+- **Every stop of the whole agent.** The ServiceSG team gets an alert, reviews why, and may approve a restart. One approval is enough, and not from the member who asked. A wrong-citation stop also alerts the knowledge base lead.
+- **The logged data.** Any member of the ServiceSG team may review it at any time, and the team must review it at least once a week.
 - **Each officer's pattern of accepting flagged drafts.** The agent counts flagged drafts accepted in a row with no change and reminds the officer at 5 and informs the supervisor each time. The supervisor reviews the log, and reinstates an officer whose drafting was stopped.
 
 ## Stop conditions
@@ -116,10 +117,15 @@ The ServiceSG team is the project owner, the supervisor and the knowledge base l
 
 Other officers keep their drafts. This happens when the officer has ignored the rubber-stamp reminder twice.
 
-1. Tell the officer why, in plain words.
-2. Log it, and inform the supervisor at once. Tell the officer the supervisor has been informed.
+1. **Show a clear notice on the officer's screen** that auto-draft is off for them. It stays on screen while drafting is off. It says drafts are off for them only, why, that the supervisor has been informed, and what they can do.
+2. Log it, and inform the supervisor at once.
 3. The officer works without drafts, as before the agent.
 4. The officer asks the supervisor to reinstate them. Only the supervisor can.
+
+**What the notice advises** (draft wording for the learner to confirm):
+- Keep working your enquiries. Read each one and search the policy pages yourself.
+- Check every fee, deadline, date and eligibility claim against the cited passage.
+- Ask the supervisor to turn drafts back on. The agent passes the request on once you confirm it.
 
 ### Fail line, not a stop
 
@@ -137,7 +143,7 @@ These are never given to the agent, however well it performs.
 - **Promising an outcome,** such as an approved appeal, waiver or application.
 - **Deciding what goes into the policy pages.** The knowledge base lead owns them.
 - **Changing the rules, sources, colours and the success, fail and kill thresholds.** The project owner approves.
-- **Adjusting the rubber-stamp streak threshold.** The ServiceSG team reviews the logged data and decides.
+- **Adjusting the rubber-stamp streak threshold and the 28 days.** Any member of the ServiceSG team, alone, after reviewing the logged data.
 - **The weekly audit.** The supervisor checks real sent replies.
 - **Approving a restart** of the whole agent. The ServiceSG team decides.
 - **Reinstating an officer** whose drafting was stopped. The supervisor decides.
@@ -146,21 +152,23 @@ These are never given to the agent, however well it performs.
 ### Decided on 2026-11-19
 
 - **Auto-disable alert.** The ServiceSG team is alerted when the agent is auto-disabled or stopped. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
-- **Restart needs approval from one member of the ServiceSG team.** The officer tells the agent they want a restart, and the request goes to the ServiceSG team. The agent stays off until one of the three (project owner, supervisor or knowledge base lead) approves. One approval is enough.
-- **Rubber-stamping.** Officer actions are logged. The reminder fires only on flagged drafts, meaning drafts with a blue item that needs the officer's attention. It does not fire on straightforward high-confidence drafts. After 5 flagged drafts in a row accepted with no change, the officer gets a reminder about the risk and about reviewing with due diligence.
-- **The officer is told the supervisor has been informed.** The reminder says so, and the supervisor is informed each time a reminder is shown and when drafting stops for an officer.
+- **Restart needs approval from one member of the ServiceSG team.** One approval is enough. **A team member cannot approve their own restart request.** Another member must.
+- **A wrong-citation stop alerts the knowledge base lead.** Any of the three ServiceSG team members can take that role for the review. *My reading, to confirm: see Open questions.*
+- **The ServiceSG team is told, not only the project owner,** when the whole agent stops.
+- **Rubber-stamping.** Officer actions are logged. The reminder fires only on flagged drafts, meaning drafts with a blue item that needs the officer's attention. **Straightforward drafts that meet the high-confidence definition do not count in the streak.** After 5 flagged drafts in a row accepted with no change, the officer gets a reminder about the risk and about reviewing with due diligence.
+- **The officer is told the supervisor has been informed.** The supervisor is informed each time a reminder is shown and when drafting stops for an officer.
 - **Reset.** An edit (minor or major), a rejection or a wrong-citation flag resets the streak to 0. A minor edit resets it even though it counts as used in the 8-in-10 success measure.
-- **Two reminders, then drafting stops for that officer.** The officer asks the supervisor to reinstate them.
-- **Good practice clears the reminder count.** After 28 days with no new reminder, the count goes back to 0. The learner confirmed 28 days.
-- **The threshold of 5 is a starting value.** The ServiceSG team reviews the data collected by the logs and may adjust it. The agent never changes it.
-- **The supervisor is informed at every reminder.** More data visibility is wanted, so the alert goes at each reminder as well as at each stop.
+- **A second ignored reminder disables auto-draft for that officer.** It is clearly indicated on their screen, with advice on what they can do. The officer asks the supervisor to reinstate them.
+- **Good practice clears the reminder count after 28 days.** The learner confirmed 28 days. **Any ServiceSG team member may adjust it, alone.**
+- **The threshold of 5 is a starting value.** **Any ServiceSG team member may adjust it, alone.** The agent never changes it.
+- **The team reviews the logged data at any time, and at least once a week.**
+- **The supervisor is informed at every reminder.** More data visibility is wanted.
 
 ### Open questions
 
-- **Whether any one of the three may approve every kind of stop.** One approval is enough today. A stop caused by wrong citations touches the knowledge base lead's pages. Decide whether that case needs the knowledge base lead specifically.
-- **Whether the approver may be the person who made the request.** The supervisor is on the team and may also be an officer's reviewer. Today nothing stops a team member approving their own request.
-- **How often the ServiceSG team reviews the data.** The team may adjust the streak threshold. No schedule is set. The logs record seconds to decide, blue items ticked and reminders.
-- **Whether one member of the team may adjust the threshold alone,** or the team decides together. Restarts need one approval. Nothing is said for the threshold.
-- **Whether the 28 days for clearing the reminder count is also adjusted by the team.** Today the files treat it like the threshold, a starting value.
-- **Straightforward drafts in a streak.** They neither count nor reset the count. An officer could accept 4 flagged drafts, 20 straightforward ones, then a fifth flagged one and get the reminder. Confirm this is wanted.
-- **Not built.** The alert, the stop notice, the restart request, the approval, the streak count, the reminder and the per-officer stop do not exist in the prototype or in any tool yet.
+- **My reading of "any three of the team members".** I read it as: a wrong-citation stop alerts the knowledge base lead, and any of the three team members can take that role. If you meant that all three are alerted and must act, or that the knowledge base lead is a separate fourth person, tell me.
+- **How the high-confidence definition is measured.** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
+- **The screen notice.** The content is decided (clear, stays on screen, says why, says the supervisor was informed, advises what to do). The advice list and its wording are my draft. The colour is not chosen. In `context-skill.md` red means no draft or a failed test. Using it here is a new meaning, which is a review trigger for that file.
+- **What happens if the team does not review weekly.** The rule says at least once a week. Nothing says what follows if it is missed.
+- **Who checks that an approver is not the requester,** and how, in a real system.
+- **Not built.** The alert, the stop notice, the restart request, the approval, the streak count, the reminder, the screen notice and the per-officer stop do not exist in the prototype or in any tool yet.

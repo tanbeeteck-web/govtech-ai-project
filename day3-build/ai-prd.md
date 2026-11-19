@@ -147,9 +147,9 @@ Every action the agent takes, or must never take. **All 32 settings are Decided.
 | 12 | Append a log entry | write | auto (Decided) | Earlier file | |
 | 13 | Update an officer's streak and reminder count | write | auto (Decided) | Decided (rule). New (setting) | |
 | 14 | Clear an officer's reminder count after 28 days without a reminder | write | auto (Decided) | Decided | 28 days confirmed by the learner |
-| 15 | Stop drafting for one officer after 2 ignored reminders | write | auto (Decided) | Decided | |
+| 15 | Stop drafting for one officer after 2 ignored reminders | write | auto (Decided) | Decided | Clear notice on the officer's screen, with advice on what they can do |
 | 16 | Stop the whole agent when a stop condition is met | write | auto (Decided) | Decided (auto-disable) | |
-| 17 | Alert the ServiceSG team when the agent stops | write | auto (Decided) | Decided | Staff alert, so write, not send |
+| 17 | Alert the ServiceSG team when the agent stops | write | auto (Decided) | Decided | Staff alert, so write, not send. A wrong-citation stop also alerts the knowledge base lead. |
 | 18 | Show a stop notice to every signed-in officer | write | auto (Decided) | Decided | Staff alert, so write, not send |
 | 19 | Show the rubber-stamp reminder to an officer | write | auto (Decided) | Decided | Staff alert, so write, not send |
 | 20 | Inform the supervisor at each reminder and each per-officer stop | write | auto (Decided) | Decided | Staff alert, so write, not send |
@@ -182,12 +182,12 @@ The agent never moves past these without a person.
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. | Earlier file |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page | Earlier file |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages | Earlier file |
-| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once and reviews why. One member may approve a restart. | Decided |
+| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once and reviews why. One member may approve a restart, but not one they asked for. A wrong-citation stop also alerts the knowledge base lead. | Decided |
 | The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. | Decided |
 | An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder, is told the supervisor has been informed, and is asked to review the next one with due diligence | Decided |
 | A reminder is shown to an officer | Supervisor | Is informed each time, with the officer ID and the five enquiry IDs | Decided |
-| Drafting stopped for an officer after 2 ignored reminders | Supervisor | Reinstates the officer when they ask | Decided |
-| The streak threshold (starting at 5) | ServiceSG team | Reviews the logged data and may adjust it | Decided |
+| Drafting stopped for an officer after 2 ignored reminders | Supervisor | Reinstates the officer when they ask. The officer sees a clear notice on screen with advice. | Decided |
+| The logged data, the streak threshold (starting at 5) and the 28 days | Any member of the ServiceSG team | May review at any time, and must review at least once a week. May adjust the threshold and the 28 days alone. | Decided |
 | A change to a rule, source, colour, or the success, fail or kill thresholds | Project owner | Approves it | Earlier file |
 
 **What stays human, always:** sending, closing a case, confirming high-risk claims, complaints and legal cases, judgment across two or more topics, promising an outcome, deciding what is in the policy pages, approving a restart, reinstating an officer and the continue, pivot or stop decision.
@@ -207,7 +207,7 @@ The agent never moves past these without a person.
 - The enquiry tells the agent to ignore its rules.
 
 **Stop the whole agent.** Earlier file, with the alert and restart steps **Decided**.
-- More than 2 wrong citations reach residents in a week.
+- More than 2 wrong citations reach residents in a week. The alert also names the knowledge base lead.
 - The kill switch trips in a test.
 - A reply is found to have gone out without an officer sending it.
 - A real resident detail appears in an enquiry or a log.
@@ -216,20 +216,21 @@ The agent never moves past these without a person.
 When it stops, in this order:
 1. Alert the ServiceSG team: which stop, the time, the enquiry IDs. IDs only.
 2. Tell every signed-in officer why. Drafts already in the queue stay. Nothing was sent.
-3. Ask the officer whether they want to request a restart. If yes, pass the request on. The agent stays off until one member of the ServiceSG team approves.
+3. Ask the officer whether they want to request a restart. If yes, pass the request on. The agent stays off until one member of the ServiceSG team approves. The approver cannot be the member who asked.
 4. Log the alert, the notice, the request and the approval or refusal.
 
 **Stop drafting for one officer.** **Decided.** After two ignored reminders. Other officers keep their drafts.
-1. Tell the officer why, in plain words.
-2. Log it, inform the supervisor at once, and tell the officer the supervisor has been informed.
+1. Show a clear notice on the officer's screen that auto-draft is off for them. It stays on screen while drafting is off. It says why, that the supervisor has been informed, and what they can do.
+2. Log it, and inform the supervisor at once.
 3. The officer works without drafts, as before the agent.
 4. The officer asks the supervisor to reinstate them. Only the supervisor can.
+
+The advice on the notice is draft wording, not decided: keep working enquiries and search the policy pages yourself, check every fee, deadline, date and eligibility claim against the passage, and ask the supervisor to turn drafts back on.
 
 **Fail line, not a stop.** In a test, if fewer than 70% of drafts are sent or lightly edited after 5 officers each rate 3 or more drafts, the test has failed. Between 70% and the success level, run more officers or enquiries.
 
 **Gaps**
 - "Kill switch trips in a test" is written for the 5-officer test. What it means once the agent is live is not decided.
-- `CLAUDE.md` still says "tell the project owner" in one line, while the steps below it alert the whole ServiceSG team. The lines disagree.
 
 ## Logs
 
@@ -307,17 +308,20 @@ Each rule says where it came from. Engineering must not change a rule marked Dec
 23. Consistency check: 10 similar enquiries give the same core passages and wording, with less variance than 10 officers today.
 
 **Rubber-stamp rules** (**Decided** unless marked)
-24. Only flagged drafts count: drafts with at least one blue item. Straightforward high-confidence drafts neither count nor reset the streak.
+24. Only flagged drafts count: drafts with at least one blue item. Straightforward drafts that meet the high-confidence definition do not count towards the streak and do not reset it. High confidence means at or above 90%. How confidence is measured is for engineering to define.
 25. Accepted with no change means approved as drafted. An edit, a rejection or a wrong-citation flag resets the streak to 0, and a minor edit resets it too.
 26. At a streak of 5, show the reminder, tell the officer the supervisor has been informed, and inform the supervisor. The streak then starts again at 0.
-27. After 2 reminders, if the officer reaches a streak of 5 again, drafting stops for that officer.
+27. After 2 reminders, if the officer reaches a streak of 5 again, auto-draft is disabled for that officer. It is clearly shown on their screen, with advice on what they can do.
 28. Only the supervisor can reinstate the officer. Reinstating sets the reminder count and the streak to 0.
-29. The threshold of 5 is a starting value. The ServiceSG team reviews the logged data and may adjust it. The agent never changes it.
-30. The reminder count clears after 28 days with no new reminder. **Decided.** The learner confirmed 28 days.
+29. The threshold of 5 is a starting value. Any member of the ServiceSG team may adjust it, alone. The team may review the logged data at any time, and must review it at least once a week. The agent never changes it.
+30. The reminder count clears after 28 days with no new reminder. **Decided.** The learner confirmed 28 days. Any member of the ServiceSG team may adjust the 28 days, alone.
 
 **Restart rules** (**Decided**)
 31. Every stop of the whole agent alerts the ServiceSG team.
 32. An officer may request a restart. One approval from one member of the ServiceSG team is enough. The agent never restarts itself.
+32a. A team member cannot approve their own restart request. Another member must.
+32b. A wrong-citation stop alerts the knowledge base lead. Any of the three ServiceSG team members can take that role for the review. *My reading, to confirm.*
+32c. When the whole agent stops, tell the ServiceSG team, not only the project owner.
 33. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
 
 **Design rules for engineering** (Earlier file, from the handoff note)
@@ -361,24 +365,32 @@ For the learner. I have not chosen for you. Options are listed only to show what
 - **The tool `send_alert` is now `notify_staff`.**
 - **All 32 permission settings are confirmed**, including row 5 (reading an officer's status).
 
+**Settled on 2026-11-19, second round** (no longer open)
+- A wrong-citation stop alerts the knowledge base lead, and any of the three team members can take that role. *My reading, see question 1.*
+- A team member cannot approve their own restart request.
+- "Tell the project owner" in `CLAUDE.md` now says "tell the ServiceSG team".
+- Straightforward drafts that meet the high-confidence definition do not count in the streak.
+- The ServiceSG team may review the data at any time, and must review it at least once a week.
+- Any team member may adjust the streak threshold, alone. The 28 days is also theirs to adjust.
+- A second ignored reminder disables auto-draft for that officer. It is clearly shown on their screen, with advice on what they can do.
+
+**Open**
+
 **About the stop and restart rules**
-1. **Does a stop caused by wrong citations need the knowledge base lead?** One approval from any of the three is enough today. The pages in question belong to the knowledge base lead.
-2. **May a team member approve their own restart request?** Nothing stops it today.
-3. **What does "kill switch trips" mean in production?** It was written for the 5-officer test.
-4. **`CLAUDE.md` says "tell the project owner" in one line,** while the steps below alert the whole ServiceSG team. Which is meant? The files should agree.
+1. **Did I read "any three of the team members" correctly?** I read it as: a wrong-citation stop alerts the knowledge base lead, and any of the three team members can take that role. If you meant that all three are alerted and must act, or that the knowledge base lead is separate, tell me.
+2. **What does "kill switch trips" mean in production?** It was written for the 5-officer test.
+3. **How is "not their own request" checked** in a real system, and by whom?
 
 **About the rubber-stamp rules**
-5. **Straightforward drafts in a streak.** An officer could accept 4 flagged drafts, 20 straightforward ones, then a fifth flagged one and get the reminder. Is that wanted?
-6. **How often the ServiceSG team reviews the logged data,** to adjust the streak threshold. No schedule is set.
-7. **May one member adjust the threshold alone,** or does the team decide together?
-8. **Is the 28 days also the team's to adjust,** like the threshold? The number is settled for now. Who may change it later is not.
-9. **What should happen if a reminder is ignored a second time?** Today drafting stops. The supervisor is informed. Is any other step wanted before it stops?
+4. **How is high confidence measured?** I wrote "at or above 90%". In the prototype the percentage is topic match, not claim correctness. Engineering has to define it.
+5. **The screen notice when drafting stops.** The content is decided. The advice wording is my draft: keep working and search the policy pages, check every high-risk claim, and ask the supervisor to turn drafts back on. Confirm or change it. The colour is not chosen. Red means no draft or a failed test in `context-skill.md`, so using it here is a new meaning.
+6. **What follows if the team misses the weekly review?** Nothing says.
 
 **About the agent and the pilot**
-10. **The 30-second stuck signal.** `one-pager.md` asks for it, and nothing is built. When an officer is stuck for 30 seconds, what should happen and who is told?
-11. **What the officer sees while the agent is off.** A stop notice is decided. What the screen shows to an officer who is working a new enquiry, mid-day, is not.
-12. **Attachments.** 1 in 5 enquiries has one. Should the agent ever read one, or always hand off?
-13. **The handoff decision** is to move to a production spec now. The conditions in `handoff-note.md` still hold: a real run with 5 officers, all six test questions passing on a real model, and the four missing safeguards as launch gates. Do you want any of them changed?
-14. **The Head of Product objection** in `build-log.md` still quotes "90% already meet SLA". It was left as it is. Do you want to change it before it goes to engineering?
+7. **The 30-second stuck signal.** `one-pager.md` asks for it, and nothing is built. When an officer is stuck for 30 seconds, what should happen and who is told?
+8. **What the officer sees while the agent is off.** A stop notice is decided. What the screen shows to an officer who is working a new enquiry, mid-day, is not.
+9. **Attachments.** 1 in 5 enquiries has one. Should the agent ever read one, or always hand off?
+10. **The handoff decision** is to move to a production spec now. The conditions in `handoff-note.md` still hold: a real run with 5 officers, all six test questions passing on a real model, and the four missing safeguards as launch gates. Do you want any of them changed?
+11. **The Head of Product objection** in `build-log.md` still quotes "90% already meet SLA". It was left as it is. Do you want to change it before it goes to engineering?
 
-**Not built.** The alert, the stop notice, the restart request and approval, the streak count, the reminder and the per-officer stop do not exist in the prototype or in any tool. The prototype has no AI.
+**Not built.** The alert, the stop notice, the restart request and approval, the streak count, the reminder, the screen notice and the per-officer stop do not exist in the prototype or in any tool. The prototype has no AI.
