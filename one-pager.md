@@ -77,11 +77,12 @@ All figures are made up.
 
 ## Agent role and guardrails
 
-**Role:** A drafting agent for ServiceSG officers. For one enquiry at a time it reads the enquiry, finds the matching passages among the 15 listed policy pages, and drafts a first reply with a citation on every claim. It saves the draft to the officer's review queue. It does not send, close a case or change a policy page. It is not built yet. The instructions are in `day3-build/CLAUDE.md`, and six hand-run examples (three normal, three stress) are in `day3-build/agent-run-log.md`.
+**Role:** A drafting agent for ServiceSG officers. For one enquiry at a time it reads the enquiry, finds the matching passages among the 15 listed policy pages, and drafts a first reply with a citation on every claim. It saves the draft to the officer's review queue. It does not send, close a case or change a policy page. It is not built yet. The instructions are in `day3-build/CLAUDE.md`, and nine hand-run examples (three normal, six stress) are in `day3-build/agent-run-log.md`.
 
 **Decides alone** (safe, or only makes the outcome more careful):
 - Read the enquiry and the policy pages, and search them.
 - Give no draft when a stop condition is met, and show up to three closest pages. Say so when none is a real match. This includes an enquiry with no readable words, and an enquiry that names a page that is not one of the 15.
+- Work out the language of an enquiry, give an English digest, and draft in the resident's language with an English version always provided.
 - Refuse a request to send, close a case or skip a confirmation.
 - Mark fees, deadlines, dates and eligibility as high risk, and write the logs.
 
