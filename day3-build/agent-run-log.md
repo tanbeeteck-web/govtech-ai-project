@@ -429,14 +429,14 @@ This is an ordinary enquiry. The test is that `search_policy_pages` returns noth
 
 **All three stopped safely.** None produced a draft, a send, a closed case or an invented fee. The harness held for these inputs.
 
-**Five gaps found.** I have not changed `CLAUDE.md`, because these are stop conditions and the project owner approves those. They are proposals for you to decide.
+**Five gaps found, all fixed on 2026-11-19.** The learner accepted every proposal below, with a threshold of 3 for gap 5. `CLAUDE.md`, `agent-control-panel.md` and `ai-prd.md` now carry them. Runs 4 to 6 were run before the fix, so they have not been rerun against the new wording.
 
-1. **No rule names an empty enquiry.** It is caught by two general lines. Proposed: add "The enquiry has no text" to the stop-one-enquiry list, with type NEEDS CLARIFICATION.
-2. **Nothing says whether to search an empty enquiry.** Proposed: do not search, and log "no search run".
-3. **A resident citing a page that is not a listed source goes nowhere.** Proposed: the log names the cited page, and the officer may pass it to the knowledge base lead. The agent does not tell the lead by itself.
-4. **No wording after repeated failed searches.** Proposed: after 2 failed tries, tell the officer to keep trying or escalate, as the prototype does.
-5. **A search tool that fails for everyone alerts nobody.** Proposed: a new whole-agent stop condition, such as "the policy search returns nothing for 3 enquiries in a row", which alerts the ServiceSG team, the Product Ops member on duty and the business owner. This would be the first condition that watches the tools themselves. It needs a threshold, so it is your decision.
+1. **No rule names an empty enquiry.** It is caught by two general lines. Fixed: add "The enquiry has no text" to the stop-one-enquiry list, with type NEEDS CLARIFICATION.
+2. **Nothing says whether to search an empty enquiry.** Fixed: do not search, and log "no search run".
+3. **A resident citing a page that is not a listed source goes nowhere.** Fixed: the log names the cited page, and the officer may pass it to the knowledge base lead. The agent does not tell the lead by itself.
+4. **No wording after repeated failed searches.** Fixed: after 2 failed tries, tell the officer to keep trying or escalate, as the prototype does.
+5. **A search tool that fails for everyone alerts nobody.** Fixed: a new whole-agent stop condition, such as "the policy search returns nothing for 3 enquiries in a row", which alerts the ServiceSG team, the Product Ops member on duty and the business owner. This would be the first condition that watches the tools themselves. The threshold is 3, and any ServiceSG team member may adjust it, alone.
 
-**One more mismatch.** The Logs section lists the no-draft type "lookup failed", but the Draft shape sentence in `CLAUDE.md` lists only four types (low confidence, needs clarification, hand-off, attachment). The prototype has the fifth screen. Proposed: add "lookup failed" to the Draft shape sentence.
+**One more mismatch.** The Logs section lists the no-draft type "lookup failed", but the Draft shape sentence in `CLAUDE.md` lists only four types (low confidence, needs clarification, hand-off, attachment). The prototype has the fifth screen. Fixed: "lookup failed" is now in the Draft shape sentence in `CLAUDE.md` and `ai-prd.md`.
 
 **Not shown.** These are hand runs, not a real model, as for runs 1 to 3. A real model might act differently on an empty enquiry or a cited page that does not exist. Not run: whitespace-only text, an attachment with an empty body, a cited page that exists but was withdrawn (that one is a whole-agent stop), and a search that returns a wrong page instead of nothing.
