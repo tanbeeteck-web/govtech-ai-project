@@ -151,7 +151,7 @@ These are never given to the agent, however well it performs.
 - **The officer is told the supervisor has been informed.** The reminder says so, and the supervisor is informed each time a reminder is shown and when drafting stops for an officer.
 - **Reset.** An edit (minor or major), a rejection or a wrong-citation flag resets the streak to 0. A minor edit resets it even though it counts as used in the 8-in-10 success measure.
 - **Two reminders, then drafting stops for that officer.** The officer asks the supervisor to reinstate them.
-- **Good practice clears the reminder count.** After 28 days with no new reminder, the count goes back to 0. The 28 days is my starting value, not yours. Adjust it with the data.
+- **Good practice clears the reminder count.** After 28 days with no new reminder, the count goes back to 0. The learner confirmed 28 days.
 - **The threshold of 5 is a starting value.** The ServiceSG team reviews the data collected by the logs and may adjust it. The agent never changes it.
 - **The supervisor is informed at every reminder.** More data visibility is wanted, so the alert goes at each reminder as well as at each stop.
 
@@ -159,7 +159,6 @@ These are never given to the agent, however well it performs.
 
 - **Whether any one of the three may approve every kind of stop.** One approval is enough today. A stop caused by wrong citations touches the knowledge base lead's pages. Decide whether that case needs the knowledge base lead specifically.
 - **Whether the approver may be the person who made the request.** The supervisor is on the team and may also be an officer's reviewer. Today nothing stops a team member approving their own request.
-- **How long the period of good practice is.** The files say 28 days without a new reminder. You did not give a number, so confirm or change it.
 - **How often the ServiceSG team reviews the data.** The team may adjust the streak threshold. No schedule is set. The logs record seconds to decide, blue items ticked and reminders.
 - **Whether one member of the team may adjust the threshold alone,** or the team decides together. Restarts need one approval. Nothing is said for the threshold.
 - **Whether the 28 days for clearing the reminder count is also adjusted by the team.** Today the files treat it like the threshold, a starting value.

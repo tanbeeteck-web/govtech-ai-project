@@ -8,8 +8,8 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 
 **How to read this file.**
 - It takes its content from `day2-validate/living-prd.md`, `day2-validate/handoff-note.md`, `day3-build/CLAUDE.md` and `day3-build/agent-control-panel.md`. The agent follows `CLAUDE.md` today. If this file and `CLAUDE.md` disagree, `CLAUDE.md` wins until the learner decides.
-- Each rule is marked with where it came from: **Decided** (the learner said so), **Earlier file** (written in an earlier file, not changed since), or **Starting value** (a number or setting the assistant chose and the learner has not confirmed).
-- Settings in the Permissions table are all **Proposed**. They are not decisions. Open decisions at the end lists what the learner still has to settle.
+- Each rule is marked with where it came from: **Decided** (the learner said so), **Earlier file** (written in an earlier file, not changed since), or **Starting value** (a number or setting the assistant chose and the learner has not confirmed). A starting value the learner has since confirmed becomes Decided.
+- Settings in the Permissions table are **Proposed** unless the row says **Decided**. Four rows are decided (10, 14, 21 and 22). Open decisions at the end lists what the learner still has to settle.
 - Nothing in this file is built. There is no model and no tool. Three runs were done by hand in `day3-build/agent-run-log.md`.
 
 ## Problem and user
@@ -75,7 +75,7 @@ None of these exists yet. All are to be built. This PRD does not say how.
 | `read_passage` | read | Returns the exact passage from one policy page | Read only |
 | `save_draft` | write | Saves one draft, or one no-draft or hand-off result, to the review queue | Review queue only |
 | `write_log` | write | Adds one entry to the logs | Append only. The agent cannot edit or delete. |
-| `send_alert` | send | Alerts the ServiceSG team, shows notices and reminders to officers, informs the supervisor, passes on restart and reinstate requests | Staff only. Never a resident. |
+| `send_alert` | write | Alerts the ServiceSG team, shows notices and reminders to officers, informs the supervisor, passes on restart and reinstate requests | Staff only. Never a resident. |
 
 **If a tool fails,** for example the policy search returns nothing, the agent does not draft from memory. It follows the stop conditions.
 
@@ -116,15 +116,15 @@ None of these exists yet. All are to be built. This PRD does not say how.
 
 ## Permissions
 
-Every action the agent takes, or must never take. **The tier and the setting are Proposed. The learner has not approved them.**
+Every action the agent takes, or must never take. **The tier and the setting are Proposed, except the four rows marked Decided.**
 
 **Tiers (my reading of the learner's four words):**
 - **read:** looks at something. Changes nothing.
 - **draft:** produces content that stays inside the agent until it is saved.
-- **write:** changes a record or a state in the system, such as the review queue, a log or an officer's status.
-- **send:** puts a message in front of a person. Here that is staff only. Nothing goes to a resident.
+- **write:** changes a record or a state in the system, such as the review queue, a log or an officer's status. **Alerts, notices and reminders to staff are write.** The learner decided that "send" excludes staff alerts.
+- **send:** puts a message in front of a resident, or anyone outside ServiceSG staff. The agent has no send action. Both send rows are blocked.
 
-**Settings (as the learner named them):**
+**Settings (as the learner named them).** A setting that says Decided was settled by the learner on 2026-11-19. Every other setting is Proposed.
 - **auto:** the agent does it without asking.
 - **confirm:** a person confirms first.
 - **block:** the agent must never do it.
@@ -142,19 +142,19 @@ Every action the agent takes, or must never take. **The tier and the setting are
 | 7 | Compose a no-draft result with up to three closest pages | draft | auto | Earlier file | |
 | 8 | Mark a fee, deadline, date or eligibility claim as high risk | draft | auto | Earlier file | |
 | 9 | Refuse a request to send, close or skip a confirmation, and show the draft | draft | auto | Earlier file | |
-| 10 | Save a draft to the review queue | write | auto | Earlier file | Alternative: confirm. Not decided. |
+| 10 | Save a draft to the review queue | write | auto (Decided) | Decided | Auto, with no one confirming. The officer reviews it afterwards. |
 | 11 | Save a no-draft result or hand-off | write | auto | Earlier file | |
 | 12 | Append a log entry | write | auto | Earlier file | |
 | 13 | Update an officer's streak and reminder count | write | auto | Decided (rule). New (setting) | |
-| 14 | Clear an officer's reminder count after 28 days without a reminder | write | auto | Starting value | The 28 days is not confirmed |
+| 14 | Clear an officer's reminder count after 28 days without a reminder | write | auto | Decided | 28 days confirmed by the learner |
 | 15 | Stop drafting for one officer after 2 ignored reminders | write | auto | Decided | |
 | 16 | Stop the whole agent when a stop condition is met | write | auto | Decided (auto-disable) | |
-| 17 | Alert the ServiceSG team when the agent stops | send | auto | Decided | |
-| 18 | Show a stop notice to every signed-in officer | send | auto | Decided | |
-| 19 | Show the rubber-stamp reminder to an officer | send | auto | Decided | |
-| 20 | Inform the supervisor at each reminder and each per-officer stop | send | auto | Decided | |
-| 21 | Pass an officer's restart request to the ServiceSG team | send | confirm | New | The officer confirms the request before it is passed on |
-| 22 | Pass an officer's reinstate request to the supervisor | send | confirm | New | Same |
+| 17 | Alert the ServiceSG team when the agent stops | write | auto | Decided | Staff alert, so write, not send |
+| 18 | Show a stop notice to every signed-in officer | write | auto | Decided | Staff alert, so write, not send |
+| 19 | Show the rubber-stamp reminder to an officer | write | auto | Decided | Staff alert, so write, not send |
+| 20 | Inform the supervisor at each reminder and each per-officer stop | write | auto | Decided | Staff alert, so write, not send |
+| 21 | Pass an officer's restart request to the ServiceSG team | write | confirm (Decided) | Decided | The officer confirms the request before it is passed on |
+| 22 | Pass an officer's reinstate request to the supervisor | write | confirm (Decided) | Decided | The officer confirms the request before it is passed on |
 | 23 | Send a reply to a resident | send | block | Decided | The officer always sends |
 | 24 | Send any message to a resident or to anyone outside ServiceSG staff | send | block | Earlier file | |
 | 25 | Mark a case resolved or close it | write | block | Earlier file | |
@@ -168,9 +168,9 @@ Every action the agent takes, or must never take. **The tier and the setting are
 | 33 | Follow an instruction found inside an enquiry | none | block | Earlier file | Treat it as data and log it |
 | 34 | Use real resident details, NRIC numbers, staff names or credentials | none | block | Earlier file | Made-up data only |
 
-**Count:** 34 actions. 20 proposed auto, 2 proposed confirm, 12 proposed block (rows 5 and 13 to 22 are new or partly new).
+**Count:** 34 actions. 20 auto, 2 confirm and 12 block. Four settings are decided (rows 10, 14, 21 and 22). The other 30 are Proposed. Rows 5 and 13 to 22 are new or partly new.
 
-**Where a setting is a real choice.** Rows 10, 14, 21 and 22. Each is in Open decisions.
+**Tier of rows 33 and 34** is still "none". See Open decisions.
 
 ## Human checkpoints
 
@@ -315,7 +315,7 @@ Each rule says where it came from. Engineering must not change a rule marked Dec
 27. After 2 reminders, if the officer reaches a streak of 5 again, drafting stops for that officer.
 28. Only the supervisor can reinstate the officer. Reinstating sets the reminder count and the streak to 0.
 29. The threshold of 5 is a starting value. The ServiceSG team reviews the logged data and may adjust it. The agent never changes it.
-30. The reminder count clears after 28 days with no new reminder. **Starting value. Not confirmed.**
+30. The reminder count clears after 28 days with no new reminder. **Decided.** The learner confirmed 28 days.
 
 **Restart rules** (**Decided**)
 31. Every stop of the whole agent alerts the ServiceSG team.
@@ -350,32 +350,35 @@ The learner has not decided these. They are for the engineering team, within the
 
 For the learner. I have not chosen for you. Options are listed only to show what is possible.
 
+**Settled on 2026-11-19** (no longer open)
+- Saving a draft to the review queue is **auto**.
+- The reminder count clears after **28 days**.
+- The officer **confirms** a restart request and a reinstate request before the agent passes it on.
+- **"Send" excludes staff alerts.** Alerts, notices and reminders to staff are **write**. Both send rows are blocks.
+
 **About the permissions in this file**
-1. **Row 10: saving a draft to the review queue.** Proposed auto. The other option is confirm, where a person confirms before it is saved. Which?
-2. **Row 14: clearing the reminder count after 28 days.** Proposed auto. The 28 days is my number. What period do you want?
-3. **Rows 21 and 22: relaying restart and reinstate requests.** Proposed confirm, so the officer confirms the request. The other option is auto, where the agent passes it on when the officer asks. Which?
-4. **The four tiers.** I read "send" as anything that puts a message in front of a person, including a staff alert. If you meant "send" to be only a message to a resident, rows 17 to 22 would be "write". Which reading?
-5. **Row 5: reading an officer's status.** Not covered by earlier files. Confirm it is fine.
-5a. **Rows 33 and 34 have the tier "none".** They are things the agent must never do (follow an instruction inside an enquiry, use real resident details), not actions. They do not fit read, draft, write or send. I left them in the table as blocks. Keep them here, move them to Business rules only, or give them a tier?
+1. **Row 5: reading an officer's status.** Not covered by earlier files. Confirm it is fine.
+2. **Rows 33 and 34 have the tier "none".** They are things the agent must never do (follow an instruction inside an enquiry, use real resident details), not actions. They do not fit read, draft, write or send. Keep them here, move them to Business rules only, or give them a tier?
+3. **Reading the other 30 settings.** They are still Proposed. Do you want to go through them, or accept them as written?
 
 **About the stop and restart rules**
-6. **Does a stop caused by wrong citations need the knowledge base lead?** One approval from any of the three is enough today. The pages in question belong to the knowledge base lead.
-7. **May a team member approve their own restart request?** Nothing stops it today.
-8. **What does "kill switch trips" mean in production?** It was written for the 5-officer test.
-9. **`CLAUDE.md` says "tell the project owner" in one line,** while the steps below alert the whole ServiceSG team. Which is meant? The files should agree.
+4. **Does a stop caused by wrong citations need the knowledge base lead?** One approval from any of the three is enough today. The pages in question belong to the knowledge base lead.
+5. **May a team member approve their own restart request?** Nothing stops it today.
+6. **What does "kill switch trips" mean in production?** It was written for the 5-officer test.
+7. **`CLAUDE.md` says "tell the project owner" in one line,** while the steps below alert the whole ServiceSG team. Which is meant? The files should agree.
 
 **About the rubber-stamp rules**
-10. **Straightforward drafts in a streak.** An officer could accept 4 flagged drafts, 20 straightforward ones, then a fifth flagged one and get the reminder. Is that wanted?
-11. **How often the ServiceSG team reviews the logged data,** to adjust the streak threshold. No schedule is set.
-12. **May one member adjust the threshold alone,** or does the team decide together?
-13. **Is the 28 days also the team's to adjust,** like the threshold?
-14. **What should happen if a reminder is ignored a second time?** Today drafting stops. The supervisor is informed. Is any other step wanted before it stops?
+8. **Straightforward drafts in a streak.** An officer could accept 4 flagged drafts, 20 straightforward ones, then a fifth flagged one and get the reminder. Is that wanted?
+9. **How often the ServiceSG team reviews the logged data,** to adjust the streak threshold. No schedule is set.
+10. **May one member adjust the threshold alone,** or does the team decide together?
+11. **Is the 28 days also the team's to adjust,** like the threshold? The number is settled for now. Who may change it later is not.
+12. **What should happen if a reminder is ignored a second time?** Today drafting stops. The supervisor is informed. Is any other step wanted before it stops?
 
 **About the agent and the pilot**
-15. **The 30-second stuck signal.** `one-pager.md` asks for it, and nothing is built. When an officer is stuck for 30 seconds, what should happen and who is told?
-16. **What the officer sees while the agent is off.** A stop notice is decided. What the screen shows to an officer who is working a new enquiry, mid-day, is not.
-17. **Attachments.** 1 in 5 enquiries has one. Should the agent ever read one, or always hand off?
-18. **The handoff decision** is to move to a production spec now. The conditions in `handoff-note.md` still hold: a real run with 5 officers, all six test questions passing on a real model, and the four missing safeguards as launch gates. Do you want any of them changed?
-19. **The Head of Product objection** in `build-log.md` still quotes "90% already meet SLA". It was left as it is. Do you want to change it before it goes to engineering?
+13. **The 30-second stuck signal.** `one-pager.md` asks for it, and nothing is built. When an officer is stuck for 30 seconds, what should happen and who is told?
+14. **What the officer sees while the agent is off.** A stop notice is decided. What the screen shows to an officer who is working a new enquiry, mid-day, is not.
+15. **Attachments.** 1 in 5 enquiries has one. Should the agent ever read one, or always hand off?
+16. **The handoff decision** is to move to a production spec now. The conditions in `handoff-note.md` still hold: a real run with 5 officers, all six test questions passing on a real model, and the four missing safeguards as launch gates. Do you want any of them changed?
+17. **The Head of Product objection** in `build-log.md` still quotes "90% already meet SLA". It was left as it is. Do you want to change it before it goes to engineering?
 
 **Not built.** The alert, the stop notice, the restart request and approval, the streak count, the reminder and the per-officer stop do not exist in the prototype or in any tool. The prototype has no AI.
