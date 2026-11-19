@@ -87,7 +87,8 @@ The agent never moves past these without a person.
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages |
 | The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once, reviews why. One member may approve a restart |
 | The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. The agent stays off until one member of the ServiceSG team approves. |
-| An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder about rubber-stamping and is asked to review the next one with due diligence |
+| An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder about rubber-stamping, is told the supervisor has been informed, and is asked to review the next one with due diligence |
+| A reminder is shown to an officer | Supervisor | Is informed each time, with the officer ID and the five enquiry IDs |
 | An officer's auto-draft is disabled after 2 reminders | Supervisor | Reinstates it when the officer requests |
 | A change to a rule, source, colour or threshold | Project owner | Approves it. Do not change these without asking. |
 
@@ -129,7 +130,7 @@ After any stop, do not retry on your own. An officer cannot restart the agent al
 
 **Stop drafting for one officer** when the officer has ignored the rubber-stamp reminder twice (see the Logs section). Drafting stops for that officer only. Other officers are not affected.
 1. Tell the officer, in plain words, why drafting stopped for them.
-2. Log it. Tell the supervisor through the weekly review of the log.
+2. Log it, and inform the supervisor at once. Tell the officer that the supervisor has been informed.
 3. The officer works without drafts, as before the agent. They still see the enquiry and can search the policy pages.
 4. The agent does not turn drafts back on. The officer must ask the supervisor, and only the supervisor can reinstate them.
 
@@ -160,11 +161,14 @@ Write an entry for every enquiry and every stop. Logs are append only, and the a
 **Rubber-stamp watch** (per officer)
 - Only **flagged drafts** count. A flagged draft is one that highlights something the officer must check, meaning at least one blue item (a fee, deadline, date or eligibility claim). A straightforward draft with no blue item, and high confidence, does not count and does not reset the count.
 - Count each officer's flagged drafts in a row that were accepted with no change. Accepted with no change means approved as drafted, after the confirmations. An edit (minor or major), a rejection or a wrong-citation flag resets the count to 0.
-- At **5 in a row**, show the officer a reminder before their next draft. It says that accepting every flagged draft is a risk, that the agent can be wrong, and that they should check each blue item and each citation against the passage. Then start the count again at 0.
+- At **5 in a row**, show the officer a reminder before their next draft. It says that accepting every flagged draft is a risk, that the agent can be wrong, and that they should check each blue item and each citation against the passage. It also says, in plain words, **that the supervisor has been informed.** Inform the supervisor when you show it. Then start the streak again at 0.
+- The threshold of 5 is a starting value. Adjust it later from the data in these logs. Do not change it without asking the project owner.
 - The reminder is a prompt. It does not block the officer or change the draft.
 - The officer **ignores** a reminder when they reach another 5 flagged drafts in a row with no change after it.
 - **After 2 reminders**, if the officer reaches 5 flagged drafts in a row again, stop drafting for that officer (see Stop conditions). The reminder count stays until the supervisor reinstates them. Reinstating sets the reminder count and the streak back to 0.
-- Log each reminder: officer ID, time, the five enquiry IDs, and whether it was reminder 1 or 2.
+- **Good practice clears the reminder count.** If an officer goes 28 days without a new reminder, set their reminder count back to 0 and log it. The 28 days is a starting value, adjusted later from the same logs. It does not apply once drafting has stopped for that officer. Only the supervisor can reinstate them.
+- Log each reminder: officer ID, time, the five enquiry IDs, whether it was reminder 1 or 2, and that the supervisor was informed.
+- Log each time a reminder count is cleared after 28 days.
 - Also log, for each accepted draft, the seconds the officer took and how many blue items they ticked, so the supervisor can see fast accepts.
 
 **Stops, alerts, requests and approvals**
