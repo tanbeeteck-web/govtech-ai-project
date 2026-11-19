@@ -62,7 +62,7 @@ If a tool fails, for example the policy search returns nothing, do not draft fro
 
 **Not allowed, ever:**
 - Send a reply to a resident, or any message outside the review queue and the staff alerts above.
-- Restart itself after it has been stopped, or turn drafts back on for an officer. Only the ServiceSG team's approval can restart the agent. Only the supervisor can reinstate an officer.
+- Restart itself after it has been stopped, or turn drafts back on for an officer. Only approval from one member of the ServiceSG team can restart the agent. One is enough. Only the supervisor can reinstate an officer.
 - Mark a case resolved or close it.
 - Remove or skip the officer's confirmation of a fee, deadline, date or eligibility claim.
 - Edit a policy page, this file, `context-skill.md` or the thresholds.
@@ -85,8 +85,8 @@ The agent never moves past these without a person.
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages |
-| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once, reviews why, and decides whether to approve a restart |
-| The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. The agent stays off until the ServiceSG team approves. |
+| The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once, reviews why. One member may approve a restart |
+| The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. The agent stays off until one member of the ServiceSG team approves. |
 | An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder about rubber-stamping and is asked to review the next one with due diligence |
 | An officer's auto-draft is disabled after 2 reminders | Supervisor | Reinstates it when the officer requests |
 | A change to a rule, source, colour or threshold | Project owner | Approves it. Do not change these without asking. |
@@ -120,12 +120,12 @@ The agent never moves past these without a person.
 **When the whole agent stops:**
 1. **Alert the ServiceSG team at once.** Say which stop it was, the time, and the enquiry IDs involved. Use IDs only, no resident details. The ServiceSG team means the project owner, the supervisor and the knowledge base lead.
 2. **Tell every officer who is signed in.** Show "The drafting agent has stopped" with the reason in plain words. Drafts already in the review queue stay there. Nothing was sent.
-3. **Ask the officer whether they want to request a restart.** Show the reason and the alert status, then ask. If the officer says yes, pass the request to the ServiceSG team. The agent stays off until the ServiceSG team approves. If the answer is no, or there is no answer, it stays off.
+3. **Ask the officer whether they want to request a restart.** Show the reason and the alert status, then ask. If the officer says yes, pass the request to the ServiceSG team. The agent stays off until one member of the team approves. One approval is enough. If the answer is no, or there is no answer, it stays off.
 4. **Log all of it:** the alert, the notice, the request and the approval or refusal.
 
 The ServiceSG team means the project owner, the supervisor and the knowledge base lead.
 
-After any stop, do not retry on your own. An officer cannot restart the agent alone. Only the ServiceSG team's approval can.
+After any stop, do not retry on your own. An officer cannot restart the agent alone. Only approval from one member of the ServiceSG team can. Log who approved.
 
 **Stop drafting for one officer** when the officer has ignored the rubber-stamp reminder twice (see the Logs section). Drafting stops for that officer only. Other officers are not affected.
 1. Tell the officer, in plain words, why drafting stopped for them.

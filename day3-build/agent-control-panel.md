@@ -71,7 +71,7 @@ The agent prepares something and stops. Nothing happens until a person acts.
 - **A no-draft result.** Saved with the reason and the closest pages. It waits for the officer to write the reply or escalate.
 - **A hand-off.** Saved for a human lead. It waits for them to take the case.
 - **A flag on a wrong citation** (raised by an officer). It waits for the knowledge base lead.
-- **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until the ServiceSG team approves. It never restarts itself.
+- **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough. It never restarts itself.
 - **Reinstating an officer** whose drafting was stopped. The officer asks the supervisor. Only the supervisor can turn it back on.
 - **A change to a rule, source, colour or threshold.** The agent may suggest one in a log or a note. It waits for the project owner and does not make the change.
 
@@ -84,7 +84,7 @@ A person checks these, whatever the agent says.
 - **5% of sent replies, every week.** The supervisor checks them against the cited passages.
 - **Every hand-off.** The human lead.
 - **Wrong-citation flags.** The knowledge base lead reviews the flag and the policy page.
-- **Every stop of the whole agent.** The ServiceSG team gets an alert, reviews why, and decides whether to approve a restart.
+- **Every stop of the whole agent.** The ServiceSG team gets an alert, reviews why, and may approve a restart. One approval is enough.
 - **Each officer's pattern of accepting flagged drafts.** The agent counts flagged drafts accepted in a row with no change and reminds the officer at 5. The supervisor reviews the log, and reinstates an officer whose drafting was stopped.
 
 ## Stop conditions
@@ -107,7 +107,7 @@ Give no draft, give the reason, and show up to three closest pages. Say so when 
 Stop all drafting. Then, in this order:
 1. **Alert the ServiceSG team.** The project owner, the supervisor and the knowledge base lead. Say which stop it was, the time and the enquiry IDs.
 2. **Tell the officers.** Everyone signed in sees that the agent stopped and why. Drafts in the queue stay there. Nothing was sent.
-3. **Ask the officer** whether they want to request a restart. If yes, the request goes to the ServiceSG team. The agent stays off until the ServiceSG team approves.
+3. **Ask the officer** whether they want to request a restart. If yes, the request goes to the ServiceSG team. The agent stays off until one member of the team approves. One approval is enough.
 4. **Do not restart on your own.** Log the alert, the notice, the request and the approval or refusal.
 
 The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
@@ -145,14 +145,15 @@ These are never given to the agent, however well it performs.
 ### Decided on 2026-11-19
 
 - **Auto-disable alert.** The ServiceSG team is alerted when the agent is auto-disabled or stopped. The ServiceSG team is the project owner, the supervisor and the knowledge base lead.
-- **Restart needs approval.** The officer tells the agent they want a restart, and the request goes to the ServiceSG team. The agent stays off until the ServiceSG team approves.
+- **Restart needs approval from one member of the ServiceSG team.** The officer tells the agent they want a restart, and the request goes to the ServiceSG team. The agent stays off until one of the three (project owner, supervisor or knowledge base lead) approves. One approval is enough.
 - **Rubber-stamping.** Officer actions are logged. The reminder fires only on flagged drafts, meaning drafts with a blue item that needs the officer's attention. It does not fire on straightforward high-confidence drafts. After 5 flagged drafts in a row accepted with no change, the officer gets a reminder about the risk and about reviewing with due diligence.
 - **Reset.** An edit (minor or major), a rejection or a wrong-citation flag resets the count to 0. A minor edit resets it even though it counts as used in the 8-in-10 success measure.
 - **Two reminders, then drafting stops for that officer.** The officer asks the supervisor to reinstate them.
 
 ### Open questions
 
-- **Which of the ServiceSG team approves a restart.** Any one of the three, or all three? Today the files say only "the ServiceSG team approves".
+- **Whether any one of the three may approve every kind of stop.** One approval is enough today. A stop caused by wrong citations touches the knowledge base lead's pages. Decide whether that case needs the knowledge base lead specifically.
+- **Whether the approver may be the person who made the request.** The supervisor is on the team and may also be an officer's reviewer. Today nothing stops a team member approving their own request.
 - **When the reminder count resets.** Today it stays until the supervisor reinstates the officer, even if the officer edits drafts for months between reminders. Decide whether it should clear after a period of good practice.
 - **Whether the supervisor is told at once** when an officer's drafting is stopped. Today they see it in the weekly log review, and the officer asks them.
 - **Straightforward drafts in a streak.** They neither count nor reset the count. An officer could accept 4 flagged drafts, 20 straightforward ones, then a fifth flagged one and get the reminder. Confirm this is wanted.
