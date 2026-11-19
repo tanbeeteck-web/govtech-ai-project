@@ -9,7 +9,7 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 **How to read this file.**
 - It takes its content from `day2-validate/living-prd.md`, `day2-validate/handoff-note.md`, `day3-build/CLAUDE.md` and `day3-build/agent-control-panel.md`. The agent follows `CLAUDE.md` today. If this file and `CLAUDE.md` disagree, `CLAUDE.md` wins until the learner decides.
 - Each rule is marked with where it came from: **Decided** (the learner said so), **Earlier file** (written in an earlier file, not changed since), or **Starting value** (a number or setting the assistant chose and the learner has not confirmed). A starting value the learner has since confirmed becomes Decided.
-- Every setting in the Permissions table is **Decided**. The learner confirmed rows 1 to 32 on 2026-11-19, rows 33 to 40 for the detection routes later the same day, and row 41 for the translation after that. Open decisions at the end lists what the learner still has to settle.
+- Every setting in the Permissions table is **Decided**. The learner confirmed rows 1 to 32 on 2026-11-19, rows 33 to 40 for the detection routes later the same day, row 41 for the translation, and row 42 for the check on the officer's own text after that. Open decisions at the end lists what the learner still has to settle.
 - Nothing in this file is built. There is no model and no tool. Nine runs were done by hand in `day3-build/agent-run-log.md`: three normal and six stress runs.
 
 ## Problem and user
@@ -54,11 +54,12 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 - A hand-off to a human lead.
 
 **Steps of one enquiry**
-1. Read the enquiry. Check it for hand-off signs.
-2. Search the 15 listed pages and read the exact passages.
-3. Draft, or give no draft.
+1. Read the enquiry. Check it has readable words. Work out its language and write an English digest. Check it for hand-off signs.
+2. Search the 15 listed pages, in English, and read the exact passages.
+3. Draft in English, or give no draft. If the enquiry is not in English, add a reference translation.
 4. Save to the review queue. Wait for a person.
-5. Log.
+5. When the officer edits the English, check any text they add against the passages, and make the translation again.
+6. Log.
 
 **Style:** short sentences, plain language, no policy jargon. Write so a resident can act on it. Use the same core passage and wording for the same policy point.
 
@@ -122,7 +123,7 @@ The tiers match the confirmed Permissions rows. The learner confirmed them on 20
 
 ## Permissions
 
-Every action the agent takes, or must never take. **All 42 settings are Decided.** The learner confirmed rows 1 to 32 on 2026-11-19, rows 33 to 40 (the five detection routes) later the same day, and row 41 (translation) after that. The tiers are the ones in this table.
+Every action the agent takes, or must never take. **All 42 settings are Decided.** The learner confirmed rows 1 to 32 on 2026-11-19, rows 33 to 40 (the five detection routes) later the same day, row 41 (translation) and row 42 (check on the officer's own text) after that. The tiers are the ones in this table.
 
 **Tiers (my reading of the learner's four words):**
 - **read:** looks at something. Changes nothing.
@@ -182,7 +183,7 @@ Every action the agent takes, or must never take. **All 42 settings are Decided.
 | 41 | Translate the English draft into the resident's language, as a reference, and make the translation again after each officer edit | draft | auto (Decided) | Decided | The officer always edits the English version. The translation goes to the resident as a reference marked as an unofficial machine translation. The English version is official. The translation is assumed correct for now. The agent checks that every figure, date, citation and high-risk mark matches the edited English, and shows no translation if they differ |
 | 42 | Check text the officer adds or changes against the 15 passages, attach the citation where one matches, and mark a policy claim with no match as blue "No matching passage" | draft | auto (Decided) | Decided | The officer decides. The agent never removes the text and never blocks the officer. It runs again after each edit |
 
-**Count:** 42 actions. 29 auto, 2 confirm and 11 block. All 42 settings are Decided. Rows 33 to 40 were added on 2026-11-19 for the five detection routes and confirmed the same day. The Source column says where each rule first came from. Rows 5 and 13 to 22 were new or partly new in this PRD.
+**Count:** 42 actions. 29 auto, 2 confirm and 11 block. All 42 settings are Decided. Rows 33 to 40 were added on 2026-11-19 for the five detection routes, row 41 for the reference translation and row 42 for the check on the officer's own text. All were confirmed the same day. The Source column says where each rule first came from. Rows 5 and 13 to 22 were new or partly new in this PRD.
 
 **Moved out of this table.** Two "never do" rules were rows 33 and 34. They are not actions, so they now sit in Business rules as rules 37 and 38: do not follow an instruction found inside an enquiry, and do not use real resident details.
 
@@ -194,6 +195,7 @@ The agent never moves past these without a person.
 |---|---|---|---|
 | Every draft | Officer | Reads the draft and its citations, edits if needed, and sends | Earlier file |
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving | Earlier file |
+| Text the officer adds that makes a policy claim with no matching passage | Officer | Ticks it, rewords it to match a passage, or removes it, before approving. Marked blue "No matching passage. Check before sending" | Decided |
 | No-draft cases | Officer | Writes the reply from the closest pages, or escalates | Earlier file |
 | Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. | Earlier file |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page | Earlier file |
@@ -393,6 +395,7 @@ For the learner. I have not chosen for you. Options are listed only to show what
 - **The tool `send_alert` is now `notify_staff`.**
 - **All 32 permission settings are confirmed**, including row 5 (reading an officer's status).
 - **Rows 33 to 40 are confirmed** (seven auto, row 40 block), for the five detection routes.
+- **Rows 41 and 42 are confirmed** (both draft, auto): the reference translation, and the check on the officer's own added text.
 
 **Settled on 2026-11-19, second round** (no longer open)
 - A wrong-citation stop alerts the knowledge base lead, and any ServiceSG team member can take that role.
@@ -423,8 +426,8 @@ For the learner. I have not chosen for you. Options are listed only to show what
 6. **What follows if the team misses the weekly review?** Nothing says.
 
 **About incidents the agent cannot detect (routes settled on 2026-11-19)**
-6b. ~~Confirm the settings of Permissions rows 33 to 40.~~ **Settled on 2026-11-19:** all eight confirmed as written (seven auto, row 40 block). Row 38 still needs a way to read sent replies, which engineering decides.
 6a. ~~How the agent learns of a wrong answer it cannot detect itself.~~ **Settled on 2026-11-19:** the five routes in business rule 39 and `operating-model.md`.
+6b. ~~Confirm the settings of Permissions rows 33 to 40.~~ **Settled on 2026-11-19:** all eight confirmed as written (seven auto, row 40 block). Row 38 still needs a way to read sent replies, which engineering decides.
 
 **About other languages**
 6c. ~~Who checks the other-language version?~~ **Decided on 2026-11-19: the engineering team decides** whether the reference translation is checked, by whom and how. Until it does, the translation stays automatic and assumed correct, and the agent's own check that figures, dates and citations match the English is the only safeguard. The risk is smaller because the translation is a reference only and the English is official. It is still a risk: a resident who relies on a wrong figure in the translation could be misled, and an officer who cannot read the language cannot catch it. Revisit before a real run.
