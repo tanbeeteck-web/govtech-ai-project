@@ -89,6 +89,7 @@ The agent never moves past these without a person.
 | The agent is stopped during the day | Officer | Is told it stopped and why. May request a restart. The agent stays off until one member of the ServiceSG team approves. |
 | An officer accepts 5 flagged drafts in a row with no change | Officer | Sees a reminder about rubber-stamping, is told the supervisor has been informed, and is asked to review the next one with due diligence |
 | A reminder is shown to an officer | Supervisor | Is informed each time, with the officer ID and the five enquiry IDs |
+| The streak threshold (starting at 5) | ServiceSG team | Reviews the logged data and may adjust it |
 | An officer's auto-draft is disabled after 2 reminders | Supervisor | Reinstates it when the officer requests |
 | A change to a rule, source, colour or threshold | Project owner | Approves it. Do not change these without asking. |
 
@@ -162,7 +163,7 @@ Write an entry for every enquiry and every stop. Logs are append only, and the a
 - Only **flagged drafts** count. A flagged draft is one that highlights something the officer must check, meaning at least one blue item (a fee, deadline, date or eligibility claim). A straightforward draft with no blue item, and high confidence, does not count and does not reset the count.
 - Count each officer's flagged drafts in a row that were accepted with no change. Accepted with no change means approved as drafted, after the confirmations. An edit (minor or major), a rejection or a wrong-citation flag resets the count to 0.
 - At **5 in a row**, show the officer a reminder before their next draft. It says that accepting every flagged draft is a risk, that the agent can be wrong, and that they should check each blue item and each citation against the passage. It also says, in plain words, **that the supervisor has been informed.** Inform the supervisor when you show it. Then start the streak again at 0.
-- The threshold of 5 is a starting value. Adjust it later from the data in these logs. Do not change it without asking the project owner.
+- The threshold of 5 is a starting value. The ServiceSG team reviews the data in these logs and may adjust it. The agent never changes it itself. It uses the value the ServiceSG team has set, and logs each change with who made it and when.
 - The reminder is a prompt. It does not block the officer or change the draft.
 - The officer **ignores** a reminder when they reach another 5 flagged drafts in a row with no change after it.
 - **After 2 reminders**, if the officer reaches 5 flagged drafts in a row again, stop drafting for that officer (see Stop conditions). The reminder count stays until the supervisor reinstates them. Reinstating sets the reminder count and the streak back to 0.

@@ -73,7 +73,7 @@ The agent prepares something and stops. Nothing happens until a person acts.
 - **A flag on a wrong citation** (raised by an officer). It waits for the knowledge base lead.
 - **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough. It never restarts itself.
 - **Reinstating an officer** whose drafting was stopped. The officer asks the supervisor. Only the supervisor can turn it back on.
-- **A change to a rule, source, colour or threshold.** The agent may suggest one in a log or a note. It waits for the project owner and does not make the change.
+- **A change to a rule, source, colour or threshold.** The agent may suggest one in a log or a note. It waits for a person and does not make the change. The project owner approves changes to rules, sources, colours and the success, fail and kill thresholds. The ServiceSG team adjusts the rubber-stamp streak threshold.
 
 ### A person reviews
 
@@ -136,7 +136,8 @@ These are never given to the agent, however well it performs.
 - **Judgment calls with two or more topics.** An officer decides what to say.
 - **Promising an outcome,** such as an approved appeal, waiver or application.
 - **Deciding what goes into the policy pages.** The knowledge base lead owns them.
-- **Changing the rules, sources, colours and thresholds.** The project owner approves.
+- **Changing the rules, sources, colours and the success, fail and kill thresholds.** The project owner approves.
+- **Adjusting the rubber-stamp streak threshold.** The ServiceSG team reviews the logged data and decides.
 - **The weekly audit.** The supervisor checks real sent replies.
 - **Approving a restart** of the whole agent. The ServiceSG team decides.
 - **Reinstating an officer** whose drafting was stopped. The supervisor decides.
@@ -151,14 +152,16 @@ These are never given to the agent, however well it performs.
 - **Reset.** An edit (minor or major), a rejection or a wrong-citation flag resets the streak to 0. A minor edit resets it even though it counts as used in the 8-in-10 success measure.
 - **Two reminders, then drafting stops for that officer.** The officer asks the supervisor to reinstate them.
 - **Good practice clears the reminder count.** After 28 days with no new reminder, the count goes back to 0. The 28 days is my starting value, not yours. Adjust it with the data.
-- **The threshold of 5 is a starting value.** It will be adjusted later from the data collected by the logs. Nobody changes it without the project owner's approval.
+- **The threshold of 5 is a starting value.** The ServiceSG team reviews the data collected by the logs and may adjust it. The agent never changes it.
+- **The supervisor is informed at every reminder.** More data visibility is wanted, so the alert goes at each reminder as well as at each stop.
 
 ### Open questions
 
 - **Whether any one of the three may approve every kind of stop.** One approval is enough today. A stop caused by wrong citations touches the knowledge base lead's pages. Decide whether that case needs the knowledge base lead specifically.
 - **Whether the approver may be the person who made the request.** The supervisor is on the team and may also be an officer's reviewer. Today nothing stops a team member approving their own request.
 - **How long the period of good practice is.** The files say 28 days without a new reminder. You did not give a number, so confirm or change it.
-- **What "the supervisor has been informed" means in practice.** It is written as an alert to the supervisor at each reminder and at each stop. Confirm that you want it at each reminder, not only at the stop.
-- **Which data adjusts the threshold.** The logs record seconds to decide, blue items ticked and reminders. Decide who reviews them and how often.
+- **How often the ServiceSG team reviews the data.** The team may adjust the streak threshold. No schedule is set. The logs record seconds to decide, blue items ticked and reminders.
+- **Whether one member of the team may adjust the threshold alone,** or the team decides together. Restarts need one approval. Nothing is said for the threshold.
+- **Whether the 28 days for clearing the reminder count is also adjusted by the team.** Today the files treat it like the threshold, a starting value.
 - **Straightforward drafts in a streak.** They neither count nor reset the count. An officer could accept 4 flagged drafts, 20 straightforward ones, then a fifth flagged one and get the reminder. Confirm this is wanted.
 - **Not built.** The alert, the stop notice, the restart request, the approval, the streak count, the reminder and the per-officer stop do not exist in the prototype or in any tool yet.
