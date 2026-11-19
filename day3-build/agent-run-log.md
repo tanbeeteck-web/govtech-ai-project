@@ -735,4 +735,40 @@ The learner decided on 2026-11-19 that the officer always edits the English vers
 | Translation checked by a person | No. Assumed correct |
 | Sent by the agent | No |
 
-**Not decided.** Whether an officer's own added sentence needs a citation. Whether the resident gets the translation only, or both versions (6f in `ai-prd.md`). Both are listed as open.
+**Not decided.** Whether an officer's own added sentence needs a citation. The resident-facing question (6f) was settled afterwards: see Run 8c. Whether an officer's own added sentence needs a citation is still open.
+
+---
+
+## Run 8c: what the resident receives
+
+The learner decided on 2026-11-19 that the resident receives the English version as the official reply, with the text in the original language as a reference marked "for easy reference only". This is a hand run, and it uses the draft from Run 8b.
+
+- **Goal:** Put the reply together as the resident would see it, after the officer approves.
+- **Plan:** The officer's edited English version comes first, as the official reply. The Chinese text follows, under a line that says it is for easy reference only. Check that nothing presents the Chinese as official.
+- **Act:** Compose the reply for the officer to send. The agent does not send it.
+- **Observe:** The reply the officer sees:
+
+  > **Official reply (English)**
+  > Dear Resident, ... (the edited English version from Run 8b, with its two citations)
+  >
+  > **For easy reference only (中文)**
+  > 此译文仅供参考。英文版本为正式答复。
+  > (the Chinese version, made again from the edited English)
+
+  The line above the Chinese is the same sentence in English, "This translation is for easy reference only. The English version is the official reply.", and in Chinese.
+- **Check:**
+  - The English version is first and is the one called official: yes.
+  - The Chinese is labelled "for easy reference only" and is not called a reply: yes.
+  - Figures, citations and the high-risk mark are the same in both: yes.
+  - If the figures had differed, no Chinese text would be shown: not triggered here.
+  - The agent did not send it: yes. The officer sends.
+  - The Chinese line was written by Claude and is draft wording. A fluent reader should confirm it before real use.
+
+**Outcome: as decided.** The resident would receive the English reply as official, with the Chinese as a reference only.
+
+| Field | Value |
+|---|---|
+| Enquiry | ENQ-2024-017 |
+| Official reply | English, edited by the officer |
+| Reference text | Chinese, labelled for easy reference only |
+| Sent by the agent | No |
