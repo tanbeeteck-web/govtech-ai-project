@@ -6,7 +6,7 @@
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. This page is for the person who watches the agent. It says what the agent does, what it may decide alone, and when to stop it. If this page and `CLAUDE.md` disagree, `CLAUDE.md` wins.
 
-**Status today:** The agent is not built. No model and no tools exist yet. Nine runs were done by hand in `agent-run-log.md`: three normal and six stress runs. Everything below describes how the agent must behave once built.
+**Status today:** The agent is not built. No model and no tools exist yet. Nine runs were done by hand in `agent-run-log.md`: three normal and six stress runs. Everything below describes how the agent must behave once built. The Permissions section holds Proposed settings, not decided ones.
 
 ## What the agent is doing
 
@@ -89,6 +89,35 @@ A person checks these, whatever the agent says.
 - **Every stop of the whole agent.** The ServiceSG team gets an alert, reviews why, and may approve a restart. One approval is enough, and not from the member who asked. A wrong-citation stop also alerts the knowledge base lead.
 - **The logged data.** Any member of the ServiceSG team may review it at any time, and the team must review it at least once a week.
 - **Each officer's pattern of accepting flagged drafts.** The agent counts flagged drafts accepted in a row with no change and reminds the officer at 5 and informs the supervisor each time. The supervisor reviews the log, and reinstates an officer whose drafting was stopped.
+
+## Permissions
+
+One row for each tool the agent uses. The tools are the six in `CLAUDE.md`, and none is built yet. **Every tier and setting below is Proposed.** I have not decided any of them. The Permissions table in `ai-prd.md` already holds Decided settings for the actions these tools carry out. Where a row here matches it, I say so. The learner decides whether this page follows `ai-prd.md` or changes it.
+
+**Tiers:** *read* looks at something and changes nothing. *draft* makes content that stays inside the agent until saved. *write* changes a record or a state, and staff alerts count as write. *send* puts a message in front of a resident or anyone outside staff.
+**Settings:** *auto* means the agent does it alone. *confirm* means a person confirms first. *block* means the agent must never do it.
+
+| Tool | Tier | Setting | What the stress runs showed | Matches `ai-prd.md`? |
+|---|---|---|---|---|
+| `read_enquiry` | read | **auto** (Proposed) | Returned a record, not an error, for an empty enquiry (Run 4) and for "?? ..." (Run 7). It read Chinese and Tamil text (Runs 8 and 9). What it returns is data, never a command. | Yes, row 1 |
+| `search_policy_pages` | read | **auto** (Proposed) | Returned nothing twice (Run 6), and nothing for junk text (Run 7a), where it was wrongly counted as a tool failure. Returned only weak matches for a page that is not one of the 15 (Run 5). It is not called for an enquiry with no readable words. It searches in English from the digest (Run 8). Three empty results in a row stop the whole agent. | Yes, row 2 |
+| `read_passage` | read | **auto** (Proposed) | Used in Run 8 for the two passport passages. It can read only the 15 listed pages, so it could not read the page the resident named in Run 5. | Yes, row 3 |
+| `save_draft` | write | **auto** (Proposed) | Used in every run: a draft, a no-draft result (needs clarification, lookup failed) and a hand-off. The review queue is its only destination. Run 8 saved a draft with two versions. It must refuse to save a draft with no citation, or two versions that differ in a figure, date or claim. | Yes, rows 10 and 11 |
+| `write_log` | write | **auto** (Proposed) | Used in every run. It recorded "no search run" (Runs 4 and 7b), each failed search with its attempt number (Run 6), the page a resident named that is not listed (Run 5), and the language by name (Runs 8 and 9). Append only. | Yes, row 12 |
+| `notify_staff` | write | **auto** for alerts and notices to staff. **confirm** for passing on an officer's restart or reinstate request. (Proposed) | **Not used in any run.** The alert, notice and restart steps were added after the runs and have not been run. The stress runs added one new reason to alert: the policy search returning nothing for 3 enquiries in a row. Run 7a showed that a miscount could trigger that alert for junk input. | Yes, rows 17 to 22 |
+
+**What the tools do not include.** The agent has no tool that sends. No row is needed for it. A send would be tier send, and `ai-prd.md` blocks it (rows 23 and 24). The translation into the resident's language is done by the model as part of drafting, so it has no tool of its own. It is row 41 in `ai-prd.md` (draft, auto).
+
+**What the stress runs add to the case for these settings.**
+- **The three read tools are low risk as auto.** Every run that went wrong went wrong in what the agent decided to do with their results, not in reading them.
+- **`save_draft` and `notify_staff` are the two to watch.** One saves what an officer will see. The other tells people. A wrong result from either goes further than a wrong read.
+- **A tool can fail for everyone, and nothing watched for it** until the 3-in-a-row stop was added. It has not been run since.
+
+**For the learner to decide.** I have not chosen any of these.
+1. **Do you want these Proposed settings to be Decided?** They match the Decided rows in `ai-prd.md`. If you confirm, I mark them Decided here.
+2. **`notify_staff` carries two settings in one row.** Option A: keep one row with two settings, as above. Option B: split it into two rows, one for alerts and one for requests.
+3. **Should `save_draft` be `confirm` for a hand-off or a no-draft result,** so a person sees it before it is saved? Today both are auto, and the officer sees them in the queue afterwards. A confirm step would add a person to a case the agent has already stopped on.
+4. **Should `search_policy_pages` be blocked, by the tool and not by a rule,** when the enquiry has no readable words? Today the rule tells the agent not to call it. Run 7a showed what happens when the rule is too narrow.
 
 ## Stop conditions
 
