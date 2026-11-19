@@ -26,7 +26,7 @@ These are the only tools the agent may use. None of them exists yet. Only the pr
 | Tool | What it does | Access |
 |---|---|---|
 | `read_enquiry` | Reads one enquiry: sender label, subject, body, attachment note | Read only |
-| `search_policy_pages` | Finds matching pages among the 15 in `context-skill.md` and returns each page with its last-updated date | Read only |
+| `search_policy_pages` | Finds matching pages among the 15 in `context-skill.md` and returns each page with its last-updated date | Read only. The tool refuses to run when the enquiry has no readable words. A refused call is not a failed search and is not counted |
 | `read_passage` | Returns the exact passage from one policy page | Read only |
 | `save_draft` | Saves one draft or one no-draft result for the officer's review | Write, to the review queue only |
 | `write_log` | Adds one entry to the logs below | Append only |
