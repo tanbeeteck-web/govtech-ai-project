@@ -23,7 +23,7 @@ This file says who owns the eval, when it runs, how we will know the agent is wo
 | **Reads the weekly numbers** | **ServiceSG team** (project owner, supervisor, knowledge base lead, Product Ops specialist), at least once a week | Already their job in the operating model. | Decided |
 | **Acts on a stop** | **Product Ops member on duty**, within 3 hours. One other ServiceSG team member approves a restart. | The operating model's Incident row. | Decided |
 
-**A check on one person holding two jobs.** The project owner both signs the pass bar and is in the team that reads the numbers. That is the same question as item 6 in the operating model. **Decided 2026-11-20:** the business owner is the second checker. The project owner's pass or fail call after each run is not final until the business owner countersigns it. If the two disagree, the stricter call stands and the business owner says why in the results file. The business owner is also told of every fail and every stop, as already decided. Item 6 in the operating model can be closed on this basis.
+**A check on one person holding two jobs.** The project owner both signs the pass bar and is in the team that reads the numbers. That is the same question as item 6 in the operating model. **Decided 2026-11-20:** the business owner is the second checker. The project owner's pass or fail call after each run is not final until the business owner countersigns it. If the two disagree, the stricter call stands and the business owner says why in the results file. The business owner is also told of every fail and every stop, as already decided. Item 6 in the operating model is closed on this basis.
 
 ## When it runs
 
