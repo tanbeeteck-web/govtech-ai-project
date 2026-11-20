@@ -165,6 +165,14 @@ resetComfort();
 ['O1', 'O2', 'O3', 'O4', 'O5'].forEach(o => addRatings(o, 'sent', 1, 3));
 eq('fewer than 3 comfortable is kill', getComfortSummary().verdict, 'kill');
 
+// ---- Direct language (decided 2026-11-20) ----
+const enq2 = syntheticEnquiries.find(e => e.id === 'ENQ-2024-002');
+const elig = enq2.draft.paragraphs.find(p => p.highRisk === 'eligibility');
+check('ENQ-002 says directly that the father qualifies', elig.text.includes('so he qualifies for senior concession fares'));
+check('ENQ-002 eligibility sentence is cited and blue (high risk)', !!elig.citation && elig.citation.source.startsWith('PTC Concession Policy'));
+check('ENQ-002 keeps the passage wording', elig.text.includes('aged 60 years and above qualify for senior concession fares on public buses and trains'));
+check('no draft promises an outcome', syntheticEnquiries.every(e => !e.draft || e.draft.paragraphs.every(p => !/will be (approved|granted|accepted)|will receive/i.test(p.text))));
+
 // ---- Result ----
 print(passed + ' passed, ' + failed + ' failed');
 if (failed > 0) throw new Error('Some checks failed');

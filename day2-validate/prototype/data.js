@@ -102,7 +102,7 @@ const syntheticEnquiries = [
           citation: null
         },
         {
-          text: "Singapore citizens aged 60 and above are eligible for the Senior Citizen Concession Card, which provides discounted public transport fares.",
+          text: "Singapore citizens aged 60 years and above qualify for senior concession fares on public buses and trains. Your father is 60 and a Singapore citizen, so he qualifies for senior concession fares.",
           citation: {
             source: "PTC Concession Policy (made up)",
             passage: "Eligibility: Singapore citizens aged 60 years and above qualify for senior concession fares on public buses and trains.",
