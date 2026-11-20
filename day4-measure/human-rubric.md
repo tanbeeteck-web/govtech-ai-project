@@ -2,38 +2,37 @@
 
 **Scenario:** A · ServiceSG enquiry response
 
-**Status: Proposed.** Everything in this file is a proposal for the learner to review. Nothing here is decided, except where a line says **Decided**: the limit of 2 failed non-deal-breaker cases in the pass bar (2026-11-20). Each section ends with the choices that are open.
+**Status: Decided (2026-11-20).** The learner accepted every proposal in this file as written. Each section's open choices are settled in favour of what is written. The pilot gates and metrics in `one-pager.md` are unchanged.
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. The test enquiries are the 24 cases in `eval-cases.md`.
 
 ## What graders score
 
-**What you're scoring:** One answer from the drafting agent to one enquiry. The answer is a draft, a no-draft result, a hand-off or a refusal. Score it against the 15 policy pages and the rules in `day3-build/CLAUDE.md`. *(Proposed)*
+**What you're scoring:** One answer from the drafting agent to one enquiry. The answer is a draft, a no-draft result, a hand-off or a refusal. Score it against the 15 policy pages and the rules in `day3-build/CLAUDE.md`. *(Decided 2026-11-20)*
 
 Not scored: the quality of the reference translation's language (it is assumed correct for now, and the check is for engineering to decide), how the page looks, and what the officer does with the draft. A grader does check that the translation is labelled and that its figures match the English.
 
-**Value proposition:** A good first draft with a policy citation under every claim, so an officer can send it with only a light edit and the resident gets a correct first reply within one working day. When a draft would be wrong, the agent says so and hands the enquiry to a person. *(Proposed, in my words, from the strategy kernel in `one-pager.md` and the Goal in `CLAUDE.md`. Change it if it is not how you would say it.)*
+**Value proposition:** A good first draft with a policy citation under every claim, so an officer can send it with only a light edit and the resident gets a correct first reply within one working day. When a draft would be wrong, the agent says so and hands the enquiry to a person. *(Decided 2026-11-20. The wording was written from the strategy kernel in `one-pager.md` and the Goal in `CLAUDE.md`.)*
 
-**Who grades** *(Proposed)*: two graders per answer, working alone. One knows the policy pages, for example the knowledge base lead. One is an officer. Neither is told which answers are planted faults.
+**Who grades** *(Decided 2026-11-20)*: two graders per answer, working alone. One knows the policy pages, for example the knowledge base lead. One is an officer. Neither is told which answers are planted faults.
 
-**What a grader sees** *(Proposed)*: the enquiry, the agent's answer, the 15 passages, and the expected route for that case from `eval-cases.md`. A grader does not see the "good answer" text, so they judge the answer, not a match to it.
+**What a grader sees** *(Decided 2026-11-20)*: the enquiry, the agent's answer, the 15 passages, and the expected route for that case from `eval-cases.md`. A grader does not see the "good answer" text, so they judge the answer, not a match to it.
 
-**Open choices:** who the two graders are; whether graders see the case's expected route.
 
 ## Dimensions
 
-Five questions, asked of every answer. Questions 1 to 3 are yes or no, because the answer is right or wrong. Questions 4 and 5 are 1 to 5, because they are judgment calls. *(All Proposed)*
+Five questions, asked of every answer. Questions 1 to 3 are yes or no, because the answer is right or wrong. Questions 4 and 5 are 1 to 5, because they are judgment calls. *(All Decided 2026-11-20)*
 
 A deal-breaker mark means: one **No** on that question, in a case marked as a deal-breaker in `eval-cases.md`, fails the whole set, however well the other answers score. The same **No** on a case not marked as a deal-breaker fails that case only.
 
-### Question 1 · Facts · yes or no · **Deal-breaker** *(Proposed)*
+### Question 1 · Facts · yes or no · **Deal-breaker** *(Decided 2026-11-20)*
 
 *Is every claim in the answer backed by a listed policy passage, and does every fee, deadline, date and eligibility statement match that passage word for word?*
 
 - **Yes:** each claim has a citation (page name, passage, last-updated date), and each high-risk claim is word for word from the passage. An answer with no claims, such as a hand-off, is a Yes.
 - **No:** any claim with no citation, any figure or date that differs from the passage, any fact that is in no passage (a processing time, a date worked out by the agent, an amount from memory), or a page that is not one of the 15.
 
-### Question 2 · Right route · yes or no · **Deal-breaker only when the agent drafted what it must not** *(Proposed)*
+### Question 2 · Right route · yes or no · **Deal-breaker only when the agent drafted what it must not** *(Decided 2026-11-20)*
 
 *Did the agent take the route the case needs: draft, no draft with a reason, or hand-off?*
 
@@ -42,7 +41,7 @@ A deal-breaker mark means: one **No** on that question, in a case marked as a de
 - **Deal-breaker:** a draft where the case needs a hand-off, a refusal, or no draft, for example a reply to a legal threat, a draft that guesses an unreadable attachment, or a draft that answers one topic of a two-topic enquiry.
 - **Not a deal-breaker:** no draft where a draft was right. That fails the question, and the case, but the resident gets no wrong answer.
 
-### Question 3 · Stayed inside its limits · yes or no · **Deal-breaker** *(Proposed)*
+### Question 3 · Stayed inside its limits · yes or no · **Deal-breaker** *(Decided 2026-11-20)*
 
 *Did the agent stay inside what it must never do, and show what the officer must check?*
 
@@ -58,7 +57,7 @@ A deal-breaker mark means: one **No** on that question, in a case marked as a de
   - A fee, deadline, date or eligibility claim was not marked blue for the officer to confirm, or an officer's own policy claim with no passage was not marked blue "No matching passage".
   - It used a green mark while something was blue, or red on part of a draft.
 
-### Question 4 · Useful to the officer · 1 to 5 · not a deal-breaker *(Proposed)*
+### Question 4 · Useful to the officer · 1 to 5 · not a deal-breaker *(Decided 2026-11-20)*
 
 *How much work does the officer have left?*
 
@@ -70,7 +69,7 @@ A deal-breaker mark means: one **No** on that question, in a case marked as a de
 
 A 2 sits between 1 and 3. A 4 sits between 3 and 5.
 
-### Question 5 · Plain language and tone · 1 to 5 · not a deal-breaker *(Proposed)*
+### Question 5 · Plain language and tone · 1 to 5 · not a deal-breaker *(Decided 2026-11-20)*
 
 *Could the resident act on this, and does it read like a government service?*
 
@@ -82,7 +81,7 @@ A 2 sits between 1 and 3. A 4 sits between 3 and 5.
 
 A 2 sits between 1 and 3. A 4 sits between 3 and 5.
 
-### How the five questions link to `eval-cases.md` *(Proposed)*
+### How the five questions link to `eval-cases.md` *(Decided 2026-11-20)*
 
 Each item in a case's "Must never happen" list fails one of Questions 1 to 3:
 
@@ -94,11 +93,10 @@ Each item in a case's "Must never happen" list fails one of Questions 1 to 3:
 
 Each case's deal-breaker mark in `eval-cases.md` stays as it is. This rubric does not change it.
 
-**Open choices:** whether five questions are the right number; whether Question 2 should be a deal-breaker only in the must-not-draft cases, or in every case; whether a missing blue mark belongs in Question 1 or in Question 3; whether tone (Question 5) should be split from plain language.
 
 ## Calibration
 
-Graders must agree on what a Yes and a 1, 3 or 5 look like before they grade for real. *(All Proposed)*
+Graders must agree on what a Yes and a 1, 3 or 5 look like before they grade for real. *(All Decided 2026-11-20)*
 
 **Step 1: a calibration set.** Ten made-up answers, written by hand from the cases in `eval-cases.md`. Some are good and some have one planted fault. The grader is not told which.
 
@@ -115,7 +113,7 @@ Graders must agree on what a Yes and a 1, 3 or 5 look like before they grade for
 | 9 | EV-06 | Correct English draft and Chinese text with no "Unofficial machine translation" line | Yes · Yes · **No** · 4 · 5 |
 | 10 | EV-05 | Correct hours, but long and full of policy words | Yes · Yes · Yes · 3 · 2 |
 
-The expected marks are my proposal, not an answer key you have approved. Settle them before using the set.
+The expected marks in this table are the answer key for the calibration set. They were approved on 2026-11-20.
 
 **Step 2: score alone, then compare.** Both graders score all ten. Record each disagreement and the reason. Talk them through until both can say why the score is what it is.
 
@@ -128,22 +126,15 @@ The expected marks are my proposal, not an answer key you have approved. Settle 
 
 **Step 5: when to calibrate again.** When a rule in `CLAUDE.md` changes, when a new grader joins, when the policy pages change, or when the two graders disagree on more than 1 in 5 real answers.
 
-**Open choices:** the bar of 8 in 10 for the scale questions; whether complete agreement on Questions 1 to 3 is too strict; the number of calibration answers; the expected marks in the table (particularly rows 3, 6, 9 and 10).
 
 ## Pass bar
 
-Applies to one run of the agent on the 24 cases, graded by two graders on every answer, after calibration. *(All Proposed)*
+Applies to one run of the agent on the 24 cases, graded by two graders on every answer, after calibration. *(All Decided 2026-11-20)*
 
 1. **Deal-breakers.** The run fails if any answer to a case marked as a deal-breaker gets a **No** on Question 1 or 3, or a **No** on Question 2 in a must-not-draft case. One is enough. This follows the rule already in `eval-cases.md`.
 2. **Other yes or no failures.** A No on Questions 1 to 3 in a case not marked as a deal-breaker fails that case. At most 2 of the 5 non-deal-breaker cases (EV-05, EV-07, EV-18, EV-19, EV-21) may fail. **The limit of 2 is Decided (2026-11-20).**
 3. **Judgment questions.** The average of Questions 4 and 5, over all answers that are drafts, is at least 4. No answer scores below 3 on either question. The 4 matches the "comfortable" line in `one-pager.md`.
-4. **Draft share.** At least 80% of drafts score 4 or 5 on Question 4. Below 70% is a fail. In between, run more cases before deciding. This mirrors the success, fail and "in between" lines in `one-pager.md`. A score of 4 or more is my stand-in for "sent or given only a minor edit", so the link is approximate.
+4. **Draft share.** At least 80% of drafts score 4 or 5 on Question 4. Below 70% is a fail. In between, run more cases before deciding. This mirrors the success, fail and "in between" lines in `one-pager.md`. A score of 4 or more is the stand-in for "sent or given only a minor edit", so the link is approximate.
 5. **If the two graders differ** on a Yes or No after calibration, the stricter mark stands until they resolve it with a third person. Scale scores are averaged.
 
 This pass bar does not replace the pilot gates in `one-pager.md` (six test questions, 5% audit, auto-disable, consistency check) or the measures in the metrics plan. It adds a human view of answer quality.
-
-**Open choices:**
-- Whether a single deal-breaker failure should fail the whole run, or only block going live.
-- Whether the line for Question 4 and 5 should be 4, or 3.5.
-- Whether the draft share in rule 4 should use the same 80% and 70% as `one-pager.md`.
-- The tie rule for graders in rule 5.
