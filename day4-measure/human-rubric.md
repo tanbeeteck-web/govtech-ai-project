@@ -4,7 +4,7 @@
 
 **Status: Decided (2026-11-20).** The learner accepted every proposal in this file as written. Each section's open choices are settled in favour of what is written. The pilot gates and metrics in `one-pager.md` are unchanged.
 
-**Added 2026-11-20 and marked Proposed:** the section "Running this eval again" at the end of this file, and the "Working readings" in it. They fill gaps a lead engineer would hit when running the eval without the learner. The learner has not yet decided them.
+**Added and decided 2026-11-20:** the section "Running this eval again" at the end of this file, and the "Working readings" in it. They fill gaps a lead engineer would hit when running the eval without the learner. The learner accepted them as written.
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. The test enquiries are the 24 cases in `eval-cases.md`.
 
@@ -158,9 +158,9 @@ Applies to one run of the agent on the 24 cases, graded by two graders on every 
 This pass bar does not replace the pilot gates in `one-pager.md` (six test questions, 5% audit, auto-disable, consistency check) or the measures in the metrics plan. It adds a human view of answer quality.
 
 
-## Running this eval again *(Proposed 2026-11-20)*
+## Running this eval again *(Decided 2026-11-20)*
 
-Written for the lead engineer who runs the 24 cases again, for example once a month, without the learner. Everything in this section is **Proposed**. It fills gaps found on reading `eval-results.md` and this file. Change any line you disagree with.
+Written for the lead engineer who runs the 24 cases again, for example once a month, without the learner. Everything in this section is **Decided (2026-11-20)**. It fills gaps found on reading `eval-results.md` and this file. If a line changes later, calibrate again.
 
 ### What was unclear or missing
 
@@ -195,7 +195,7 @@ Written for the lead engineer who runs the 24 cases again, for example once a mo
 8. **Compare with the last run.** Put the last run's numbers beside this run's (see "Comparing runs"). *(Gap 14)*
 9. **Save and tell.** Save the results as `day4-measure/eval-results-YYYY-MM-DD.md`. Do not overwrite the earlier file. Tell the learner the pass or fail, every failed deal-breaker, and anything in "Comparing runs" that needs a decision.
 
-### Scoring sheet *(Proposed)*
+### Scoring sheet *(Decided 2026-11-20)*
 
 One row per answer or variant. A grader copies this header and fills it in.
 
@@ -207,9 +207,9 @@ Rules for the sheet:
 - Q4 and Q5 are left blank where a case has no draft and the "Questions 4 and 5 for other cases" reading below does not apply.
 - A reason is required for every No, so the tie-breaker can rule without asking the grader.
 
-### Working readings *(Proposed, so a grader does not have to guess)*
+### Working readings *(Decided 2026-11-20, so a grader does not have to guess)*
 
-These are the readings the first run used. They are not yet decided by the learner. If the learner decides differently, change the line here and calibrate again.
+These are the readings the first run used. The learner decided them on 2026-11-20. If one changes later, change the line here and calibrate again.
 
 1. **Word for word.** For a fee, deadline, date or eligibility claim, the figure, date, unit and the eligibility condition must be exactly the passage's. The words around them may be plain language. Changing the figure or the condition, even slightly, is a No on Question 1. *(Gap 6)*
 2. **What is blue.** A fee, a deadline (including a booking window, as in EV-05 "up to 14 days in advance"), a date, and an eligibility statement are blue. An officer-added sentence that matches a passage gets the citation and is also blue if it is a fee, deadline, date or eligibility claim. An officer-added claim with no matching passage is blue "No matching passage". *(Gap 7)*
@@ -239,7 +239,7 @@ Tell the learner when any of these is true:
 - The two graders disagree on more than 1 in 5 answers (this also triggers calibration).
 - The source changed (the answers came from a real agent last time and a hand run this time, or the reverse). Do not compare the two as like for like. *(Gap 17)*
 
-### When to run *(Proposed)*
+### When to run *(Decided 2026-11-20)*
 
 - **Once a month (Decided 2026-11-20):** a full run of all 24 cases while the pilot runs.
 - **Every week (Decided 2026-11-20):** a run of the 19 deal-breaker cases on the live agent, scored by one grader. The results go to the ServiceSG team. A deal-breaker No in a weekly run is reported to the project owner at once.
