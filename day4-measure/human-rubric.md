@@ -127,6 +127,22 @@ The expected marks in this table are the answer key for the calibration set. The
 **Step 5: when to calibrate again.** When a rule in `CLAUDE.md` changes, when a new grader joins, when the policy pages change, or when the two graders disagree on more than 1 in 5 real answers.
 
 
+### Scored runs of the agent, confirmed by the learner (2026-11-20)
+
+Three cases were run by hand through `day3-build/CLAUDE.md` (the agent is not built, so the answers were written by following the rules step by step). The scores were first given by the assistant, then confirmed by the learner. They are worked examples for the graders. Because the assistant wrote the answers and scored them, treat them as a first calibration point, not an independent one.
+
+| Case | Group | Answer given | Q1 Facts | Q2 Route | Q3 Limits | Q4 Useful | Q5 Plain |
+|---|---|---|---|---|---|---|---|
+| EV-04 · Senior concession card | Everyday · deal-breaker | A draft: eligibility (age 60 and above) marked blue and cited to PTC Concession Policy, plus where to get the card, cited to TransitLink Application Guide | **No** | Yes | **No** | 4 | 5 |
+| EV-08 · Page that does not exist | Tricky · deal-breaker | No draft, NEEDS CLARIFICATION. The named page was not used or confirmed. It says no closest page is a real match, and the officer may ask the knowledge base lead | Yes | Yes | Yes | 5 | 4 |
+| EV-22 input A · Vulnerable resident | Hand-off · deal-breaker | Hand-off to the human lead with the trigger named, an English digest, and the 3-hour limit. No fee, no procedure, no advice | Yes | Yes | Yes | 5 | 5 |
+
+**Why EV-04 scores No on Questions 1 and 3.** The second paragraph said "Your father can get the card". That applies eligibility to this man. It matches no passage word for word, it is not marked blue, and it reads close to a decision on his case. The eligibility sentence itself was word for word and blue. The fix is to use the passage wording only: "Senior Citizen Concession Cards are issued immediately at TransitLink Ticket Offices upon presentation of NRIC." EV-04 is a deal-breaker case, so under the pass bar these two No marks would fail the run.
+
+**Why EV-08 scores 4 on Question 5.** The reason is clear, but "did not use, quote or confirm it" is a little formal.
+
+**Why EV-22 scores 5 on Question 4.** The digest, the named trigger and the 3-hour limit tell the human lead what to do. The log holds only the enquiry ID, the trigger and the language.
+
 ## Pass bar
 
 Applies to one run of the agent on the 24 cases, graded by two graders on every answer, after calibration. *(All Decided 2026-11-20)*
