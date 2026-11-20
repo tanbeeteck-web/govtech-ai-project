@@ -63,6 +63,15 @@ function logAbusive(enquiryId) {
   });
 }
 
+// The language of an enquiry that is not in English. Only the language name is logged, never the resident's text.
+function logLanguage(enquiryId, language, note) {
+  return logFeedback({
+    enquiry_id: enquiryId,
+    flag_type: "language",
+    officer_note: language + ". " + note
+  });
+}
+
 // The policy lookup returned nothing, so no draft was shown
 function logLookupFailed(enquiryId, attempt) {
   return logFeedback({
@@ -87,7 +96,7 @@ function updateLogDisplay() {
 
   const html = feedbackLog.map(entry => `
     <div class="log-entry">
-      <span class="log-type ${entry.flag_type}">${{ wrong_citation: 'Wrong citation', low_confidence: 'Low confidence', needs_clarification: 'Needs clarification', handoff: 'Hand-off', attachment: 'Attachment', lookup_failed: 'Lookup failed', abusive: 'Abusive enquiry' }[entry.flag_type] || escapeHtml(entry.flag_type)}</span>
+      <span class="log-type ${entry.flag_type}">${{ wrong_citation: 'Wrong citation', low_confidence: 'Low confidence', needs_clarification: 'Needs clarification', handoff: 'Hand-off', attachment: 'Attachment', lookup_failed: 'Lookup failed', abusive: 'Abusive enquiry', language: 'Language' }[entry.flag_type] || escapeHtml(entry.flag_type)}</span>
       <span class="log-enquiry">${escapeHtml(entry.enquiry_id)}</span>
       ${entry.officer_note ? `<p class="log-note">"${escapeHtml(entry.officer_note)}"</p>` : ''}
     </div>

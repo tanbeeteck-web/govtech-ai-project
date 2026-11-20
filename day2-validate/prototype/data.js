@@ -451,6 +451,101 @@ const syntheticEnquiries = [
       reason: "The resident asks about other residents and what they were told. The AI cannot share anything about other residents or their replies, so it refuses. A human lead must handle it. No draft is written."
     },
     suggestedPolicies: []
+  },
+  {
+    id: "ENQ-2024-015",
+    topic: "Passports and ID cards",
+    timestamp: "2024-11-18 18:25",
+    confidence: "high",
+    confidencePct: 95,
+    language: "Chinese",
+    digest: "The resident wants to renew a passport and asks which documents to bring.",
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "更新护照",
+      body: "你好，我想更新护照。请问需要带哪些文件？谢谢。"
+    },
+    draft: {
+      greeting: "Dear Resident,",
+      paragraphs: [
+        {
+          text: "Thank you for your enquiry about passport renewal.",
+          citation: null
+        },
+        {
+          text: "You need to bring your current passport and one recent photograph taken within the last 3 months.",
+          citation: {
+            source: "ICA Passport Services (made up)",
+            passage: "Citizens renewing passports must present: (1) current passport, (2) one recent photograph taken within the last 3 months.",
+            url: "#policy-ica-passport-001"
+          }
+        }
+      ],
+      closing: "We hope this helps. Feel free to reach out if you need further assistance.",
+      signature: "ServiceSG Officer"
+    },
+    translation: {
+      language: "Chinese",
+      text: "您好，感谢您就护照更新提出咨询。请携带您目前的护照和一张3个月内拍摄的近照。希望以上信息对您有帮助。"
+    }
+  },
+  {
+    id: "ENQ-2024-016",
+    topic: "Passports and ID cards",
+    timestamp: "2024-11-18 18:40",
+    confidence: "none",
+    confidencePct: null,
+    language: "Tamil",
+    digest: "The resident complains about the service and says they will go to a lawyer.",
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "புகார்",
+      body: "நான் இந்த சேவையைப் பற்றி புகார் அளிக்கிறேன். நான் வழக்கறிஞரிடம் செல்வேன்."
+    },
+    draft: null,
+    noDraft: {
+      type: "handoff",
+      trigger: "a complaint and legal action",
+      reason: "The English digest shows a complaint and a threat of legal action. A human lead must handle it. No draft is written and no translation is made."
+    },
+    suggestedPolicies: []
+  },
+  {
+    id: "ENQ-2024-017",
+    topic: "Passports and ID cards",
+    timestamp: "2024-11-18 18:55",
+    confidence: "high",
+    confidencePct: 93,
+    language: "Malay",
+    digest: "The resident wants to renew a passport and asks what photograph is needed.",
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Pembaharuan pasport",
+      body: "Selamat pagi, saya ingin memperbaharui pasport saya. Apakah gambar yang diperlukan? Terima kasih."
+    },
+    draft: {
+      greeting: "Dear Resident,",
+      paragraphs: [
+        {
+          text: "Thank you for your enquiry about passport renewal.",
+          citation: null
+        },
+        {
+          text: "You need one recent photograph taken within the last 3 months.",
+          citation: {
+            source: "ICA Passport Services (made up)",
+            passage: "Citizens renewing passports must present: (1) current passport, (2) one recent photograph taken within the last 3 months.",
+            url: "#policy-ica-passport-001"
+          }
+        }
+      ],
+      closing: "We hope this helps. Feel free to reach out if you need further assistance.",
+      signature: "ServiceSG Officer"
+    },
+    translation: {
+      language: "Malay",
+      text: "Terima kasih atas pertanyaan anda tentang pembaharuan pasport. Anda memerlukan satu gambar terbaru yang diambil dalam tempoh 6 bulan yang lepas. (Made-up faulty translation: the figure differs from the English.)"
+    }
   }
 ];
 

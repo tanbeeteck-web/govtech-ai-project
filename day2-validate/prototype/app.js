@@ -105,6 +105,49 @@ function retryLookup(e) {
   }, RETRY_DELAY_MS);
 }
 
+
+// ---- Other languages (decided 2026-11-19 and 2026-11-20) ----
+// The draft is always in English. The English version is official. A reference translation is added,
+// marked as an unofficial machine translation. The officer edits the English only. If a figure in the
+// translation differs from the English, no translation is shown and the English draft stands.
+const TRANSLATION_LABELS = {
+  Chinese: '非官方机器翻译。英文版本为正式回复，如有差异，以英文版本为准。',
+  Malay: 'Terjemahan mesin tidak rasmi. Versi bahasa Inggeris ialah balasan rasmi dan diutamakan jika terdapat sebarang perbezaan.'
+};
+const TRANSLATION_LABEL_EN = 'Unofficial machine translation. The English version is the official reply and prevails if there is any difference.';
+function figuresOf(text) {
+  return (String(text).match(/\d+(?:[.,]\d+)?/g) || []).sort();
+}
+function translationStatus(english, translation) {
+  const a = figuresOf(english), b = figuresOf(translation.text);
+  if (a.join('|') === b.join('|')) return { ok: true, reason: '' };
+  return { ok: false, reason: 'A figure in the translation (' + (b.join(', ') || 'none') + ') differs from the English (' + (a.join(', ') || 'none') + ').' };
+}
+function translationHtml(enquiry, englishText) {
+  const t = enquiry.translation;
+  if (!t) return '';
+  const st = translationStatus(englishText, t);
+  if (!st.ok) {
+    return `<div class="translation-box translation-withheld" id="translation-box"><strong>No translation shown.</strong> ${escapeHtml(st.reason)} The English draft stands. The officer does not need to check the ${escapeHtml(t.language)} text.</div>`;
+  }
+  return `<div class="translation-box" id="translation-box">
+    <p class="translation-label">${escapeHtml(TRANSLATION_LABEL_EN)}</p>
+    <p class="translation-label">${escapeHtml(TRANSLATION_LABELS[t.language] || '')}</p>
+    <p class="translation-text">${escapeHtml(t.text)}</p>
+    <p class="translation-note">${escapeHtml(t.language)} reference translation, made from the English. You edit the English only. It is made again after each edit. (made up)</p>
+  </div>`;
+}
+const languageLogged = {};
+function logLanguageOnce(enquiry) {
+  if (!enquiry.language || languageLogged[enquiry.id]) return;
+  languageLogged[enquiry.id] = true;
+  logLanguage(enquiry.id, enquiry.language, 'English version provided. The resident\'s text is not logged.');
+}
+function languageHtml(enquiry) {
+  if (!enquiry.language) return '';
+  return `<div class="language-box" id="language-box"><strong>Language: ${escapeHtml(enquiry.language)}.</strong> English digest: ${escapeHtml(enquiry.digest)}</div>`;
+}
+
 function renderLookupFailed(enquiry, st) {
   const retrying = st.status === 'retrying';
   document.getElementById('draft-panel-title').textContent = 'No draft available';
@@ -205,10 +248,15 @@ function enterEditMode(enquiry) {
   document.getElementById('draft-content').innerHTML =
     '<p style="font-size:13px;color:#666;margin-bottom:8px;">' + (hasKept ? 'Your earlier text was kept. ' : '') +
     'Edit the draft below. When you save, the tool measures how much you changed. (made up test)</p>' +
-    '<textarea id="edit-box" style="width:100%;min-height:320px;font:inherit;padding:8px;"></textarea>';
+    '<textarea id="edit-box" style="width:100%;min-height:320px;font:inherit;padding:8px;"></textarea>' +
+    (enquiry.translation ? '<p style="font-size:13px;color:#666;">You edit the English only. The ' + escapeHtml(enquiry.translation.language) + ' translation is made again from your English.</p><div id="translation-live">' + translationHtml(enquiry, hasKept ? kept : original) + '</div>' : '');
   const box = document.getElementById('edit-box');
   box.value = hasKept ? kept : original;
-  box.addEventListener('input', (ev) => { officerText[enquiry.id] = ev.target.value; });
+  box.addEventListener('input', (ev) => {
+    officerText[enquiry.id] = ev.target.value;
+    const live = document.getElementById('translation-live');
+    if (live) live.innerHTML = translationHtml(enquiry, ev.target.value);
+  });
   document.getElementById('draft-actions').innerHTML = `
     <button class="btn btn-primary" id="btn-save-edit">Save edit</button>
     <button class="btn btn-secondary" id="btn-cancel-edit">Discard my edit</button>
@@ -302,7 +350,8 @@ function renderNoDraft(enquiry) {
 
   logNoDraft(enquiry.id, enquiry.noDraft.type, enquiry.noDraft.reason);
 
-  let html = `
+  logLanguageOnce(enquiry);
+  let html = languageHtml(enquiry) + `
     <div class="low-confidence-notice">
       <div class="notice-icon">⚠️</div>
       <div class="notice-text">
@@ -344,7 +393,8 @@ function renderDraft(enquiry) {
   document.getElementById('draft-panel-title').textContent = 'AI draft with citations';
   const draft = enquiry.draft;
   highRiskItems = [];
-  let html = `<p class="draft-only-note">Draft only. An officer must review and send every reply.</p>`;
+  logLanguageOnce(enquiry);
+  let html = `<p class="draft-only-note">Draft only. An officer must review and send every reply.</p>` + languageHtml(enquiry);
   const flaggedCount = draft.paragraphs.filter(p => p.highRisk).length;
   html += flaggedCount > 0
     ? `<p class="flag-summary flag-summary-verify">${flaggedCount} section${flaggedCount > 1 ? 's need' : ' needs'} your verification before you accept. Check ${flaggedCount > 1 ? 'each' : 'it'} against the cited passage. This is a required check, not a sign of low confidence.</p>`
@@ -412,6 +462,7 @@ function renderDraft(enquiry) {
 
   html += `<p class="draft-closing">${escapeHtml(draft.closing)}</p>`;
   html += `<p class="draft-signature">${escapeHtml(draft.signature)}</p>`;
+  html += translationHtml(enquiry, draftToText(draft));
 
   document.getElementById('draft-content').innerHTML = html;
 

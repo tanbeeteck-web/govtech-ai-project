@@ -674,3 +674,11 @@ header h1 {
   background: #fff3bf;
   color: #e67700;
 }
+
+/* Other languages */
+.language-box{background:#f1f3f5;border:1px solid #ced4da;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:14px;color:#495057}
+.translation-box{background:#f8f9fa;border:1px dashed #868e96;border-radius:8px;padding:12px 14px;margin-top:16px}
+.translation-label{font-size:12px;font-weight:700;color:#495057;margin:0 0 4px}
+.translation-text{margin:8px 0;font-size:15px}
+.translation-note{margin:0;font-size:12px;color:#868e96}
+.translation-withheld{border-style:solid;border-color:#adb5bd;font-size:14px;color:#495057}
