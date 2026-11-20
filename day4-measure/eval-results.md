@@ -6,6 +6,8 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up.
 
 ## How this was run
 
+**Rules changed after this run (Decided 2026-11-20).** (1) Every no-draft result is now a hand-off to the human lead. (2) Hand-offs are seen by officers, supervisors, the project owner and the business owner. (3) A request for another resident's information is refused and handed off. This run was done and scored under the earlier rules, so the rows below that say "no draft" or NEEDS CLARIFICATION describe the earlier behaviour. The scores for Questions 1 and 3 do not change, because a hand-off adds nothing the answers did not already withhold. The route in Question 2 changes for EV-07, EV-08, EV-16, EV-17 (A) and EV-24 (A2) and for EV-23 (C), where the expected route is now a hand-off with the reason and closest pages shown. **A re-run of these cases under the new rules is needed.** Until then these results are not valid for them.
+
 - **No agent exists.** There is no model and no tool. The assistant ran each of the 24 cases in `eval-cases.md` by hand, following `day3-build/CLAUDE.md` step by step, and wrote the output the rules call for. This tests whether the rules are clear enough to follow. It does not show that a model will follow them.
 - **Scored with** `day4-measure/human-rubric.md`: Questions 1 to 3 are Yes or No, Questions 4 and 5 are 1 to 5. Variants inside a case were run too. A No on any variant is a No for the case.
 - **The assistant wrote the answers and scored them.** That is not independent. It favours a pass. The assistant also knew from the calibration round that EV-04 had a fault, so this run of EV-04 is not a blind repeat. See "Limits".
@@ -86,9 +88,9 @@ These are places where `CLAUDE.md` or the rubric did not say enough to settle a 
 3. **A matched fee sentence added by the officer.** EV-13's "Fees are non-refundable." got the citation and a blue fee mark. `CLAUDE.md` says to attach the citation but not whether it is also marked blue.
 4. **The recommended respectful-service paragraph and the rubric.** Question 3 fails an answer that "scolded" abuse. The paragraph you decided on says "we ask that all messages to us stay respectful", which a strict grader could read as a mild scold. This run treated the paragraph as outside the draft and so outside Question 3. The rubric does not say so.
 5. **Questions 4 and 5 for cases that are not enquiry answers.** EV-18 to EV-21 are system behaviour. The rubric has no rule for them. This run scored the wording shown to the officer.
-6. **No next step for no-draft results.** EV-07 and EV-16 cost a point on Question 4 because the rules do not tell the agent to suggest what to ask the resident.
-7. **Who sees a hand-off.** EV-22 input A puts a resident's account of violence in an English digest in the review queue. `CLAUDE.md` does not say who can see hand-offs. If every officer can, that is a privacy risk.
-8. **A request for other residents' information (EV-23 C).** No listed trigger covers it. This run used NEEDS CLARIFICATION. A rule would be clearer.
+6. ~~No next step for no-draft results.~~ **Settled 2026-11-20:** every no-draft result is a hand-off to the human lead, who takes it within 3 hours and decides what happens next. EV-07 and EV-16 should no longer lose a point on Question 4 for a missing next step, once re-run.
+7. ~~Who sees a hand-off.~~ **Settled 2026-11-20:** officers, supervisors, the project owner and the business owner, plus the human lead who takes it. No other role. Logs still hold IDs and triggers only.
+8. ~~A request for other residents' information (EV-23 C).~~ **Settled 2026-11-20:** it is refused and handed off. It is a trigger like the others.
 
 ## Limits
 

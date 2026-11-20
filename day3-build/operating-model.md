@@ -21,7 +21,7 @@ The agent is not built. There is no model and no tool yet. This file describes h
 | **Officer** | Reviews, edits and sends every reply. Ticks every blue item before approving. May request a restart, or a reinstatement. Edits only the English version. Sees the reminder and the notice when drafting is off. | Earlier file |
 | **Supervisor** | Checks 5% of sent replies each week against the cited passages. Is informed at each reminder and each per-officer stop. Is the only role that can reinstate an officer. Is a member of the ServiceSG team. | Earlier file, Decided |
 | **Knowledge base lead** | Owns the policy pages and what goes in or out of the 15 sources. Reviews wrong-citation flags. Is alerted when a wrong-citation stop happens. Is a member of the ServiceSG team. | Earlier file, Decided |
-| **Human lead** | Takes hand-offs, such as a complaint with legal risk, within 3 hours of the hand-off. | Earlier file, with the 3 hours **Decided 2026-11-20** |
+| **Human lead** | Takes every hand-off within 3 hours of the hand-off. That means the listed triggers (complaint, legal action, regulator, law enforcement, vulnerable resident, threat against staff, an opinion request, a request for another resident's information) and every no-draft result. | Earlier file, with the 3 hours, the wider triggers and the no-draft rule **Decided 2026-11-20** |
 | **Project owner** | Keeps the context skill and prototype in line. Approves changes to the rules, sources, colours and the success, fail and kill thresholds. Is a member of the ServiceSG team. | Earlier file |
 | **ServiceSG team** | The project owner, the supervisor, the knowledge base lead and the Product Ops specialist, an additional member added on 2026-11-19. Gets every stop alert. One member approves a restart, and it cannot be the member who asked. Any member may adjust the rubber-stamp streak threshold and the 28 days, alone. Must review the logged data at least once a week. | Decided |
 | **Engineering team** | Builds and runs the agent. Decides the items listed under "What engineering decides" in `ai-prd.md`, such as how the policy search works, where logs are kept, and whether and how the reference translation is checked. It is named in `ai-prd.md` and not defined in `one-pager.md`. | Earlier file (named only) |
@@ -56,6 +56,9 @@ One row for each decision. **Harness part** is the part of the agent this decisi
 - **Confirming a fee, deadline, date or eligibility claim.** The officer, every time.
 - **Sending a reply and closing a case.** Always the officer. The agent never does either.
 - **The weekly audit.** The supervisor.
+- **Who sees a hand-off (Decided 2026-11-20).** Officers, supervisors, the project owner and the business owner, plus the human lead who takes it. No other role. The engineering team sees logs only, which hold IDs and triggers, not the resident's words.
+- **No-draft results (Decided 2026-11-20).** Every one is a hand-off to the human lead, within 3 hours.
+- **A request for another resident's information (Decided 2026-11-20).** Refused and handed off.
 - **Signing the eval pass bar (Decided 2026-11-20).** The project owner signs after each full eval run. The business owner countersigns. The supervisor and the knowledge base lead grade, and are not the producer of the answers. See `day4-measure/eval-plan.md`.
 
 ## Incident walkthrough: a wrong answer at 08:00 on Monday

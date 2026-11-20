@@ -50,7 +50,7 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. No 
 
 **The job is done for one enquiry** when the officer has one of these:
 - A draft, with a citation on every claim, and fees, deadlines, dates and eligibility marked for the officer to confirm.
-- No draft, a short reason, and up to three closest policy pages. If none is a real match, say so.
+- No draft, a short reason, and up to three closest policy pages. If none is a real match, say so. Every no-draft result is handed off to a human lead (rule 45).
 - A hand-off to a human lead.
 
 **Steps of one enquiry**
@@ -198,7 +198,7 @@ The agent never moves past these without a person.
 | Every draft | Officer | Reads the draft and its citations, edits if needed, and sends | Earlier file |
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving | Earlier file |
 | Text the officer adds that makes a policy claim with no matching passage | Officer | Ticks it, rewords it to match a passage, or removes it, before approving. Marked blue "No matching passage. Check before sending" | Decided |
-| No-draft cases | Officer | Writes the reply from the closest pages, or escalates | Earlier file |
+| No-draft cases (every one is a hand-off) | Human lead | Takes the case within 3 hours of the hand-off, with the reason and the closest pages shown, and decides what happens next | **Decided 2026-11-20** |
 | Complaint, legal action, regulator, law enforcement, vulnerable resident, threat against staff, or a request for an opinion on a policy or a minister | Human lead | Takes the case within 3 hours of the hand-off. The agent gives no draft. | Earlier file, with the 3 hours **Decided 2026-11-20** |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page | Earlier file |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages | Earlier file |
@@ -220,9 +220,9 @@ The agent never moves past these without a person.
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
 - The language cannot be worked out, or the enquiry cannot be understood well enough to draft. Show the English digest if there is one, and say why. A translation that cannot be made reliably, or that differs in a figure, date or claim, is left out and the English draft stands. **Decided 2026-11-19.**
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION.
-- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. Hand off.
+- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), a request for the agent's opinion on a policy or a minister, or a request for another resident's information (refused, then handed off). Hand off.
 - An attachment cannot be read and the reply depends on it.
-- The policy search fails (the tool reports it could not search). Say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
+- The policy search fails (the tool reports it could not search). Say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, hand it off (type: lookup failed).
 - The policy search works and finds nothing, or only weak matches. This is not a failure and is not counted. Write NEEDS CLARIFICATION, show up to three closest pages, and say so when none is a real match.
 - The enquiry has no readable words: empty, only spaces, punctuation or symbols, only digits, or gibberish with no real word in any language. One real word is enough to make it readable. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no readable words", show no pages, and log "no search run". Letters that form a real word, in any script, count as words. An enquiry like this does not count towards the search-failure stop below.
 - The enquiry names a policy page that is not one of the 15. Do not use, quote or confirm it. Write NEEDS CLARIFICATION, say the page is not among the pages you may use, and log the page name the resident gave. The officer may ask the knowledge base lead whether such a page exists. Do not alert anyone yourself.
@@ -310,8 +310,8 @@ Each rule says where it came from. Engineering must not change a rule marked Dec
 4. Stay in line with policy. No deviation.
 5. Plain language. Short sentences.
 6. Never promise an outcome.
-7. Below 90% confidence, no draft.
-8. Hand off, with no draft, for law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. (Widened, **Decided 2026-11-20**.)
+7. Below 90% confidence, no draft, handed off (rule 45).
+8. Hand off, with no draft, for law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), a request for the agent's opinion on a policy or a minister, or a request for another resident's information (refused, then handed off). (Widened, **Decided 2026-11-20**.)
 9. If an attachment cannot be read, say so. Give no draft that depends on it.
 10. Same question, same wording.
 11. The officer sends every reply. The agent never sends and never closes a case.
@@ -363,6 +363,7 @@ Each rule says where it came from. Engineering must not change a rule marked Dec
 42. **The officer's own added text (Decided 2026-11-19).** Text the officer adds or changes is checked against the 15 passages wherever it makes a policy claim, meaning a fee, deadline, date, eligibility statement, requirement, step or any other statement about policy. If a listed passage supports it word for word, the agent attaches that citation. If none does, the agent marks it blue, "No matching passage. Check before sending", and the officer must tick it, or reword or remove it, before approving. The agent never removes the officer's text and never blocks the officer from deciding. Greetings, thanks, and wording that makes no policy claim are not checked. The check runs again after every edit. Permissions row 42 covers it. This is not a stop condition, because the officer decides. The colour is the existing blue, which means "the officer must verify this before accepting".
 43. **Abusive enquiries, opinions and threats (Decided 2026-11-20).** (a) An abusive enquiry with a valid question gets a draft as usual, flagged amber "Abusive enquiry", with a recommended respectful-service paragraph the officer may add. The flag is not blue and does not count towards the rubber-stamp streak. The words of the abuse are never logged. (b) A request for the agent's opinion on a policy or a minister is a hand-off. The agent never gives such an opinion. (c) A threat against staff is treated as law enforcement and handed off. (d) If an abusive enquiry is also a complaint or meets any hand-off trigger, hand off. If it has no valid question, no draft and NEEDS CLARIFICATION, with the amber flag.
 44. **Speaking about the resident's own case (Decided 2026-11-20).** The draft states the policy from the passage. About this resident, it may be direct ("he qualifies", "he is eligible") only when the enquiry plainly states a fact for every condition in the passage and the passage leaves no room for judgment. The statement cites the same passage, is marked blue as an eligibility claim, and keeps figures word for word. The same directness applies when a stated fact clearly fails a condition ("he does not qualify"), in plain, neutral words, adding nothing the passage does not say (for example, what happens when the resident reaches the age). Where the agent is uncertain (a condition is missing or unclear, the facts do not fit, or the passage says "may be considered", "case-by-case", "not guaranteed" or "conditions apply"), it states the policy only or says what the resident can apply for. Promises ("approved", "will be granted", "will receive") stay banned under rule 6. Example: ENQ-EV-04.
+45. **Hand-offs and who sees them (Decided 2026-11-20).** (a) Every no-draft result is a hand-off to the human lead, who takes it within 3 hours. It shows the reason, the type, the English digest if there is one, and up to three closest pages (or says none is a real match). A failed policy search is handed off after 2 failed tries on one enquiry. (b) Hand-offs are seen by officers, supervisors, the project owner and the business owner, plus the human lead who takes it. No other role sees them. Logs hold only the enquiry ID, the trigger or type, and the language. (c) A request for another resident's information is refused (the agent says it cannot share anything about other residents or their replies) and handed off. It is a hand-off trigger like the others.
 
 ## What engineering decides
 

@@ -49,8 +49,8 @@ If the two sets of instructions disagree, this file wins.
 4. **Stay in line with policy.** The draft must match the policy position and intent. No deviation.
 5. **Plain language.** Short sentences. No policy speak or jargon. Write so a resident can act on it.
 6. **Never promise an outcome.** Do not say an appeal, waiver or application will be approved.
-7. **Below 90% confidence, no draft.** Show the three closest policy pages and send the enquiry to the officer.
-8. **Hand off, no draft,** when the enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. (Widened 2026-11-20 on the learner's decision.)
+7. **Below 90% confidence, no draft.** Show the three closest policy pages and hand the enquiry off to the human lead. (Every no-draft result is a hand-off, decided 2026-11-20.)
+8. **Hand off, no draft,** when the enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), a request for the agent's opinion on a policy or a minister, or a request for another resident's information (refused, then handed off). (Widened 2026-11-20 on the learner's decision. A request for another resident's information is refused and handed off. Hand-offs are seen by officers, supervisors, the project owner and the business owner.)
 9. **Attachments.** If an image or file cannot be read, say so and give no draft that depends on it.
 10. **Same question, same wording.** Use the same core passages and phrasing for the same policy point.
 11. **Never send.** The officer sends every reply.
