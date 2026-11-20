@@ -198,7 +198,11 @@ All numbers are made up and come from the prototype's comfort test.
 
 ## Decision: continue, pivot or stop
 
-**Not decided yet.** There is no test data, because the prototype ratings are made-up inputs.
+**Call: Continue, to a real pilot with 5 officers. Not yet to launch.** *(Proposed 2026-11-20, for the learner to confirm.)*
+
+**Why:** A hand run of all 24 eval cases passed with no deal-breaker failed, but a person following the rules is not a model, so only a real test can show the agent is good enough to launch.
+
+**What would change the call:** the rule below. A real pilot that misses the success signal and trips the kill switch means pivot. A pivot that also fails means stop.
 
 **Rule:**
 - **Continue** if the success signal is met in a real test.
@@ -214,3 +218,11 @@ All numbers are made up and come from the prototype's comfort test.
 - **Attachments.** 1 in 5 enquiries have images, and no tool reads them yet.
 - **Consistency** (Head of Product) is not measured by the prototype.
 - **Colour meaning** has not been checked with real officers. They may read blue differently.
+- **No agent exists yet.** The 24-case eval (`day4-measure/eval-results.md`) was a hand run by one grader, who also wrote the answers. It passed 24 of 24, but it shows only that the rules can be followed. It does not show that a model will follow them. Two graders and calibration are untested.
+- **Consistency (EV-21)** cannot be tested until a real agent runs 10 similar enquiries and is compared with the officer baseline.
+- **Human lead workload.** Every no-draft result and every trigger goes to the human lead within 3 hours, and about 40% of the inbox is edge cases. The learner will review and adjust.
+- **Sensitive hand-offs** (a vulnerable resident, law enforcement) are now seen by officers, supervisors, the project owner and the business owner. Whether their digest should be shorter is not decided.
+- **A failed policy lookup** is handed off after 2 tries, with no closest pages. What the human lead does while the tool is down is not decided.
+- **Rubric readings** are working choices, not tested: what "word for word" means for plain language, whether a booking window is a deadline, whether a matched officer-added fee sentence is blue, and how the recommended respectful-service paragraph is scored.
+- **Roles still open** (`day3-build/operating-model.md`): a data protection or security role, the agent's budget, who investigates an incident, what happens to logs and policy pages at retirement, and whether engineering is its own role.
+- **First-30-day dates** in `day4-measure/eval-plan.md` are counted from go-live, because no go-live date exists.
