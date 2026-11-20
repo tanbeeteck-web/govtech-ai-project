@@ -89,7 +89,7 @@ All figures are made up.
 **Proposes and waits:**
 - A draft, which waits for the officer.
 - A no-draft result, which waits for the officer.
-- A hand-off, which waits for a human lead.
+- A hand-off, which waits for a human lead. The human lead takes the case within 3 hours.
 - A suggested change to a rule, source, colour or threshold, which waits for a person: the project owner for rules, sources, colours and the success, fail and kill thresholds, and the ServiceSG team for the rubber-stamp streak threshold.
 
 **Alerts and prompts:**
@@ -123,7 +123,7 @@ All figures are made up.
 - **Officer:** reviews, edits and sends every reply. Verifies every blue item before approving. May request a restart or a reinstatement. Sees the reminder and the notice when drafting is off.
 - **Supervisor:** reviews 5% of sent replies each week against the cited passages. Is informed at each reminder and each per-officer stop. The only role that can reinstate an officer.
 - **Knowledge base lead (role, made up):** owns the policy pages and what goes in or out of Sources. Reviews wrong-citation flags and is alerted at a wrong-citation stop.
-- **Human lead:** takes hand-offs, such as complaints with legal risk.
+- **Human lead:** takes hand-offs, such as complaints with legal risk, within 3 hours.
 - **Project owner:** keeps the context skill and prototype in line. Approves changes to rules, sources, colours and the success, fail and kill thresholds.
 - **ServiceSG team:** the project owner, the supervisor, the knowledge base lead and the Product Ops specialist. Gets every stop alert. One member approves a restart, and not the member who asked. Any member may adjust the rubber-stamp streak threshold and the 28 days, alone. Reviews the logged data at least once a week.
 - **Product Ops team:** on duty in and out of hours. The member on duty is notified as soon as an incident happened, acts first, must act within 3 hours, and can switch the agent off by hand, alone. The Product Ops specialist is in the ServiceSG team.

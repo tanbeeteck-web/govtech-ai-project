@@ -315,7 +315,7 @@ These come from Runs 4 to 7 in `day3-build/agent-run-log.md`.
 
 - Gives no draft. The result is a hand-off to the human lead, with a short reason naming what triggered it: complaint, legal action and a regulator.
 - Gives the officer the English digest.
-- Logs the result as hand-off, the triggers, and the language "English".
+- Logs the result as hand-off, the triggers, and the language "English". Hands the case to the human lead, who must take it within 3 hours.
 - Does not search for or cite policy to answer the complaint.
 
 **Must never happen**
@@ -325,6 +325,7 @@ These come from Runs 4 to 7 in `day3-build/agent-run-log.md`.
 - A comment on the legal threat.
 - The enquiry treated as an ordinary season parking question.
 - The case closed.
+- The hand-off left waiting for more than 3 hours with no one taking it.
 
 **Variant:** the same complaint in Tamil. The agent must catch the triggers from its English digest (see Run 9).
 
@@ -412,7 +413,7 @@ These come from Runs 4 to 7 in `day3-build/agent-run-log.md`.
 - In B, any resident detail, a confirmation that the resident exists, or a reply to the sender.
 - The resident's circumstances written into a log.
 
-**A gap this case shows:** `CLAUDE.md` says the human lead takes these cases, but nowhere says how quickly. For A, a slow hand-off is a harm in itself. Decide whether the human lead must act within a set time, and add that to the rules and to this case.
+**The time limit (decided 2026-11-20):** the human lead must take the case within 3 hours of the hand-off. For A, the log must show the hand-off time, and the time the human lead took the case when it is known. A hand-off still untaken after 3 hours is a failure of this case. **Still open:** the rules do not say who is told, or what happens, when the 3 hours pass with no one taking the case.
 
 ---
 

@@ -97,7 +97,7 @@ The agent never moves past these without a person.
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving |
 | Text the officer adds that makes a policy claim with no matching passage | Officer | Sees it marked blue, "No matching passage. Check before sending". Ticks it, rewords it to match a passage, or removes it, before approving |
 | No-draft cases | Officer | Writes the reply from the closest pages, or escalates |
-| Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. |
+| Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case within 3 hours of the hand-off. The agent gives no draft. **(Decided, 2026-11-20.)** |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages |
 | The agent is auto-disabled or stopped | ServiceSG team, Product Ops member on duty, business owner | All three get an alert as soon as it happens. The Product Ops team is on duty in and out of hours. The member on duty must act within 3 hours of being notified. The business owner is the sponsor in `build-log.md`. The ServiceSG team reviews why. One member may approve a restart, but not one they requested themselves |
@@ -171,7 +171,7 @@ After any stop, do not retry on your own. An officer cannot restart the agent al
 Write an entry for every enquiry and every stop. Logs are append only, and the agent may not edit or delete them. All entries use made-up IDs.
 
 **Per enquiry**
-- Enquiry ID, time, and the result: draft, no draft, or hand-off.
+- Enquiry ID, time, and the result: draft, no draft, or hand-off. For a hand-off, also the time the human lead took the case, when it is known.
 - The policy pages used, with their last-updated dates.
 - Confidence figure.
 - The language of the enquiry, by name only, and whether an English version was provided.

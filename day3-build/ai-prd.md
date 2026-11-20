@@ -197,7 +197,7 @@ The agent never moves past these without a person.
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving | Earlier file |
 | Text the officer adds that makes a policy claim with no matching passage | Officer | Ticks it, rewords it to match a passage, or removes it, before approving. Marked blue "No matching passage. Check before sending" | Decided |
 | No-draft cases | Officer | Writes the reply from the closest pages, or escalates | Earlier file |
-| Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case. The agent gives no draft. | Earlier file |
+| Complaint, legal action, regulator, law enforcement or vulnerable resident | Human lead | Takes the case within 3 hours of the hand-off. The agent gives no draft. | Earlier file, with the 3 hours **Decided 2026-11-20** |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page | Earlier file |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages | Earlier file |
 | The agent is auto-disabled or stopped | ServiceSG team | Gets an alert at once and reviews why. One member may approve a restart, but not one they asked for. A wrong-citation stop also alerts the knowledge base lead. The Product Ops member on duty and the business owner are alerted at the same moment. | Decided |
