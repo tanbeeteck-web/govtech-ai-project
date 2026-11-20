@@ -2,7 +2,7 @@
 
 **Scenario:** A · ServiceSG enquiry response
 
-**Status: Proposed (2026-11-20).** Everything in this file is Proposed. The learner has not decided any of it.
+**Status: Proposed (2026-11-20), with two decisions made.** On 2026-11-20 the learner decided: (1) a full run once a month and a weekly run of the deal-breaker cases, and (2) the business owner is the second checker of the project owner's sign-off. Both are marked Decided below. Everything else is Proposed.
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. Job roles only, no names of people.
 
@@ -14,7 +14,7 @@ This file says who owns the eval, when it runs, how we will know the agent is wo
 
 | Job | Role | Why this role | Mark |
 |---|---|---|---|
-| **Signs the pass bar** (the thresholds in `human-rubric.md`, and the call "pass" or "fail" after each run) | **Project owner** | The operating model already gives the project owner the success, fail and kill thresholds, and the go-live decision. The ServiceSG team reviews. The business owner is told of a fail. | Proposed |
+| **Signs the pass bar** (the thresholds in `human-rubric.md`, and the call "pass" or "fail" after each run) | **Project owner** | The operating model already gives the project owner the success, fail and kill thresholds, and the go-live decision. The ServiceSG team reviews. **The business owner checks and countersigns every sign-off (Decided 2026-11-20).** | Proposed, countersign Decided |
 | **Writes the test cases** (`eval-cases.md`) | **Knowledge base lead** writes the policy facts and the expected answers. **Supervisor** checks that each enquiry sounds like a real one. | The knowledge base lead owns the 15 policy pages. The supervisor knows what officers receive. | Proposed |
 | **Refreshes the test cases** | **Knowledge base lead**, on every policy change and every wrong-citation flag. **Supervisor**, when a real enquiry exposes a failure no case covers (add EV-25 and on). | Policy changes and flags already go to the knowledge base lead. | Proposed |
 | **Runs the eval** (gets the answers and records the version tested) | **Engineering team** | They build and run the agent. | Proposed |
@@ -23,7 +23,7 @@ This file says who owns the eval, when it runs, how we will know the agent is wo
 | **Reads the weekly numbers** | **ServiceSG team** (project owner, supervisor, knowledge base lead, Product Ops specialist), at least once a week | Already their job in the operating model. | Proposed |
 | **Acts on a stop** | **Product Ops member on duty**, within 3 hours. One other ServiceSG team member approves a restart. | The operating model's Incident row. | Proposed |
 
-**A check on one person holding two jobs.** The project owner both signs the pass bar and is in the team that reads the numbers. That is the same open question as item 6 in the operating model. A second person checking the project owner's sign-off, such as the business owner, is a choice for the learner.
+**A check on one person holding two jobs.** The project owner both signs the pass bar and is in the team that reads the numbers. That is the same question as item 6 in the operating model. **Decided 2026-11-20:** the business owner is the second checker. The project owner's pass or fail call after each run is not final until the business owner countersigns it. If the two disagree, the stricter call stands and the business owner says why in the results file. The business owner is also told of every fail and every stop, as already decided. Item 6 in the operating model can be closed on this basis.
 
 ## When it runs
 
@@ -33,11 +33,11 @@ Two kinds of run. A **full run** is all 24 cases, every variant, two graders. A 
 |---|---|---|---|
 | **Before go-live** | One full run on the real agent, not a hand run. Calibrate the two graders first. All six test questions in `one-pager.md` pass. The pass bar is met with no deal-breaker failed. EV-21 is run on the real agent, with 10 similar enquiries. Go-live also needs the other gates in `one-pager.md`. | Engineering team runs. The graders grade. The project owner signs. | Proposed |
 | **Before every change** | One full run, and the result is compared with the last run. A change means: a new model or version, any edit to `day3-build/CLAUDE.md` or `day2-validate/context-skill.md`, a new or changed tool, a new colour or threshold. **No change goes live while a deal-breaker case fails.** | Engineering team runs. The project owner signs. | Proposed |
-| **Every week** | (1) The supervisor's 5% audit of sent replies. (2) A short run of the 19 deal-breaker cases on the live agent, scored by one grader. (3) The ServiceSG team reads the numbers in "How I'll know it's working". | Supervisor, engineering team, one grader, the ServiceSG team | Proposed |
+| **Every week (Decided 2026-11-20)** | (1) The supervisor's 5% audit of sent replies. (2) A short run of the 19 deal-breaker cases on the live agent, scored by one grader. (3) The ServiceSG team reads the numbers in "How I'll know it's working". | Supervisor, engineering team, one grader, the ServiceSG team | Proposed |
 | **When policy changes** | The daily check stops the agent when a cited page changes. After the knowledge base lead has reviewed the change, the cases for that page are refreshed and run, then a restart is approved. The cases for the other 14 pages run too if the change affects shared wording. | Knowledge base lead refreshes. Engineering team runs. | Proposed |
-| **Also** | A full run once a month, and when two graders disagree on more than 1 in 5 answers (calibrate again first). | Same as a full run | Proposed |
+| **Every month (Decided 2026-11-20)** | A full run, and and also when two graders disagree on more than 1 in 5 answers (calibrate again first). | Same as a full run | Proposed |
 
-**Where this differs from the rubric.** `human-rubric.md` ("When to run", Proposed) says a full run once a month. The weekly run of the 19 deal-breaker cases is new here. If you accept this plan, the rubric should say weekly as well.
+**Rubric.** `human-rubric.md` ("When to run") now says the same: a full run once a month and a weekly run of the deal-breaker cases. Decided 2026-11-20.
 
 **Why the weekly run is smaller.** A full run needs two graders for 24 cases, plus variants. That is too much to ask every week. The deal-breaker cases are the ones that cause public harm, so those run weekly.
 
