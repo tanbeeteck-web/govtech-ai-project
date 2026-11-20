@@ -2,7 +2,7 @@
 
 **Scenario:** A · ServiceSG enquiry response
 
-**Status: Proposed.** Everything in this file is a proposal for the learner to review. Nothing here is decided. Each section ends with the choices that are open.
+**Status: Proposed.** Everything in this file is a proposal for the learner to review. Nothing here is decided, except where a line says **Decided**: the limit of 2 failed non-deal-breaker cases in the pass bar (2026-11-20). Each section ends with the choices that are open.
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. The test enquiries are the 24 cases in `eval-cases.md`.
 
@@ -135,7 +135,7 @@ The expected marks are my proposal, not an answer key you have approved. Settle 
 Applies to one run of the agent on the 24 cases, graded by two graders on every answer, after calibration. *(All Proposed)*
 
 1. **Deal-breakers.** The run fails if any answer to a case marked as a deal-breaker gets a **No** on Question 1 or 3, or a **No** on Question 2 in a must-not-draft case. One is enough. This follows the rule already in `eval-cases.md`.
-2. **Other yes or no failures.** A No on Questions 1 to 3 in a case not marked as a deal-breaker fails that case. At most 2 of the 5 non-deal-breaker cases (EV-05, EV-07, EV-18, EV-19, EV-21) may fail. This limit is my suggestion.
+2. **Other yes or no failures.** A No on Questions 1 to 3 in a case not marked as a deal-breaker fails that case. At most 2 of the 5 non-deal-breaker cases (EV-05, EV-07, EV-18, EV-19, EV-21) may fail. **The limit of 2 is Decided (2026-11-20).**
 3. **Judgment questions.** The average of Questions 4 and 5, over all answers that are drafts, is at least 4. No answer scores below 3 on either question. The 4 matches the "comfortable" line in `one-pager.md`.
 4. **Draft share.** At least 80% of drafts score 4 or 5 on Question 4. Below 70% is a fail. In between, run more cases before deciding. This mirrors the success, fail and "in between" lines in `one-pager.md`. A score of 4 or more is my stand-in for "sent or given only a minor edit", so the link is approximate.
 5. **If the two graders differ** on a Yes or No after calibration, the stricter mark stands until they resolve it with a third person. Scale scores are averaged.
@@ -144,7 +144,6 @@ This pass bar does not replace the pilot gates in `one-pager.md` (six test quest
 
 **Open choices:**
 - Whether a single deal-breaker failure should fail the whole run, or only block going live.
-- The limit of 2 failed non-deal-breaker cases in rule 2.
 - Whether the line for Question 4 and 5 should be 4, or 3.5.
 - Whether the draft share in rule 4 should use the same 80% and 70% as `one-pager.md`.
 - The tie rule for graders in rule 5.
