@@ -112,7 +112,7 @@ delete officerText['ENQ-2024-011'];
 check('other enquiries have no abusive flag', syntheticEnquiries.filter(e => e.id !== 'ENQ-2024-011').every(e => !e.abusive));
 
 // ---- 5c. Hand-offs: opinion on a policy or a minister, a threat against staff, and the 3-hour limit ----
-['ENQ-2024-008', 'ENQ-2024-012', 'ENQ-2024-013'].forEach(id => {
+['ENQ-2024-008', 'ENQ-2024-012', 'ENQ-2024-013', 'ENQ-2024-014'].forEach(id => {
   const i = syntheticEnquiries.findIndex(e => e.id === id);
   currentEnquiryIndex = i;
   renderEnquiry(i);
@@ -125,6 +125,33 @@ check('other enquiries have no abusive flag', syntheticEnquiries.filter(e => e.i
 });
 check('opinion hand-off gives no opinion on the fee', syntheticEnquiries.find(e => e.id === 'ENQ-2024-012').noDraft.reason.indexOf('no opinion') !== -1);
 check('hand-off screen lists the new triggers', NO_DRAFT_INFO.handoff.text.indexOf('threats against staff') !== -1 && NO_DRAFT_INFO.handoff.text.indexOf('opinion') !== -1);
+
+// ---- 5d. Every no-draft result is a hand-off, seen by four roles (decided 2026-11-20) ----
+syntheticEnquiries.filter(e => e.draft === null).forEach(e => {
+  const i = syntheticEnquiries.indexOf(e);
+  currentEnquiryIndex = i;
+  renderEnquiry(i);
+  const h = _el('draft-content').innerHTML;
+  check(e.id + ' no-draft says it is handed off to the human lead', h.indexOf('Handed off to the human lead') !== -1);
+  check(e.id + ' no-draft says who can see it', h.indexOf('supervisors, the project owner and the business owner') !== -1);
+  check(e.id + ' no-draft has no escalate to senior officer', h.indexOf('senior officer') === -1 && _el('draft-actions').innerHTML.indexOf('senior officer') === -1);
+});
+const o14 = syntheticEnquiries.find(e => e.id === 'ENQ-2024-014');
+check('request for another resident\'s information is refused with no draft', o14.draft === null && o14.noDraft.reason.indexOf('cannot share anything about other residents') !== -1);
+check('refusal does not say whether anyone else wrote in', o14.noDraft.reason.toLowerCase().indexOf('no one else') === -1 && o14.noDraft.reason.toLowerCase().indexOf('nobody else') === -1);
+check('hand-off screen lists the other-resident trigger', NO_DRAFT_INFO.handoff.text.indexOf("another resident's information") !== -1);
+
+// ---- 5e. A lookup that fails twice is handed off, not escalated (decided 2026-11-20) ----
+setForcedFailure(true);
+const lfIdx = syntheticEnquiries.findIndex(e => e.id === 'ENQ-2024-001');
+Object.keys(lookupState).forEach(k => delete lookupState[k]);
+currentEnquiryIndex = lfIdx;
+renderEnquiry(lfIdx);
+renderLookupFailed(syntheticEnquiries[lfIdx], { status: 'failed', attempts: 2 });
+check('second failed lookup says it is handed off', _el('draft-content').innerHTML.indexOf('handed off to the human lead') !== -1);
+check('second failed lookup has no escalate button', _el('draft-actions').innerHTML.indexOf('senior officer') === -1 && _el('draft-content').innerHTML.indexOf('senior officer') === -1);
+setForcedFailure(false);
+Object.keys(lookupState).forEach(k => delete lookupState[k]);
 
 // ---- 6. Edit size ----
 eq('no change is 0%', editPercent('a b c d', 'a b c d'), 0);
