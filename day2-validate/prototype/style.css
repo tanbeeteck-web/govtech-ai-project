@@ -650,3 +650,27 @@ header h1 {
   overflow-y: auto;
   overflow-wrap: anywhere;
 }
+
+/* ---- Abusive enquiry flag. Amber = "look at this", not an error (context-skill.md colour meanings) ---- */
+.abusive-flag {
+  background: #fff9db;
+  border: 1px solid #ffd43b;
+  border-left: 4px solid #e67700;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  color: #5c3b00;
+  font-size: 14px;
+}
+.abusive-flag blockquote {
+  margin: 6px 0 8px;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px dashed #ffd43b;
+  border-radius: 4px;
+  color: #333;
+}
+.log-type.abusive {
+  background: #fff3bf;
+  color: #e67700;
+}

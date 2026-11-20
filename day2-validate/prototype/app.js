@@ -156,7 +156,7 @@ function renderLookupFailed(enquiry, st) {
 const NO_DRAFT_INFO = {
   low_confidence:      { tab: 'Low conf',      badge: 'Low confidence',      title: 'No draft generated',        text: 'Confidence is below 90%. Here are the closest policy pages to help you draft a reply:' },
   needs_clarification: { tab: 'Needs clarif.', badge: 'NEEDS CLARIFICATION', title: 'NEEDS CLARIFICATION',        text: 'The answer is not in the policy pages the AI is allowed to use, so it did not guess.' },
-  handoff:             { tab: 'Hand-off',      badge: 'Hand off to human lead', title: 'Hand off to a human lead', text: 'Complaints, legal action, regulators and vulnerable residents are not drafted by the AI.' },
+  handoff:             { tab: 'Hand-off',      badge: 'Hand off to human lead', title: 'Hand off to a human lead', text: 'Complaints, legal action, regulators, law enforcement, vulnerable residents, threats against staff and requests for an opinion on a policy or a minister are not drafted by the AI.' },
   attachment:          { tab: 'Attachment',    badge: 'Attachment not readable', title: 'Attachment could not be read', text: 'The AI will not guess what the attachment says.' }
 };
 // Last-updated date for a cited policy page, from policySources in data.js
@@ -170,7 +170,7 @@ function buildTabs() {
   const nav = document.getElementById('enquiry-nav');
   nav.innerHTML = visibleIndices().map(i => {
     const e = syntheticEnquiries[i];
-    return `<button class="enquiry-tab" data-index="${i}">${escapeHtml(e.id)}${e.draft === null ? ' (' + noDraftLabel(e.noDraft.type) + ')' : ''}<span class="tab-topic">${escapeHtml(topicOf(e))}</span></button>`;
+    return `<button class="enquiry-tab" data-index="${i}">${escapeHtml(e.id)}${e.draft === null ? ' (' + noDraftLabel(e.noDraft.type) + ')' : (e.abusive ? ' (Abusive)' : '')}<span class="tab-topic">${escapeHtml(topicOf(e))}</span></button>`;
   }).join('');
   nav.querySelectorAll('.enquiry-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -183,6 +183,21 @@ function buildTabs() {
 // Plain-text version of the draft, used for editing and for measuring how much was changed
 function draftToText(draft) {
   return [draft.greeting, ...draft.paragraphs.map(p => p.text), draft.closing, draft.signature].join('\n\n');
+}
+
+// Abusive enquiries: log the flag once per enquiry. The words used are never logged.
+const abusiveLogged = {};
+function logAbusiveOnce(id) {
+  if (abusiveLogged[id]) return;
+  abusiveLogged[id] = true;
+  logAbusive(id);
+}
+// The officer chose to add the recommended paragraph. It goes in before the closing, as the officer's own text,
+// and the officer can still change or remove it in the edit box.
+function addRespectfulParagraph(enquiry) {
+  const d = enquiry.draft;
+  officerText[enquiry.id] = [d.greeting, ...d.paragraphs.map(p => p.text), respectfulServiceParagraph, d.closing, d.signature].join('\n\n');
+  enterEditMode(enquiry);
 }
 
 function enterEditMode(enquiry) {
@@ -297,6 +312,7 @@ function renderNoDraft(enquiry) {
         <strong>${info.title}</strong>
         <p>${escapeHtml(enquiry.noDraft.reason)}</p>
         <p>${info.text}</p>
+        ${enquiry.noDraft.type === 'handoff' ? `${enquiry.noDraft.trigger ? `<p>Trigger: ${escapeHtml(enquiry.noDraft.trigger)}.</p>` : ''}<p>The human lead must take this case within 3 hours of the hand-off.</p>` : ''}
       </div>
     </div>
   `;
@@ -340,6 +356,16 @@ function renderDraft(enquiry) {
   html += flaggedCount > 0
     ? `<p class="flag-summary flag-summary-verify">${flaggedCount} section${flaggedCount > 1 ? 's need' : ' needs'} your verification before you accept. Check ${flaggedCount > 1 ? 'each' : 'it'} against the cited passage. This is a required check, not a sign of low confidence.</p>`
     : `<p class="flag-summary flag-summary-green">Nothing here needs verification. Still check the citations before sending.</p>`;
+  if (enquiry.abusive) {
+    html += `<div class="abusive-flag" id="abusive-flag">
+      <strong>Abusive enquiry</strong>
+      <p>This enquiry is rude or offensive, but it holds a valid question. The draft answers only the question and does not answer the abuse. Look at this before you reply.</p>
+      <p><strong>Recommended paragraph.</strong> It is not part of the draft. You decide whether to add it:</p>
+      <blockquote>${escapeHtml(respectfulServiceParagraph)}</blockquote>
+      <button class="btn btn-warning" id="btn-add-respect">Add to my reply</button>
+    </div>`;
+    logAbusiveOnce(enquiry.id);
+  }
   html += `<p class="draft-greeting">${escapeHtml(draft.greeting)}</p>`;
 
   draft.paragraphs.forEach((para, i) => {
@@ -414,6 +440,8 @@ function renderDraft(enquiry) {
     });
   });
 
+  const respectBtn = document.getElementById('btn-add-respect');
+  if (respectBtn) respectBtn.addEventListener('click', () => addRespectfulParagraph(enquiry));
   document.getElementById('btn-approve').addEventListener('click', handleApprove);
   document.getElementById('btn-edit').addEventListener('click', () => enterEditMode(enquiry));
   document.getElementById('btn-discard').addEventListener('click', () => {

@@ -76,7 +76,7 @@ syntheticEnquiries[0].draft.paragraphs[0].text = original;
 
 // ---- 5. Policy lookup failure (forced failure on fee enquiries) ----
 const feeIds = syntheticEnquiries.filter(isAboutFees).map(e => e.id);
-eq('fee enquiries affected', feeIds.join(','), 'ENQ-2024-001,ENQ-2024-003,ENQ-2024-004');
+eq('fee enquiries affected', feeIds.join(','), 'ENQ-2024-001,ENQ-2024-003,ENQ-2024-004,ENQ-2024-011');
 setForcedFailure(true);
 syntheticEnquiries.forEach((e, i) => {
   currentEnquiryIndex = i;
@@ -87,6 +87,44 @@ syntheticEnquiries.forEach((e, i) => {
   if (failed_) check(e.id + ' failed screen has no Approve', _el('draft-actions').innerHTML.indexOf('btn-approve') === -1);
 });
 setForcedFailure(false);
+
+// ---- 5b. Abusive enquiry: a draft with an amber flag and a recommended paragraph (decided 2026-11-20) ----
+Object.keys(lookupState).forEach(k => delete lookupState[k]);   // the forced failure above left these enquiries failed
+const abIdx = syntheticEnquiries.findIndex(e => e.id === 'ENQ-2024-011');
+const abEnq = syntheticEnquiries[abIdx];
+currentEnquiryIndex = abIdx;
+renderEnquiry(abIdx);
+const abHtml = _el('draft-content').innerHTML;
+check('abusive enquiry still gets a draft with Approve', _el('draft-actions').innerHTML.indexOf('btn-approve') !== -1);
+check('abusive flag is shown with words', abHtml.indexOf('Abusive enquiry') !== -1 && abHtml.indexOf('abusive-flag') !== -1);
+check('recommended paragraph is shown', abHtml.indexOf(respectfulServiceParagraph) !== -1);
+check('recommended paragraph is not part of the draft', draftToText(abEnq.draft).indexOf(respectfulServiceParagraph) === -1);
+check('abusive flag is not blue and the fee stays blue', _el('confidence-badge').textContent.indexOf('Verification required') === 0 && abHtml.indexOf('abusive-flag') < abHtml.indexOf('FEE - Verify before accepting'));
+check('draft does not repeat the insult', draftToText(abEnq.draft).toLowerCase().indexOf('idiot') === -1 && draftToText(abEnq.draft).toLowerCase().indexOf('stupid') === -1);
+check('abusive flag is in the log', getLog().some(r => r.enquiry_id === 'ENQ-2024-011' && r.flag_type === 'abusive'));
+check('log does not hold the words used', getLog().every(r => (r.officer_note || '').toLowerCase().indexOf('idiot') === -1 && (r.officer_note || '').toLowerCase().indexOf('stupid') === -1));
+const abLogCount = getLog().filter(r => r.flag_type === 'abusive').length;
+renderEnquiry(abIdx);
+eq('abusive flag is logged once per enquiry', getLog().filter(r => r.flag_type === 'abusive').length, abLogCount);
+addRespectfulParagraph(abEnq);
+check('adding the paragraph puts it in the edit box before the closing', _el('edit-box').value.indexOf(respectfulServiceParagraph) !== -1 && _el('edit-box').value.indexOf(respectfulServiceParagraph) < _el('edit-box').value.indexOf(abEnq.draft.closing));
+delete officerText['ENQ-2024-011'];
+check('other enquiries have no abusive flag', syntheticEnquiries.filter(e => e.id !== 'ENQ-2024-011').every(e => !e.abusive));
+
+// ---- 5c. Hand-offs: opinion on a policy or a minister, a threat against staff, and the 3-hour limit ----
+['ENQ-2024-008', 'ENQ-2024-012', 'ENQ-2024-013'].forEach(id => {
+  const i = syntheticEnquiries.findIndex(e => e.id === id);
+  currentEnquiryIndex = i;
+  renderEnquiry(i);
+  const h = _el('draft-content').innerHTML;
+  check(id + ' is a hand-off with no draft', syntheticEnquiries[i].draft === null && syntheticEnquiries[i].noDraft.type === 'handoff');
+  check(id + ' has no Approve', _el('draft-actions').innerHTML.indexOf('btn-approve') === -1);
+  check(id + ' says the human lead has 3 hours', h.indexOf('within 3 hours') !== -1);
+  check(id + ' names its trigger', h.indexOf('Trigger:') !== -1);
+  check(id + ' shows no policy pages', h.indexOf('policy-card') === -1);
+});
+check('opinion hand-off gives no opinion on the fee', syntheticEnquiries.find(e => e.id === 'ENQ-2024-012').noDraft.reason.indexOf('no opinion') !== -1);
+check('hand-off screen lists the new triggers', NO_DRAFT_INFO.handoff.text.indexOf('threats against staff') !== -1 && NO_DRAFT_INFO.handoff.text.indexOf('opinion') !== -1);
 
 // ---- 6. Edit size ----
 eq('no change is 0%', editPercent('a b c d', 'a b c d'), 0);

@@ -316,6 +316,7 @@ const syntheticEnquiries = [
     draft: null,
     noDraft: {
       type: "handoff",
+      trigger: "a complaint and legal action",
       reason: "This is a complaint with legal risk. A human lead must handle it. No draft is written."
     },
     suggestedPolicies: []
@@ -355,10 +356,91 @@ const syntheticEnquiries = [
       reason: "No policy page in the source list covers processing time. Nothing was guessed."
     },
     suggestedPolicies: []
+  },
+  // ---- Added 2026-11-20 for the abusive, opinion and threat decisions (see day3-build/CLAUDE.md) ----
+  {
+    id: "ENQ-2024-011",
+    topic: "Passports and ID cards",
+    timestamp: "2024-11-18 17:25",
+    confidence: "high",
+    confidencePct: 95,
+    abusive: true,   // rude, but it holds a valid question: a draft is delivered, flagged amber "Abusive enquiry"
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Useless",
+      body: "Your stupid system again. How much is a replacement for a lost identity card, first time? Answer properly this time, you idiots."
+    },
+    draft: {
+      greeting: "Dear Resident,",
+      paragraphs: [
+        { text: "Thank you for your enquiry about replacing a lost identity card.", citation: null },
+        {
+          text: "Please make a police report first, then apply for a replacement in person at any ICA Services Centre. Quote your police report number.",
+          citation: {
+            source: "ICA Lost Card Procedure (made up)",
+            passage: "Lost cards must be reported to the police. Applicants then apply for a replacement in person, quoting the police report number.",
+            url: "#policy-ica-lostcard-001"
+          }
+        },
+        {
+          text: "The replacement fee is $100 for a first loss.",
+          citation: {
+            source: "ICA Fee Schedule (made up)",
+            passage: "Replacement of lost identity card: $100 for first loss, $300 for second loss, $500 for subsequent losses.",
+            url: "#policy-ica-fees-002"
+          },
+          highRisk: "fee"
+        }
+      ],
+      closing: "Please let us know if you have any other questions.",
+      signature: "ServiceSG Officer"
+    }
+  },
+  {
+    id: "ENQ-2024-012",
+    topic: "Passports and ID cards",
+    timestamp: "2024-11-18 17:40",
+    confidence: "none",
+    confidencePct: null,
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Passport charge",
+      body: "Do you agree the $80 passport charge is a rip-off? The minister in charge is useless, isn't he? Tell me what you think."
+    },
+    draft: null,
+    noDraft: {
+      type: "handoff",
+      trigger: "a request for an opinion on a policy or a minister",
+      reason: "The resident asks for an opinion on a policy and a minister. The AI gives no opinion, for or against. A human lead must handle it. No draft is written."
+    },
+    suggestedPolicies: []
+  },
+  {
+    id: "ENQ-2024-013",
+    timestamp: "2024-11-18 17:55",
+    confidence: "none",
+    confidencePct: null,
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "You will regret this",
+      body: "I know where your officers work. Someone will pay for this."
+    },
+    draft: null,
+    noDraft: {
+      type: "handoff",
+      trigger: "a threat against staff, treated as law enforcement",
+      reason: "This is a threat against staff. It is treated as a law enforcement matter. A human lead must handle it. No draft is written and nothing is sent to the sender."
+    },
+    suggestedPolicies: []
   }
 ];
 
+// Recommended paragraph for an abusive enquiry. It is NOT part of the draft. The officer decides whether to add it.
+// It makes no policy claim, so it needs no citation (like a greeting). Wording is for the learner to confirm.
+const respectfulServiceParagraph = "We are glad to help. Our officers work to serve every resident well, and we ask that all messages to us stay respectful. Thank you for understanding.";
+
+
 // Export for use in main script
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { syntheticEnquiries };
+  module.exports = { syntheticEnquiries, respectfulServiceParagraph };
 }
