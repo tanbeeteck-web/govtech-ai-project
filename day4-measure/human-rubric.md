@@ -241,10 +241,12 @@ Tell the learner when any of these is true:
 
 ### When to run *(Proposed)*
 
-- Once a month while the pilot runs.
+- **Once a month (Decided 2026-11-20):** a full run of all 24 cases while the pilot runs.
+- **Every week (Decided 2026-11-20):** a run of the 19 deal-breaker cases on the live agent, scored by one grader. The results go to the ServiceSG team. A deal-breaker No in a weekly run is reported to the project owner at once.
 - Straight after any change to `day3-build/CLAUDE.md`, a policy page, or the prototype's wording rules.
 - After any stop of the whole agent by the daily check, once the knowledge base lead has reviewed the page. *(Gap 15)*
 - Before any decision to widen the pilot.
+- **Sign-off (Decided 2026-11-20):** the project owner signs the pass or fail after each full run, and the business owner countersigns. See `eval-plan.md`.
 
 ### Cases to add when something new happens
 
