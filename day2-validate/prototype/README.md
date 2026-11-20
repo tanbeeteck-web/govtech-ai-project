@@ -12,11 +12,19 @@ Double-click `index.html`. It opens in your browser. `server.py` is optional and
 
 ## What it does today
 
-**14 made-up enquiries**, one tab each. Each tab shows the enquiry's topic underneath:
-- **6 have a draft.** Each claim has a citation with the policy page and its last-updated date. The page says "Draft only. An officer must review and send every reply."
-- **8 have no draft:** low confidence (two of them), four hand-offs for a trigger (a legal complaint, a request for an opinion on a policy and a minister, a threat against staff, and a request for another resident's information), an unreadable attachment, and a question no source covers. Each shows why.
+**17 made-up enquiries**, one tab each. Each tab shows the enquiry's topic underneath:
+- **8 have a draft (two of them are enquiries in another language).** Each claim has a citation with the policy page and its last-updated date. The page says "Draft only. An officer must review and send every reply."
+- **9 have no draft (one of them is in Tamil):** low confidence (two of them), four hand-offs for a trigger (a legal complaint, a request for an opinion on a policy and a minister, a threat against staff, and a request for another resident's information), an unreadable attachment, and a question no source covers. Each shows why.
 - **Every no-draft result is a hand-off (decided 2026-11-20).** Each no-draft screen says "Handed off to the human lead", that the human lead must take the case within 3 hours, and that officers, supervisors, the project owner and the business owner can see it. A hand-off for a trigger also names the trigger. The others show up to three closest policy pages. There is no "Escalate to senior officer" button any more.
 - **Another resident's information (ENQ-2024-014).** The agent refuses, shares nothing about other residents or their replies, does not say whether anyone else wrote in, and hands the enquiry off.
+
+**Enquiries in other languages (decided 2026-11-19 and 2026-11-20).** Three made-up enquiries.
+- **ENQ-2024-015 (Chinese).** The agent reads it, shows an English digest, and writes a complete draft in English only. Under the draft is a Chinese reference translation with the line "Unofficial machine translation. The English version is the official reply and prevails if there is any difference." in English and Chinese. The line does not say the translation was checked.
+- **ENQ-2024-016 (Tamil).** A complaint with a legal threat. It is a hand-off to the human lead, with an English digest, the trigger and the 3-hour limit. No draft, no translation.
+- **ENQ-2024-017 (Malay).** The translation has a figure that differs from the English (6 months, not 3). The tool withholds the translation, says why, and the English draft stands.
+- The officer edits the English only. In the edit screen the translation is shown again after each change, and withheld if a figure no longer matches.
+- The log holds the language name only ("Chinese. English version provided."). The resident's own words are never logged.
+- The translation here is made up and stored. This mock-up does not translate. It checks the figures only.
 
 **Abusive enquiry (decided 2026-11-20).** ENQ-2024-011 is rude but holds a valid question. It gets a draft, as for any resident, with an amber "Abusive enquiry" flag above it. The flag is not blue, so it does not mean "verify", and not red, so it does not mean "stop". Under the flag is a recommended paragraph about respectful service. It is not part of the draft. **Add to my reply** puts it in the edit box before the closing, and the officer can still change or remove it. The draft does not repeat the insult. The feedback log records "Abusive enquiry" once, and never the words used. The wording of the paragraph is for the learner to confirm.
 
@@ -76,7 +84,7 @@ On a Mac, from this folder:
 
 `/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc tests.js`
 
-It prints "155 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the abusive flag and the recommended paragraph, the three hand-offs and their 3-hour note, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
+It prints "195 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the abusive flag and the recommended paragraph, the three hand-offs and their 3-hour note, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
 
 ## Limits
 

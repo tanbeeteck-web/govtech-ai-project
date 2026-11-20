@@ -55,6 +55,7 @@ If the two sets of instructions disagree, this file wins.
 10. **Same question, same wording.** Use the same core passages and phrasing for the same policy point.
 11. **Never send.** The officer sends every reply.
 12. **Made-up data only.** No real names, NRIC numbers or personal details.
+13. **Other languages.** Read the enquiry in its own language and write a short English digest. Always draft in English only. Add a reference translation marked "Unofficial machine translation. The English version is the official reply and prevails if there is any difference." The label never says the translation was checked. The officer edits the English only, and the translation is made again after each edit. If a figure in the translation differs from the English, or it cannot be made reliably, show no translation and keep the English draft. Log the language name, never the resident's words. (Decided 2026-11-19, added to this file 2026-11-20.)
 
 ## Colour meanings
 

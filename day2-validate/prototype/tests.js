@@ -153,6 +153,44 @@ check('second failed lookup has no escalate button', _el('draft-actions').innerH
 setForcedFailure(false);
 Object.keys(lookupState).forEach(k => delete lookupState[k]);
 
+// ---- 5f. Enquiries in other languages (decided 2026-11-19 and 2026-11-20) ----
+function show(id) { const i = syntheticEnquiries.findIndex(e => e.id === id); currentEnquiryIndex = i; renderEnquiry(i); return syntheticEnquiries[i]; }
+// Chinese: readable, English draft, labelled reference translation (EV-06)
+const zh = show('ENQ-2024-015');
+const zhHtml = _el('draft-content').innerHTML;
+check('Chinese enquiry is read, not stopped as unreadable', zh.draft !== null && _el('draft-actions').innerHTML.indexOf('btn-approve') !== -1);
+check('Chinese enquiry shows the language and an English digest', zhHtml.indexOf('Language: Chinese') !== -1 && zhHtml.indexOf('English digest') !== -1);
+check('draft is in English only', zh.draft.paragraphs.every(p => !/[\u4e00-\u9fff]/.test(p.text)) && !/[\u4e00-\u9fff]/.test(draftToText(zh.draft)));
+check('English draft keeps the 3 months figure and cites ICA Passport Services', draftToText(zh.draft).indexOf('3 months') !== -1 && zh.draft.paragraphs.some(p => p.citation && p.citation.source.indexOf('ICA Passport Services') === 0));
+check('translation carries the unofficial machine translation label in English and Chinese', zhHtml.indexOf('Unofficial machine translation. The English version is the official reply and prevails if there is any difference.') !== -1 && zhHtml.indexOf('非官方机器翻译') !== -1);
+check('label does not say the translation was checked', zhHtml.toLowerCase().indexOf('verified') === -1 && zhHtml.toLowerCase().indexOf('checked by') === -1);
+check('translation keeps the figure 3', translationStatus(draftToText(zh.draft), zh.translation).ok);
+check('Chinese text is not part of the English edit text or edit size', draftToText(zh.draft).indexOf(zh.translation.text) === -1 && classifyEdit(draftToText(zh.draft), draftToText(zh.draft) + ' We look forward to serving you.').action === 'edited_minor');
+check('language is logged by name and the resident text is not', getLog().some(r => r.enquiry_id === 'ENQ-2024-015' && r.flag_type === 'language' && r.officer_note.indexOf('Chinese') === 0) && getLog().every(r => (r.officer_note || '').indexOf('更新护照') === -1 && (r.officer_note || '').indexOf('护照') === -1));
+const zhLogCount = getLog().filter(r => r.flag_type === 'language').length;
+show('ENQ-2024-015');
+eq('language is logged once per enquiry', getLog().filter(r => r.flag_type === 'language').length, zhLogCount);
+// Officer edits the English: the translation is made again, and withheld if a figure no longer matches (EV-14)
+check('edited English with the same figure keeps the translation', translationStatus(draftToText(zh.draft) + ' We look forward to serving you.', zh.translation).ok);
+check('edited English with a changed figure withholds the translation', !translationStatus(draftToText(zh.draft).replace('3 months', '6 months'), zh.translation).ok);
+enterEditMode(zh);
+check('edit screen says the officer edits the English only', _el('draft-content').innerHTML.indexOf('You edit the English only') !== -1);
+delete officerText['ENQ-2024-015'];
+// Malay: a figure in the translation differs, so no translation is shown (EV-15)
+const ms = show('ENQ-2024-017');
+const msHtml = _el('draft-content').innerHTML;
+check('Malay draft is in English and still has Approve', ms.draft !== null && _el('draft-actions').innerHTML.indexOf('btn-approve') !== -1);
+check('translation with a different figure is withheld', msHtml.indexOf('No translation shown') !== -1 && msHtml.indexOf('translation-withheld') !== -1 && msHtml.indexOf('Terjemahan') === -1);
+check('withheld translation says why and that the English stands', msHtml.indexOf('differs from the English') !== -1 && msHtml.indexOf('The English draft stands') !== -1);
+// Tamil: a complaint with a legal threat is a hand-off, with an English digest and no translation (EV-10)
+const ta = show('ENQ-2024-016');
+const taHtml = _el('draft-content').innerHTML;
+check('Tamil complaint is a hand-off with no draft and no translation', ta.draft === null && ta.noDraft.type === 'handoff' && taHtml.indexOf('translation-box') === -1);
+check('Tamil hand-off shows the language and the English digest', taHtml.indexOf('Language: Tamil') !== -1 && taHtml.indexOf('complains about the service') !== -1);
+check('Tamil hand-off names its trigger and the 3 hours', taHtml.indexOf('a complaint and legal action') !== -1 && taHtml.indexOf('within 3 hours') !== -1);
+check('Tamil text is not in the log', getLog().every(r => (r.officer_note || '').indexOf('புகார்') === -1));
+check('English enquiries have no language box', syntheticEnquiries.filter(e => !e.language).every(e => { show(e.id); return _el('draft-content').innerHTML.indexOf('language-box') === -1; }));
+
 // ---- 6. Edit size ----
 eq('no change is 0%', editPercent('a b c d', 'a b c d'), 0);
 eq('all changed is 100%', editPercent('a b c d', 'w x y z'), 100);
