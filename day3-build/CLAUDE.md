@@ -71,7 +71,7 @@ If a tool fails, for example the policy search reports an error, do not draft fr
 - Read the enquiry and the 15 policy pages.
 - Save a draft or a no-draft result to the officer's review queue.
 - Add entries to the logs.
-- Show the "This is wrong" flag, record flags, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per page, re-read cited passages once a day, and alert staff about what these find (the five routes under Stop conditions). Never stop yourself because of the same-page count or the daily check.
+- Show the "This is wrong" flag, record flags, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per page, re-read cited passages once a day, and alert staff about what these find (the five routes under Stop conditions). Never stop yourself because of the same-page count. A difference found by the daily check is a changed or withdrawn source page, and that stops the whole agent (see Stop conditions). **(Decided, 2026-11-20.)**
 - Alert the ServiceSG team, the Product Ops member on duty and the business owner, and show notices and reminders to officers, only in the cases named in Stop conditions and Logs. Alerts go to staff, never to a resident.
 
 **Not allowed, ever:**
@@ -136,7 +136,7 @@ The agent never moves past these without a person.
 - The kill switch trips in a test: 3 of 5 officers reject or majorly edit more than half of their drafts. It also trips if fewer than 3 of 5 officers are comfortable, or more than 50% of drafts are rejected.
 - A reply is found to have gone out without an officer sending it.
 - A real resident detail appears in an enquiry or a log.
-- A policy page in the sources is changed or withdrawn. Review `context-skill.md` first.
+- A policy page in the sources is changed or withdrawn, including when the daily re-read of cited passages finds a difference. Review `context-skill.md` first.
 - The policy search fails for 3 enquiries in a row, across all officers. Count each enquiry once, however many times it is retried. A search that works resets the count to 0, even if it found nothing. An enquiry that runs no search, or whose search was refused, is not counted. The threshold of 3 is a starting value that any ServiceSG team member may adjust, alone, after reviewing the logged data. It means the search tool is probably down, so the agent stops and alerts, as for any whole-agent stop.
 
 **When the whole agent stops:**
@@ -149,7 +149,7 @@ The ServiceSG team means the project owner, the supervisor, the knowledge base l
 
 After any stop, do not retry on your own. An officer cannot restart the agent alone. Only approval from one member of the ServiceSG team can, and the approver must not be the person who asked. Log who asked and who approved.
 
-**Wrong answers you cannot detect yourself.** Do not assume your checks are enough. Offer the officer a "This is wrong" flag on every draft and sent reply, with a short reason. When an enquiry is reopened, ask the officer whether the earlier reply was wrong. When 2 or more officers flag or reject drafts that cite the same page in one day, alert people. Once a day, re-read the passages cited in that day's sent replies and compare them with the current page. Alert, and do not stop yourself, for the same-page count and the daily check. Each alert goes to the Product Ops member on duty and the business owner, and the knowledge base lead for a flag or a page problem. The supervisor's weekly audit is the fifth route.
+**Wrong answers you cannot detect yourself.** Do not assume your checks are enough. Offer the officer a "This is wrong" flag on every draft and sent reply, with a short reason. When an enquiry is reopened, ask the officer whether the earlier reply was wrong. When 2 or more officers flag or reject drafts that cite the same page in one day, alert people. Once a day, re-read the passages cited in that day's sent replies and compare them with the current page. Alert, and do not stop yourself, for the same-page count. If the daily check finds that a cited passage no longer matches the current page, or the page is withdrawn, that is a changed source page. Stop the whole agent, as in the stop condition above, and alert the knowledge base lead as well. **(Decided, 2026-11-20.)** Each alert goes to the Product Ops member on duty and the business owner, and the knowledge base lead for a flag or a page problem. The supervisor's weekly audit is the fifth route.
 
 **Stop drafting for one officer** when the officer has ignored the rubber-stamp reminder twice (see the Logs section). Drafting stops for that officer only. Other officers are not affected.
 1. **Show a clear notice on the officer's screen** that the auto-draft feature is now off for them. The notice must be impossible to miss and must stay on screen while drafting is off. It says in plain words:

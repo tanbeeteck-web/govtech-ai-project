@@ -150,7 +150,7 @@ The agent only stops at conditions it can check. A wrong answer that passes its 
 | **1. One-click flag by an officer** | A "This is wrong" button on every draft and every sent reply, with a short reason. It goes to the knowledge base lead and the Product Ops member on duty at once. This is the main route. | Minutes |
 | **2. A reopened or repeat enquiry** | If a resident writes back about the same case, or the same enquiry is reopened, the officer sees a prompt: "Was the earlier reply wrong?" One click makes it a flag. | Hours to days |
 | **3. Several flags on the same policy page** | If 2 or more officers flag or reject drafts that cite the same page within a day, the agent alerts the knowledge base lead and the Product Ops member on duty. It does not stop itself. A person decides. | Same day |
-| **4. A check of sent replies against the page** | Each day, the agent re-reads the passages cited in the replies sent that day and compares them with the current page text. A difference is flagged to the knowledge base lead. It reads only. | Next day |
+| **4. A check of sent replies against the page** | Each day, the agent re-reads the passages cited in the replies sent that day and compares them with the current page text. A difference means a source page was changed or withdrawn, so the whole agent stops. The agent alerts the ServiceSG team, the Product Ops member on duty and the business owner, and flags the knowledge base lead. Until then it reads only. (Decided 2026-11-20.) | Next day |
 | **5. The weekly audit** | The supervisor's 5% check of sent replies, as today. Any wrong answer found counts towards the limit of 2 wrong citations in a week. | Up to a week |
 
 Notes:
