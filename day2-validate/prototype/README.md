@@ -74,7 +74,7 @@ On a Mac, from this folder:
 
 `/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc tests.js`
 
-It prints "113 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the abusive flag and the recommended paragraph, the three hand-offs and their 3-hour note, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
+It prints "117 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the abusive flag and the recommended paragraph, the three hand-offs and their 3-hour note, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
 
 ## Limits
 
