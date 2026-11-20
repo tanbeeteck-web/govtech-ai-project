@@ -50,7 +50,7 @@ If the two sets of instructions disagree, this file wins.
 5. **Plain language.** Short sentences. No policy speak or jargon. Write so a resident can act on it.
 6. **Never promise an outcome.** Do not say an appeal, waiver or application will be approved.
 7. **Below 90% confidence, no draft.** Show the three closest policy pages and send the enquiry to the officer.
-8. **Hand off, no draft,** when the enquiry involves law enforcement, legal action, a regulator, a complaint, or a vulnerable resident.
+8. **Hand off, no draft,** when the enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. (Widened 2026-11-20 on the learner's decision.)
 9. **Attachments.** If an image or file cannot be read, say so and give no draft that depends on it.
 10. **Same question, same wording.** Use the same core passages and phrasing for the same policy point.
 11. **Never send.** The officer sends every reply.
@@ -65,7 +65,7 @@ Each colour has one meaning. Do not reuse a colour for something else. A wrong c
 | **Blue** | **The officer must verify this before accepting.** It is a required check. It does **not** mean the AI is unsure. | Fee, deadline and eligibility sections (rule 3), the "Verification required" badge, the verification summary line, the confirmation checklist |
 | **Green** | **Nothing here needs verification.** The officer still checks the citations. It does not mean the draft is safe to send without review. | "High confidence · nothing to verify" badge, the "Nothing here needs verification" line, the success verdict in the comfort test |
 | **Red** | **Stop. Something failed or the AI cannot help.** Two uses: (1) the AI is unsure or cannot help, so there is no draft (low confidence, hand-off, unreadable attachment, needs clarification); (2) the comfort test failed (kill switch hit or fail verdict). | No-draft screens and badge, matching feedback log entries, the kill-switch verdict, the fail verdict in the comfort test |
-| **Amber** | **Look at this, but it is not an error.** Something needs attention or a decision. | Flag and escalate buttons, wrong-citation log entries, the attachment note, the "in between" verdict in the comfort test |
+| **Amber** | **Look at this, but it is not an error.** Something needs attention or a decision. | Flag and escalate buttons, the "Abusive enquiry" flag, wrong-citation log entries, the attachment note, the "in between" verdict in the comfort test |
 | **Grey** | **Neutral information.** | "Draft only" note, source last-updated date, the "All data is made up" badge in the page header |
 
 Rules for colours:

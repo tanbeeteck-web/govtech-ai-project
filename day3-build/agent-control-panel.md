@@ -126,7 +126,7 @@ Give no draft, give the reason, and show up to three closest pages. Say so when 
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
 - The language cannot be worked out, or the enquiry cannot be understood well enough to draft. Show the English digest if there is one. A translation that cannot be made reliably, or that differs from the English in a figure, date or claim, is left out and the English draft stands. **(Decided, 2026-11-19.)**
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION.
-- The enquiry involves law enforcement, legal action, a regulator, a complaint or a vulnerable resident. Hand off to a human lead.
+- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. Hand off to a human lead.
 - An attachment cannot be read and the reply depends on it.
 - The policy search fails (the tool reports it could not search). Say nothing was sent, and let the officer retry. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
 - The enquiry has no readable words: empty, only spaces, punctuation or symbols, only digits, or gibberish with no real word in any language. Do not search. Write NEEDS CLARIFICATION and log "no search run".
@@ -170,7 +170,7 @@ These are never given to the agent, however well it performs.
 - **Sending a reply.** The officer sends every reply.
 - **Closing a case or marking it resolved.**
 - **Confirming a fee, deadline, date or eligibility claim.** The tick is the officer's.
-- **Complaints, legal action, regulators, law enforcement and vulnerable residents.** A human lead takes them.
+- **Complaints, legal action, regulators, law enforcement, vulnerable residents, threats against staff, and requests for an opinion on a policy or a minister.** A human lead takes them. An abusive enquiry with a valid question still gets a draft, flagged amber "Abusive enquiry".
 - **Judgment calls with two or more topics.** An officer decides what to say.
 - **Promising an outcome,** such as an approved appeal, waiver or application.
 - **Deciding what goes into the policy pages.** The knowledge base lead owns them.
