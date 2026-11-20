@@ -12,9 +12,11 @@ Double-click `index.html`. It opens in your browser. `server.py` is optional and
 
 ## What it does today
 
-**13 made-up enquiries**, one tab each. Each tab shows the enquiry's topic underneath:
+**14 made-up enquiries**, one tab each. Each tab shows the enquiry's topic underneath:
 - **6 have a draft.** Each claim has a citation with the policy page and its last-updated date. The page says "Draft only. An officer must review and send every reply."
-- **7 have no draft:** low confidence (two of them), three hand-offs (a legal complaint, a request for an opinion on a policy and a minister, and a threat against staff), an unreadable attachment, and a question no source covers. Each shows why. A hand-off also names its trigger and says the human lead must take the case within 3 hours. The others show up to three closest policy pages.
+- **8 have no draft:** low confidence (two of them), four hand-offs for a trigger (a legal complaint, a request for an opinion on a policy and a minister, a threat against staff, and a request for another resident's information), an unreadable attachment, and a question no source covers. Each shows why.
+- **Every no-draft result is a hand-off (decided 2026-11-20).** Each no-draft screen says "Handed off to the human lead", that the human lead must take the case within 3 hours, and that officers, supervisors, the project owner and the business owner can see it. A hand-off for a trigger also names the trigger. The others show up to three closest policy pages. There is no "Escalate to senior officer" button any more.
+- **Another resident's information (ENQ-2024-014).** The agent refuses, shares nothing about other residents or their replies, does not say whether anyone else wrote in, and hands the enquiry off.
 
 **Abusive enquiry (decided 2026-11-20).** ENQ-2024-011 is rude but holds a valid question. It gets a draft, as for any resident, with an amber "Abusive enquiry" flag above it. The flag is not blue, so it does not mean "verify", and not red, so it does not mean "stop". Under the flag is a recommended paragraph about respectful service. It is not part of the draft. **Add to my reply** puts it in the edit box before the closing, and the officer can still change or remove it. The draft does not repeat the insult. The feedback log records "Abusive enquiry" once, and never the words used. The wording of the paragraph is for the learner to confirm.
 
@@ -23,7 +25,7 @@ Double-click `index.html`. It opens in your browser. `server.py` is optional and
 **Topic filter:** a dropdown above the tabs filters the inbox by policy topic.
 - There is a fixed list of 6 made-up topics: Passports and ID cards, Concessions and transport, Community centres, Parking, Housing (HDB), and Appeals and overseas.
 - Each enquiry has one topic only, shown as a grey "Topic:" chip next to the time.
-- An enquiry with no topic goes under **Other**. Today that is ENQ-2024-009 (the unreadable attachment) and ENQ-2024-013 (the threat).
+- An enquiry with no topic goes under **Other**. Today that is ENQ-2024-009 (the unreadable attachment), ENQ-2024-013 (the threat) and ENQ-2024-014 (the request about other residents).
 - Each option shows its count, for example "Parking (2)". A line says "Showing 2 of 10 enquiries".
 - A topic with 0 enquiries shows a plain message and no buttons. Picking All brings the inbox back.
 - Picking a topic opens its first enquiry, unless the one you are on is still in the list.
@@ -31,7 +33,7 @@ Double-click `index.html`. It opens in your browser. `server.py` is optional and
 **Policy lookup failure:** the prototype can simulate a failed policy lookup.
 - A checkbox under the header, marked "Test control (made up)", makes the lookup return nothing for every enquiry about fees. Today that is ENQ-2024-001, 003, 004 and 011.
 - When the lookup fails, no draft is shown, because every draft must cite a policy page. The screen says so, says nothing was sent, and offers **Retry lookup**.
-- After a second failure it says "Still no result after 2 tries" and also offers **Escalate to senior officer**.
+- After a second failure it says "Still no result after 2 tries" and that the enquiry has been handed off to the human lead (decided 2026-11-20). It no longer offers a senior-officer button.
 - Text the officer typed is kept through retries, switching enquiries and the failure starting mid-edit. Only the **Discard my edit** button removes it.
 - Turning the checkbox off does not fix a failed enquiry by itself. The officer presses Retry lookup.
 - Each failed attempt goes in the feedback log as "Lookup failed".
@@ -74,7 +76,7 @@ On a Mac, from this folder:
 
 `/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc tests.js`
 
-It prints "117 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the abusive flag and the recommended paragraph, the three hand-offs and their 3-hour note, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
+It prints "155 passed, 0 failed" when all is well. The checks run on a stand-in page, not a real browser. They cover the escaping of text, every enquiry screen, the abusive flag and the recommended paragraph, the three hand-offs and their 3-hour note, the forced lookup failure, edit size and the comfort test verdicts. They do not check how the page looks.
 
 ## Limits
 

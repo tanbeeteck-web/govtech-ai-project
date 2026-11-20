@@ -114,7 +114,7 @@ function renderLookupFailed(enquiry, st) {
 
   let hint;
   if (retrying) hint = 'Please wait a moment.';
-  else if (st.attempts >= 2) hint = `Still no result after ${st.attempts} tries. You can keep retrying, or escalate to a senior officer.`;
+  else if (st.attempts >= 2) hint = `Still no result after ${st.attempts} tries. The enquiry has been handed off to the human lead, who takes it within 3 hours. Officers, supervisors, the project owner and the business owner can see it.`;
   else hint = 'Press Retry lookup to try again.';
 
   let html = `
@@ -145,18 +145,15 @@ function renderLookupFailed(enquiry, st) {
 
   document.getElementById('draft-actions').innerHTML = `
     <button class="btn btn-primary" id="btn-retry" ${retrying ? 'disabled' : ''}>${retrying ? 'Retrying...' : 'Retry lookup'}</button>
-    ${st.attempts >= 2 && !retrying ? '<button class="btn btn-warning" id="btn-lookup-escalate">Escalate to senior officer</button>' : ''}
   `;
   document.getElementById('btn-retry').addEventListener('click', () => retryLookup(enquiry));
-  const esc = document.getElementById('btn-lookup-escalate');
-  if (esc) esc.addEventListener('click', () => showToast('Escalated to senior officer queue. (made up)'));
 }
 
 // Short labels for each no-draft case (from context-skill.md rules 2, 7, 8, 9)
 const NO_DRAFT_INFO = {
   low_confidence:      { tab: 'Low conf',      badge: 'Low confidence',      title: 'No draft generated',        text: 'Confidence is below 90%. Here are the closest policy pages to help you draft a reply:' },
   needs_clarification: { tab: 'Needs clarif.', badge: 'NEEDS CLARIFICATION', title: 'NEEDS CLARIFICATION',        text: 'The answer is not in the policy pages the AI is allowed to use, so it did not guess.' },
-  handoff:             { tab: 'Hand-off',      badge: 'Hand off to human lead', title: 'Hand off to a human lead', text: 'Complaints, legal action, regulators, law enforcement, vulnerable residents, threats against staff and requests for an opinion on a policy or a minister are not drafted by the AI.' },
+  handoff:             { tab: 'Hand-off',      badge: 'Hand off to human lead', title: 'Hand off to a human lead', text: 'Complaints, legal action, regulators, law enforcement, vulnerable residents, threats against staff, requests for an opinion on a policy or a minister, and requests for another resident\'s information are not drafted by the AI.' },
   attachment:          { tab: 'Attachment',    badge: 'Attachment not readable', title: 'Attachment could not be read', text: 'The AI will not guess what the attachment says.' }
 };
 // Last-updated date for a cited policy page, from policySources in data.js
@@ -312,7 +309,8 @@ function renderNoDraft(enquiry) {
         <strong>${info.title}</strong>
         <p>${escapeHtml(enquiry.noDraft.reason)}</p>
         <p>${info.text}</p>
-        ${enquiry.noDraft.type === 'handoff' ? `${enquiry.noDraft.trigger ? `<p>Trigger: ${escapeHtml(enquiry.noDraft.trigger)}.</p>` : ''}<p>The human lead must take this case within 3 hours of the hand-off.</p>` : ''}
+        ${enquiry.noDraft.type === 'handoff' && enquiry.noDraft.trigger ? `<p>Trigger: ${escapeHtml(enquiry.noDraft.trigger)}.</p>` : ''}
+        <p class="handoff-note"><strong>Handed off to the human lead.</strong> The human lead must take this case within 3 hours of the hand-off. Officers, supervisors, the project owner and the business owner can see it.</p>
       </div>
     </div>
   `;
@@ -333,16 +331,11 @@ function renderNoDraft(enquiry) {
 
   document.getElementById('draft-content').innerHTML = html;
 
-  const handoff = enquiry.noDraft.type === 'handoff';
   document.getElementById('draft-actions').innerHTML = `
-    <button class="btn btn-primary" id="btn-start-scratch">${handoff ? 'Open case file' : 'Start from scratch'}</button>
-    <button class="btn btn-warning" id="btn-escalate">${handoff ? 'Hand off to human lead' : 'Escalate to senior officer'}</button>
+    <button class="btn btn-primary" id="btn-start-scratch">Open case file</button>
   `;
   document.getElementById('btn-start-scratch').addEventListener('click', () => {
-    showToast('Opening blank reply editor. (not implemented in prototype)');
-  });
-  document.getElementById('btn-escalate').addEventListener('click', () => {
-    showToast(handoff ? 'Handed off to a human lead. (made up)' : 'Escalated to senior officer queue. (made up)');
+    showToast('Opening the case file. (not implemented in prototype)');
   });
 }
 

@@ -34,6 +34,7 @@ const policyTopics = [
 
 // Enquiries with draft: null show a no-draft screen. noDraft.type is one of:
 // low_confidence, needs_clarification, handoff, attachment (see context-skill.md rules 2, 7, 8, 9).
+// Every no-draft result is a hand-off to the human lead (decided 2026-11-20).
 const syntheticEnquiries = [
   {
     id: "ENQ-2024-001",
@@ -430,6 +431,24 @@ const syntheticEnquiries = [
       type: "handoff",
       trigger: "a threat against staff, treated as law enforcement",
       reason: "This is a threat against staff. It is treated as a law enforcement matter. A human lead must handle it. No draft is written and nothing is sent to the sender."
+    },
+    suggestedPolicies: []
+  },
+  {
+    id: "ENQ-2024-014",
+    timestamp: "2024-11-18 18:10",
+    confidence: "none",
+    confidencePct: null,
+    enquiry: {
+      from: "Resident (made up)",
+      subject: "Did my neighbours lose a card too?",
+      body: "Did anyone else at my block lose an identity card this week? What did ICA tell them?"
+    },
+    draft: null,
+    noDraft: {
+      type: "handoff",
+      trigger: "a request for another resident's information",
+      reason: "The resident asks about other residents and what they were told. The AI cannot share anything about other residents or their replies, so it refuses. A human lead must handle it. No draft is written."
     },
     suggestedPolicies: []
   }
