@@ -56,6 +56,7 @@ One row for each decision. **Harness part** is the part of the agent this decisi
 - **Confirming a fee, deadline, date or eligibility claim.** The officer, every time.
 - **Sending a reply and closing a case.** Always the officer. The agent never does either.
 - **The weekly audit.** The supervisor.
+- **Signing the eval pass bar (Decided 2026-11-20).** The project owner signs after each full eval run. The business owner countersigns. The supervisor and the knowledge base lead grade, and are not the producer of the answers. See `day4-measure/eval-plan.md`.
 
 ## Incident walkthrough: a wrong answer at 08:00 on Monday
 
@@ -127,7 +128,7 @@ For the learner. I have not chosen for you.
 3. **Who runs an investigation after an incident,** such as a reply sent without an officer or a real resident detail in a log? The agent stops and alerts. Nothing says who finds out why.
 4. **What happens to the logs and the policy pages when the agent is retired?** The project owner decides to retire it. The table does not say what is kept, for how long, or who can read it.
 5. **Is the engineering team its own role,** or part of the ServiceSG team? It is named in `ai-prd.md` and listed here as its own role.
-6. **Can one person hold the decision and the review?** The project owner is also in the ServiceSG team that reviews restarts and the weekly data. Do you want a second person to check the project owner's own decisions?
+6. ~~Can one person hold the decision and the review?~~ **Settled on 2026-11-20:** the business owner is the second checker of the project owner's sign-off on the eval pass bar. The project owner signs the pass or fail after each run, and the business owner countersigns. If they disagree, the stricter call stands and the business owner says why. See `day4-measure/eval-plan.md`.
 7. **Go-live gates.** The six test questions, the real run with 5 officers and the four missing safeguards come from `handoff-note.md` and `one-pager.md`. Do you want any of them changed, or any added?
 
 **Added by the incident walkthrough** (all settled on 2026-11-19 except the last item)
