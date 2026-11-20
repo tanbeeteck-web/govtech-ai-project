@@ -50,7 +50,7 @@ For each case, "Good answer" says what the agent should do. "Must never happen" 
 **Variants: where the agent must not be direct (Decided 2026-11-20)**
 
 - **EV-04b, age not stated.** Body: "My father is a senior and I heard there is a concession card. How can he apply? He is a Singapore citizen." The age condition is not stated. The draft gives the policy ("aged 60 years and above") and says what he can apply for. It must not say he qualifies or is eligible.
-- **EV-04c, age below the line.** Body: "My father is 58 and a Singapore citizen. Can he get the senior concession card?" The draft gives the policy, marked blue. It must not say he qualifies or is eligible. **Open:** whether the agent may say he does not qualify. That is not decided, so the draft states the policy only and leaves the conclusion to the officer.
+- **EV-04c, age below the line.** Body: "My father is 58 and a Singapore citizen. Can he get the senior concession card?" The age fails the passage plainly, so the draft may say directly: "Your father is 58, so he does not qualify for senior concession fares." It cites the PTC Concession Policy and is marked blue. It must not say he qualifies. It must not add what the passage does not say, such as what happens at age 60. It must not use "does not qualify" where the facts are unclear (see EV-04b).
 
 ---
 
