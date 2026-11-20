@@ -2,7 +2,7 @@
 
 **Scenario:** A · ServiceSG enquiry response
 
-**Status: Proposed (2026-11-20), with two decisions made.** On 2026-11-20 the learner decided: (1) a full run once a month and a weekly run of the deal-breaker cases, and (2) the business owner is the second checker of the project owner's sign-off. Both are marked Decided below. Everything else is Proposed.
+**Status: Decided (2026-11-20).** The learner decided every part of this file on 2026-11-20. Two decisions were made first: a full run once a month with a weekly run of the deal-breaker cases, and the business owner as the second checker of the project owner's sign-off. The rest was accepted as written.
 
 All enquiries, residents, policy pages, fees, dates and numbers are made up. Job roles only, no names of people.
 
@@ -14,14 +14,14 @@ This file says who owns the eval, when it runs, how we will know the agent is wo
 
 | Job | Role | Why this role | Mark |
 |---|---|---|---|
-| **Signs the pass bar** (the thresholds in `human-rubric.md`, and the call "pass" or "fail" after each run) | **Project owner** | The operating model already gives the project owner the success, fail and kill thresholds, and the go-live decision. The ServiceSG team reviews. **The business owner checks and countersigns every sign-off (Decided 2026-11-20).** | Proposed, countersign Decided |
-| **Writes the test cases** (`eval-cases.md`) | **Knowledge base lead** writes the policy facts and the expected answers. **Supervisor** checks that each enquiry sounds like a real one. | The knowledge base lead owns the 15 policy pages. The supervisor knows what officers receive. | Proposed |
-| **Refreshes the test cases** | **Knowledge base lead**, on every policy change and every wrong-citation flag. **Supervisor**, when a real enquiry exposes a failure no case covers (add EV-25 and on). | Policy changes and flags already go to the knowledge base lead. | Proposed |
-| **Runs the eval** (gets the answers and records the version tested) | **Engineering team** | They build and run the agent. | Proposed |
-| **Grades the answers** | Two graders, working alone: the **knowledge base lead** (knows the pages) and an **officer**. Neither is the person who produced the answers. The **supervisor** breaks a tie, or the knowledge base lead if the supervisor is one of the two graders. | Matches "Who grades" in the rubric. The first run broke this rule, because the same hand wrote and scored the answers. | Proposed |
-| **Reviews the weekly sample** | **Supervisor**: the 5% of sent replies, checked against the cited passages. Each wrong one goes to the knowledge base lead and counts towards the limit of 2 wrong citations a week. | Already the supervisor's job in the operating model. | Proposed |
-| **Reads the weekly numbers** | **ServiceSG team** (project owner, supervisor, knowledge base lead, Product Ops specialist), at least once a week | Already their job in the operating model. | Proposed |
-| **Acts on a stop** | **Product Ops member on duty**, within 3 hours. One other ServiceSG team member approves a restart. | The operating model's Incident row. | Proposed |
+| **Signs the pass bar** (the thresholds in `human-rubric.md`, and the call "pass" or "fail" after each run) | **Project owner** | The operating model already gives the project owner the success, fail and kill thresholds, and the go-live decision. The ServiceSG team reviews. **The business owner checks and countersigns every sign-off (Decided 2026-11-20).** | Decided |
+| **Writes the test cases** (`eval-cases.md`) | **Knowledge base lead** writes the policy facts and the expected answers. **Supervisor** checks that each enquiry sounds like a real one. | The knowledge base lead owns the 15 policy pages. The supervisor knows what officers receive. | Decided |
+| **Refreshes the test cases** | **Knowledge base lead**, on every policy change and every wrong-citation flag. **Supervisor**, when a real enquiry exposes a failure no case covers (add EV-25 and on). | Policy changes and flags already go to the knowledge base lead. | Decided |
+| **Runs the eval** (gets the answers and records the version tested) | **Engineering team** | They build and run the agent. | Decided |
+| **Grades the answers** | Two graders, working alone: the **knowledge base lead** (knows the pages) and an **officer**. Neither is the person who produced the answers. The **supervisor** breaks a tie, or the knowledge base lead if the supervisor is one of the two graders. | Matches "Who grades" in the rubric. The first run broke this rule, because the same hand wrote and scored the answers. | Decided |
+| **Reviews the weekly sample** | **Supervisor**: the 5% of sent replies, checked against the cited passages. Each wrong one goes to the knowledge base lead and counts towards the limit of 2 wrong citations a week. | Already the supervisor's job in the operating model. | Decided |
+| **Reads the weekly numbers** | **ServiceSG team** (project owner, supervisor, knowledge base lead, Product Ops specialist), at least once a week | Already their job in the operating model. | Decided |
+| **Acts on a stop** | **Product Ops member on duty**, within 3 hours. One other ServiceSG team member approves a restart. | The operating model's Incident row. | Decided |
 
 **A check on one person holding two jobs.** The project owner both signs the pass bar and is in the team that reads the numbers. That is the same question as item 6 in the operating model. **Decided 2026-11-20:** the business owner is the second checker. The project owner's pass or fail call after each run is not final until the business owner countersigns it. If the two disagree, the stricter call stands and the business owner says why in the results file. The business owner is also told of every fail and every stop, as already decided. Item 6 in the operating model can be closed on this basis.
 
@@ -31,11 +31,11 @@ Two kinds of run. A **full run** is all 24 cases, every variant, two graders. A 
 
 | When | What runs | Who | Mark |
 |---|---|---|---|
-| **Before go-live** | One full run on the real agent, not a hand run. Calibrate the two graders first. All six test questions in `one-pager.md` pass. The pass bar is met with no deal-breaker failed. EV-21 is run on the real agent, with 10 similar enquiries. Go-live also needs the other gates in `one-pager.md`. | Engineering team runs. The graders grade. The project owner signs. | Proposed |
-| **Before every change** | One full run, and the result is compared with the last run. A change means: a new model or version, any edit to `day3-build/CLAUDE.md` or `day2-validate/context-skill.md`, a new or changed tool, a new colour or threshold. **No change goes live while a deal-breaker case fails.** | Engineering team runs. The project owner signs. | Proposed |
-| **Every week (Decided 2026-11-20)** | (1) The supervisor's 5% audit of sent replies. (2) A short run of the 19 deal-breaker cases on the live agent, scored by one grader. (3) The ServiceSG team reads the numbers in "How I'll know it's working". | Supervisor, engineering team, one grader, the ServiceSG team | Proposed |
-| **When policy changes** | The daily check stops the agent when a cited page changes. After the knowledge base lead has reviewed the change, the cases for that page are refreshed and run, then a restart is approved. The cases for the other 14 pages run too if the change affects shared wording. | Knowledge base lead refreshes. Engineering team runs. | Proposed |
-| **Every month (Decided 2026-11-20)** | A full run, and and also when two graders disagree on more than 1 in 5 answers (calibrate again first). | Same as a full run | Proposed |
+| **Before go-live** | One full run on the real agent, not a hand run. Calibrate the two graders first. All six test questions in `one-pager.md` pass. The pass bar is met with no deal-breaker failed. EV-21 is run on the real agent, with 10 similar enquiries. Go-live also needs the other gates in `one-pager.md`. | Engineering team runs. The graders grade. The project owner signs. | Decided |
+| **Before every change** | One full run, and the result is compared with the last run. A change means: a new model or version, any edit to `day3-build/CLAUDE.md` or `day2-validate/context-skill.md`, a new or changed tool, a new colour or threshold. **No change goes live while a deal-breaker case fails.** | Engineering team runs. The project owner signs. | Decided |
+| **Every week (Decided 2026-11-20)** | (1) The supervisor's 5% audit of sent replies. (2) A short run of the 19 deal-breaker cases on the live agent, scored by one grader. (3) The ServiceSG team reads the numbers in "How I'll know it's working". | Supervisor, engineering team, one grader, the ServiceSG team | Decided |
+| **When policy changes** | The daily check stops the agent when a cited page changes. After the knowledge base lead has reviewed the change, the cases for that page are refreshed and run, then a restart is approved. The cases for the other 14 pages run too if the change affects shared wording. | Knowledge base lead refreshes. Engineering team runs. | Decided |
+| **Every month (Decided 2026-11-20)** | A full run, and also when two graders disagree on more than 1 in 5 answers (calibrate again first). | Same as a full run | Decided |
 
 **Rubric.** `human-rubric.md` ("When to run") now says the same: a full run once a month and a weekly run of the deal-breaker cases. Decided 2026-11-20.
 
@@ -55,11 +55,11 @@ Two kinds of run. A **full run** is all 24 cases, every variant, two graders. A 
 - **Target** (from `one-pager.md`): 8 in 10 drafts sent with no edit or a light edit in a two-week pilot, and at least 4 of 5 officers comfortable. Below 7 in 10 is a fail. In between means run more before deciding.
 - **Target for the goal:** SLA from 70% to 90% within one working day. This is the goal's own target. It is measured after the pilot, not in it.
 - **Quality target** (from the rubric): no deal-breaker failed. Q4 and Q5 average 4 or more. At least 80% of drafts score 4 or more on Q4.
-- **Review date** *(Proposed)*: **Day 14** after go-live is the pilot read-out, and **Day 30** after go-live is the decision to continue, pivot or stop. Both are set as calendar dates by the project owner when go-live is approved. Before that, no date is fixed.
+- **Review date** *(Decided 2026-11-20)*: **Day 14** after go-live is the pilot read-out, and **Day 30** after go-live is the decision to continue, pivot or stop. Both are set as calendar dates by the project owner when go-live is approved. Before that, no date is fixed.
 
-**A usage metric** *(Proposed)*: **the share of drafts an officer sent after no edit or a minor edit** (a minor edit is 50% of the text or less changed). It is both the success measure and the usage measure in `one-pager.md`. Read it with its companion: the share of enquiries where a draft was offered and an officer opened it. If officers do not open drafts, the first number means nothing.
+**A usage metric** *(Decided 2026-11-20)*: **the share of drafts an officer sent after no edit or a minor edit** (a minor edit is 50% of the text or less changed). It is both the success measure and the usage measure in `one-pager.md`. Read it with its companion: the share of enquiries where a draft was offered and an officer opened it. If officers do not open drafts, the first number means nothing.
 
-**The pattern to watch first: rubber-stamping.** *(Proposed)* This is the risk the sponsor named in `build-log.md`. Watch for a high share of drafts sent unchanged **with falling time between opening and approving**, especially on drafts that carry blue items. The agent counts flagged drafts accepted in a row (the streak starts at 5) and reminds the officer. The ServiceSG team looks at the streak counts weekly. A rising unchanged share is good news only when the supervisor's 5% audit finds no more wrong citations. If the unchanged share rises and the audit finds wrong ones, rubber-stamping has started. Watch it before anything else, because it is how a wrong draft reaches a resident.
+**The pattern to watch first: rubber-stamping.** *(Decided 2026-11-20)* This is the risk the sponsor named in `build-log.md`. Watch for a high share of drafts sent unchanged **with falling time between opening and approving**, especially on drafts that carry blue items. The agent counts flagged drafts accepted in a row (the streak starts at 5) and reminds the officer. The ServiceSG team looks at the streak counts weekly. A rising unchanged share is good news only when the supervisor's 5% audit finds no more wrong citations. If the unchanged share rises and the audit finds wrong ones, rubber-stamping has started. Watch it before anything else, because it is how a wrong draft reaches a resident.
 
 **The stop line** (from `one-pager.md` and the operating model). Stop if any is true:
 - More than 2 wrong citations reach residents in a week. The agent disables itself until reviewed.
@@ -73,7 +73,7 @@ Two kinds of run. A **full run** is all 24 cases, every variant, two graders. A 
 
 ## First 30 days
 
-The agent is not built, so day 1 here means the day a real agent is available to test. Counted from that day. All steps Proposed.
+The agent is not built, so day 1 here means the day a real agent is available to test. Counted from that day. All steps Decided (2026-11-20).
 
 | Days | What happens | Who |
 |---|---|---|
