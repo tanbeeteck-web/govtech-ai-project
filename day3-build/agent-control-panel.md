@@ -19,7 +19,7 @@ All enquiries, residents, policy pages, fees, dates and numbers are made up. Thi
 | 1. Read | Reads the enquiry and checks it for hand-off signs | Hand-off, or continue |
 | 2. Search | Finds the matching passages among the 15 listed policy pages | No match, or continue |
 | 3. Draft | Writes a short plain reply with a citation on every claim. Marks fees, deadlines, dates and eligibility | Draft, or no draft |
-| 4. Save | Puts the draft or no-draft result in the officer's review queue | Waits for a person |
+| 4. Save | Puts the draft in the officer's review queue, or hands a no-draft result to the human lead (Decided 2026-11-20) | Waits for a person |
 | 5. Log | Writes what it did | Done |
 
 **What it can touch:** the enquiry, the 15 policy pages (read only), the review queue and the logs. It cannot send, close a case or change a page.
@@ -55,7 +55,7 @@ The agent acts without asking. These actions are safe because they can be undone
 
 - Read the enquiry and the 15 listed policy pages.
 - Search the policy pages and read a passage.
-- Give **no draft** when a stop condition is met, and show up to three closest pages. If none is a real match, say so. A no-draft result is always the safer direction.
+- Give **no draft** when a stop condition is met, and show up to three closest pages. If none is a real match, say so. A no-draft result is always the safer direction. Every no-draft result is a hand-off to the human lead (Decided 2026-11-20).
 - Refuse a request to send, close a case or skip a confirmation, and show the draft instead.
 - Mark a fee, deadline, date or eligibility claim as high risk.
 - Write log entries. The logs are append only.
@@ -71,7 +71,7 @@ The agent acts without asking. These actions are safe because they can be undone
 The agent prepares something and stops. Nothing happens until a person acts.
 
 - **A draft reply.** Saved to the review queue. It waits for an officer to verify each blue item, edit if needed, and send.
-- **A no-draft result.** Saved with the reason and the closest pages. It waits for the officer to write the reply or escalate.
+- **A no-draft result.** Handed off to the human lead, with the reason and the closest pages. The human lead takes it within 3 hours. Officers, supervisors, the project owner and the business owner can see it. (Decided 2026-11-20.)
 - **A hand-off.** Saved for a human lead. It waits for them to take the case, which they must do within 3 hours (Decided 2026-11-20).
 - **A flag on a wrong citation** (raised by an officer). It waits for the knowledge base lead.
 - **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough, and it cannot be the member who asked. It never restarts itself.
@@ -126,9 +126,9 @@ Give no draft, give the reason, and show up to three closest pages. Say so when 
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
 - The language cannot be worked out, or the enquiry cannot be understood well enough to draft. Show the English digest if there is one. A translation that cannot be made reliably, or that differs from the English in a figure, date or claim, is left out and the English draft stands. **(Decided, 2026-11-19.)**
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION.
-- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. Hand off to a human lead.
+- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), a request for the agent's opinion on a policy or a minister, or a request for another resident's information (refused, then handed off). Hand off to a human lead.
 - An attachment cannot be read and the reply depends on it.
-- The policy search fails (the tool reports it could not search). Say nothing was sent, and let the officer retry. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
+- The policy search fails (the tool reports it could not search). Say nothing was sent, and let the officer retry. After 2 failed tries on one enquiry, hand it off (type: lookup failed).
 - The enquiry has no readable words: empty, only spaces, punctuation or symbols, only digits, or gibberish with no real word in any language. Do not search. Write NEEDS CLARIFICATION and log "no search run".
 - The enquiry names a policy page that is not one of the 15. Do not confirm it. Write NEEDS CLARIFICATION, and log the page name. The officer may ask the knowledge base lead. The agent does not alert anyone.
 - A fee, deadline, date or eligibility statement cannot be matched word for word to its passage.
@@ -216,3 +216,9 @@ These are never given to the agent, however well it performs.
 - **What happens if the team does not review weekly.** The rule says at least once a week. Nothing says what follows if it is missed.
 - **Who checks that an approver is not the requester,** and how, in a real system.
 - **Not built.** The alert, the stop notice, the restart request, the approval, the streak count, the reminder, the screen notice and the per-officer stop do not exist in the prototype or in any tool yet.
+
+## Hand-offs and who sees them (Decided 2026-11-20)
+
+- Every no-draft result is a hand-off to the human lead, who takes it within 3 hours.
+- Hand-offs are seen by officers, supervisors, the project owner and the business owner, plus the human lead who takes it. No other role sees them.
+- A request for another resident's information is refused and handed off. The agent shares nothing about other residents or their replies.

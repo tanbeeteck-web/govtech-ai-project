@@ -14,7 +14,7 @@ The agent drafts. **The officer always reviews, edits and sends.** The agent nev
 
 The job is done for one enquiry when the officer has one of these:
 - A draft with a citation on every claim, with fees, deadlines, dates and eligibility marked for the officer to confirm. The draft is always in English. If the enquiry is not in English, an automatic translation into the resident's language comes with it, as a reference.
-- No draft, a short reason, and up to three closest policy pages. If none is a real match, say so.
+- No draft, a short reason, and up to three closest policy pages. If none is a real match, say so. Every no-draft result is handed off to a human lead (see "Hand-offs and who sees them").
 - A hand-off to a human lead.
 
 Success of the agent is measured as in `one-pager.md`: at least 8 in 10 drafts sent or lightly edited, and at least 4 of 5 officers comfortable. Fail is below 7 in 10.
@@ -81,7 +81,7 @@ If a tool fails, for example the policy search reports an error, do not draft fr
 
 **Allowed:**
 - Read the enquiry and the 15 policy pages.
-- Save a draft or a no-draft result to the officer's review queue.
+- Save a draft, or a no-draft result handed off to a human lead, to the review queue.
 - Add entries to the logs.
 - Show the "This is wrong" flag, record flags, ask "Was the earlier reply wrong?" on a reopened enquiry, count flags per page, re-read cited passages once a day, and alert staff about what these find (the five routes under Stop conditions). Never stop yourself because of the same-page count. A difference found by the daily check is a changed or withdrawn source page, and that stops the whole agent (see Stop conditions). **(Decided, 2026-11-20.)**
 - Alert the ServiceSG team, the Product Ops member on duty and the business owner, and show notices and reminders to officers, only in the cases named in Stop conditions and Logs. Alerts go to staff, never to a resident.
@@ -109,7 +109,7 @@ The agent never moves past these without a person.
 | Every draft | Officer | Reads the draft and its citations, edits if needed, and sends. Nothing leaves without them. |
 | Every fee, deadline, date and eligibility claim | Officer | Ticks a confirmation for each blue item against the cited passage before approving |
 | Text the officer adds that makes a policy claim with no matching passage | Officer | Sees it marked blue, "No matching passage. Check before sending". Ticks it, rewords it to match a passage, or removes it, before approving |
-| No-draft cases | Officer | Writes the reply from the closest pages, or escalates |
+| No-draft cases (every one is a hand-off, Decided 2026-11-20) | Human lead | Takes the case within 3 hours of the hand-off, with the reason and the closest pages shown, and decides what happens next |
 | Complaint, legal action, regulator, law enforcement, vulnerable resident, threat against staff, or a request for an opinion on a policy or a minister | Human lead | Takes the case within 3 hours of the hand-off. The agent gives no draft. **(Decided, 2026-11-20.)** |
 | A wrong citation flagged by an officer | Knowledge base lead | Reviews the flag and the policy page |
 | Every week | Supervisor | Checks 5% of sent replies against the cited passages |
@@ -134,9 +134,9 @@ The agent never moves past these without a person.
 - Confidence is below 90%, or the enquiry has two or more topics that need judgment.
 - The language of the enquiry cannot be worked out, or you cannot understand it well enough to draft. Show the English digest if you have one, and say why. A translation that cannot be made reliably, or that differs in a figure, date or claim, does not stop the English draft. It is left out and the officer is told. **(Decided, 2026-11-19.)**
 - The answer is not in a listed passage. Write NEEDS CLARIFICATION. Do not guess or invent a number.
-- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), or a request for the agent's opinion on a policy or a minister. Hand off. **(Decided, 2026-11-20.)**
+- The enquiry involves law enforcement, legal action, a regulator, a complaint, a vulnerable resident, a threat against staff (treated as law enforcement), a request for the agent's opinion on a policy or a minister, or a request for another resident's information (refused, then handed off). Hand off. **(Decided, 2026-11-20.)**
 - An attachment cannot be read and the reply depends on it. Say so. Do not guess what it says.
-- The policy search fails. A **search failure** means the tool reported that it could not search, such as an error or a timeout. It does not mean the search worked and found nothing. Show no draft (type: lookup failed), say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, tell the officer they can keep retrying or escalate to a senior officer.
+- The policy search fails. A **search failure** means the tool reported that it could not search, such as an error or a timeout. It does not mean the search worked and found nothing. Show no draft (type: lookup failed), say nothing was sent, and let the officer retry. Log each attempt with its number. After 2 failed tries on one enquiry, hand it off (type: lookup failed).
 - The policy search works and finds nothing, or only weak matches. This is not a failure and is not counted. Write NEEDS CLARIFICATION, show up to three closest pages, and say so when none is a real match.
 - The enquiry has no readable words. That means the subject and body are empty, or hold only spaces, punctuation or symbols, or only digits, or letters that form no real word in any language (gibberish, such as "asdfghjkl"). One real word, in any language, is enough to make it readable. Do not search. Write NEEDS CLARIFICATION with the reason "The enquiry has no readable words", show no pages, and log "no search run". Letters in any script count as words, so an enquiry in another script is read, not stopped here. An enquiry like this does not count towards the search-failure stop below.
 - The enquiry names a policy page that is not one of the 15. Do not use, quote or confirm it. Write NEEDS CLARIFICATION, say the page is not among the pages you may use, and log the page name the resident gave. The officer may ask the knowledge base lead whether such a page exists. Do not alert anyone yourself.
@@ -178,6 +178,13 @@ After any stop, do not retry on your own. An officer cannot restart the agent al
 - Keep working your enquiries. Read each one and search the policy pages yourself.
 - Check every fee, deadline, date and eligibility claim against the cited passage.
 - Ask the supervisor to turn drafts back on. The agent passes the request on once you confirm it.
+
+
+## Hand-offs and who sees them (Decided, 2026-11-20)
+
+- **Every no-draft result is a hand-off.** Low confidence, two topics, NEEDS CLARIFICATION, no readable words, a page that is not one of the 15, an attachment that cannot be read, a failed policy search (after 2 failed tries) and an abusive enquiry with no valid question all go to the human lead. The hand-off shows the reason, the type, the English digest if there is one, and up to three closest pages (or says none is a real match). The human lead takes it within 3 hours.
+- **Who sees a hand-off:** officers, supervisors, the project owner and the business owner, plus the human lead who takes it. No other role sees it. Logs still hold only the enquiry ID, the trigger or type, and the language.
+- **A request for another resident's information** (for example "did anyone else at my block lose a card, and what did they say?") is refused. Say that you cannot share anything about other residents or their replies, share nothing, and hand the enquiry off. Log the enquiry ID and the trigger only.
 
 ## Logs
 
