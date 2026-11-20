@@ -72,7 +72,7 @@ The agent prepares something and stops. Nothing happens until a person acts.
 
 - **A draft reply.** Saved to the review queue. It waits for an officer to verify each blue item, edit if needed, and send.
 - **A no-draft result.** Saved with the reason and the closest pages. It waits for the officer to write the reply or escalate.
-- **A hand-off.** Saved for a human lead. It waits for them to take the case.
+- **A hand-off.** Saved for a human lead. It waits for them to take the case, which they must do within 3 hours (Decided 2026-11-20).
 - **A flag on a wrong citation** (raised by an officer). It waits for the knowledge base lead.
 - **Restarting the agent.** After any stop of the whole agent, the officer may request a restart. The agent stays off until one member of the ServiceSG team approves. One is enough, and it cannot be the member who asked. It never restarts itself.
 - **Reinstating an officer** whose drafting was stopped. The officer asks the supervisor. Only the supervisor can turn it back on.
@@ -86,7 +86,7 @@ A person checks these, whatever the agent says.
 - **Every fee, deadline, date and eligibility claim.** The officer ticks each blue item against the cited passage before approving.
 - **Every unmatched claim in text the officer added.** The officer ticks it, rewords it to match a passage, or removes it, before approving.
 - **5% of sent replies, every week.** The supervisor checks them against the cited passages.
-- **Every hand-off.** The human lead.
+- **Every hand-off.** The human lead, who must take the case within 3 hours (Decided 2026-11-20).
 - **Wrong-citation flags.** The knowledge base lead reviews the flag and the policy page.
 - **Every stop of the whole agent.** The ServiceSG team gets an alert, reviews why, and may approve a restart. One approval is enough, and not from the member who asked. A wrong-citation stop also alerts the knowledge base lead.
 - **The logged data.** Any member of the ServiceSG team may review it at any time, and the team must review it at least once a week.
